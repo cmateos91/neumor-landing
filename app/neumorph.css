@@ -1,0 +1,316 @@
+/* ==========================================
+   NEUMORSTUDIO - Estilos Neumórficos
+   Todos los estilos con efecto neumórfico
+   organizados por categoría
+   ========================================== */
+
+/* ========== CARDS ========== */
+
+/* Card neumórfica estándar */
+.neumor-card {
+  border-radius: 24px;
+  padding: 1.5rem;
+  background: linear-gradient(145deg, #FFFFFF, #E8E8E8);
+  box-shadow:
+    -8px -8px 16px rgba(255, 255, 255, 0.8),
+    8px 8px 16px rgba(174, 174, 192, 0.4);
+}
+
+.dark .neumor-card {
+  background: linear-gradient(145deg, #1E1E1E, #151515);
+  box-shadow:
+    -8px -8px 16px rgba(38, 38, 38, 0.6),
+    8px 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* Card neumórfica circular (para contenido general) */
+.neumor-pill {
+  border-radius: 999px;
+  background: linear-gradient(135deg, #F2F3F7, #FFFFFF);
+  box-shadow:
+    -10px -10px 22px #FFFFFF,
+    10px 10px 22px #D1D5DB;
+}
+
+.dark .neumor-pill {
+  background: linear-gradient(135deg, #151C23, #0F141A);
+  box-shadow:
+    -10px -10px 22px #1F2937,
+    10px 10px 22px #020617;
+}
+
+/* Card neumórfica para formularios (border-radius moderado) */
+.form-card {
+  border-radius: 24px;
+  background: linear-gradient(135deg, #F2F3F7, #FFFFFF);
+  box-shadow:
+    -10px -10px 22px #FFFFFF,
+    10px 10px 22px #D1D5DB;
+}
+
+.dark .form-card {
+  background: linear-gradient(135deg, #151C23, #0F141A);
+  box-shadow:
+    -10px -10px 22px #1F2937,
+    10px 10px 22px #020617;
+}
+
+/* ========== BUTTONS ========== */
+
+.neumor-button {
+  border-radius: 16px;
+  background: linear-gradient(145deg, #FFFFFF, #E8E8E8);
+  box-shadow:
+    -6px -6px 12px rgba(255, 255, 255, 0.8),
+    6px 6px 12px rgba(174, 174, 192, 0.4);
+  border: none;
+  cursor: pointer;
+}
+
+.neumor-button:hover {
+  box-shadow:
+    -4px -4px 8px rgba(255, 255, 255, 0.8),
+    4px 4px 8px rgba(174, 174, 192, 0.4);
+}
+
+.neumor-button:active {
+  box-shadow:
+    inset -2px -2px 6px rgba(255, 255, 255, 0.7),
+    inset 2px 2px 6px rgba(174, 174, 192, 0.5);
+}
+
+.dark .neumor-button {
+  background: linear-gradient(145deg, #1E1E1E, #151515);
+  box-shadow:
+    -6px -6px 12px rgba(38, 38, 38, 0.6),
+    6px 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.dark .neumor-button:hover {
+  box-shadow:
+    -4px -4px 8px rgba(38, 38, 38, 0.6),
+    4px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.dark .neumor-button:active {
+  box-shadow:
+    inset -2px -2px 6px rgba(38, 38, 38, 0.5),
+    inset 2px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* ========== INPUTS ========== */
+
+.neumor-input {
+  border-radius: 12px;
+  background: linear-gradient(145deg, #E8E8E8, #FFFFFF);
+  box-shadow:
+    inset -4px -4px 8px rgba(255, 255, 255, 0.7),
+    inset 4px 4px 8px rgba(174, 174, 192, 0.3);
+  border: none;
+  outline: none;
+}
+
+.neumor-input:focus {
+  box-shadow:
+    inset -4px -4px 8px rgba(255, 255, 255, 0.7),
+    inset 4px 4px 8px rgba(174, 174, 192, 0.3),
+    0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.dark .neumor-input {
+  background: linear-gradient(145deg, #151515, #1E1E1E);
+  box-shadow:
+    inset -4px -4px 8px rgba(38, 38, 38, 0.5),
+    inset 4px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.dark .neumor-input:focus {
+  box-shadow:
+    inset -4px -4px 8px rgba(38, 38, 38, 0.5),
+    inset 4px 4px 8px rgba(0, 0, 0, 0.5),
+    0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+/* ========== BADGES ========== */
+
+/* Badge neumórfico reutilizable */
+.badge-pill {
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #F2F3F7;
+  color: #1A1A1A;
+  box-shadow:
+    -6px -6px 14px #FFFFFF,
+    6px 6px 14px #D1D5DB;
+}
+
+.dark .badge-pill {
+  background: #151C23;
+  color: #E5E7EB;
+  box-shadow:
+    -6px -6px 14px #1F2937,
+    6px 6px 14px #020617;
+}
+
+/* ========== HERO 3D VIDEO ========== */
+
+/* Contenedor neumórfico del vídeo */
+.hero-3d-shell {
+  width: min(320px, 80vw);
+  aspect-ratio: 3 / 4;
+  border-radius: 32px;
+  padding: 10px;
+  background: linear-gradient(145deg, #F2F3F7, #ECEEF3);
+  box-shadow:
+    -14px -14px 28px #FFFFFF,
+    14px 14px 28px #D1D5DB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.dark .hero-3d-shell {
+  background: radial-gradient(circle at 20% 0%, #111827, #020617);
+  box-shadow:
+    -14px -14px 28px #1F2937,
+    14px 14px 28px #020617;
+  border: 1px solid rgba(55, 65, 81, 0.9);
+}
+
+/* El vídeo en sí: fondo negro, pero con glow azul alrededor */
+.hero-3d-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 24px;
+  background-color: #000000;
+  box-shadow: 0 0 28px rgba(59, 130, 246, 0.9);
+}
+
+/* ========== UNIVERSE CARD ========== */
+
+.outer {
+  width: 300px;
+  height: 250px;
+  border-radius: 16px;
+  padding: 1px;
+  background: radial-gradient(circle 230px at 0% 0%, #F2F3F7, #0D1117);
+  position: relative;
+}
+
+.dark .outer {
+  background: radial-gradient(circle 230px at 0% 0%, #151C23, #020617);
+}
+
+.dot {
+  width: 5px;
+  aspect-ratio: 1;
+  position: absolute;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px #ffffff;
+  border-radius: 100px;
+  z-index: 2;
+  right: 10%;
+  top: 10%;
+  animation: moveDot 6s linear infinite;
+}
+
+@keyframes moveDot {
+  0%,
+  100% {
+    top: 10%;
+    right: 10%;
+  }
+  25% {
+    top: 10%;
+    right: calc(100% - 35px);
+  }
+  50% {
+    top: calc(100% - 30px);
+    right: calc(100% - 35px);
+  }
+  75% {
+    top: calc(100% - 30px);
+    right: 10%;
+  }
+}
+
+.card {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  border: solid 1px #202222;
+  background-size: 20px 20px;
+  background: radial-gradient(circle 280px at 0% 0%, #ECEEF3, #0D1117);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-direction: column;
+  color: #ffffff;
+}
+
+.dark .card {
+  background: radial-gradient(circle 280px at 0% 0%, #151C23, #020617);
+}
+
+.ray {
+  width: 220px;
+  height: 45px;
+  border-radius: 100px;
+  position: absolute;
+  background-color: #c7c7c7;
+  opacity: 0.4;
+  box-shadow: 0 0 50px #ffffff;
+  filter: blur(10px);
+  transform-origin: 10%;
+  top: 0%;
+  left: 0;
+  transform: rotate(40deg);
+}
+
+.card .text {
+  font-weight: bolder;
+  font-size: 2.6rem;
+  background: linear-gradient(45deg, #1F8AFB 10%, #FFFFFF, #3B82F6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  background-color: #2c2c2c;
+}
+
+.topl {
+  top: 10%;
+  background: linear-gradient(90deg, #9CA3AF 30%, #1d1f1f 70%);
+}
+
+.bottoml {
+  bottom: 10%;
+}
+
+.leftl {
+  left: 10%;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, #747474 30%, #222424 70%);
+}
+
+.rightl {
+  right: 10%;
+  width: 1px;
+  height: 100%;
+}
