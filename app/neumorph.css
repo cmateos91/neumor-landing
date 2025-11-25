@@ -8,112 +8,148 @@
 
 /* Card neumórfica estándar */
 .neumor-card {
-  border-radius: 24px;
-  padding: 1.5rem;
-  background: linear-gradient(145deg, #FFFFFF, #E8E8E8);
+  border-radius: 32px;
+  padding: 2rem;
+  background: var(--neuro-bg, #e6e6e6);
   box-shadow:
-    -8px -8px 16px rgba(255, 255, 255, 0.8),
-    8px 8px 16px rgba(174, 174, 192, 0.4);
+    8px 8px 16px var(--neuro-dark, #d1d1d1),
+    -8px -8px 16px var(--neuro-light, #ffffff);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.neumor-card:hover {
+  box-shadow:
+    4px 4px 8px var(--neuro-dark, #d1d1d1),
+    -4px -4px 8px var(--neuro-light, #ffffff);
+  transform: translateY(-1px);
 }
 
 .dark .neumor-card {
-  background: linear-gradient(145deg, #1E1E1E, #151515);
+  background: linear-gradient(145deg, #1A202C, #13181F);
   box-shadow:
-    -8px -8px 16px rgba(38, 38, 38, 0.6),
-    8px 8px 16px rgba(0, 0, 0, 0.5);
+    -12px -12px 24px rgba(30, 37, 48, 0.5),
+    12px 12px 24px rgba(0, 0, 0, 0.8);
+}
+
+.dark .neumor-card:hover {
+  box-shadow:
+    -16px -16px 32px rgba(30, 37, 48, 0.6),
+    16px 16px 32px rgba(0, 0, 0, 0.9);
+  transform: translateY(-2px);
 }
 
 /* Card neumórfica circular (para contenido general) */
 .neumor-pill {
   border-radius: 999px;
-  background: linear-gradient(135deg, #F2F3F7, #FFFFFF);
+  background: var(--neuro-bg, #e6e6e6);
   box-shadow:
-    -10px -10px 22px #FFFFFF,
-    10px 10px 22px #D1D5DB;
+    10px 10px 20px var(--neuro-dark, #d1d1d1),
+    -10px -10px 20px var(--neuro-light, #ffffff);
+  transition: all 0.3s ease;
+}
+
+.neumor-pill:hover {
+  box-shadow:
+    6px 6px 12px var(--neuro-dark, #d1d1d1),
+    -6px -6px 12px var(--neuro-light, #ffffff);
 }
 
 .dark .neumor-pill {
-  background: linear-gradient(135deg, #151C23, #0F141A);
+  background: linear-gradient(135deg, #1A202C, #13181F);
   box-shadow:
-    -10px -10px 22px #1F2937,
-    10px 10px 22px #020617;
+    -14px -14px 28px rgba(30, 37, 48, 0.4),
+    14px 14px 28px rgba(0, 0, 0, 0.8);
+}
+
+.dark .neumor-pill:hover {
+  box-shadow:
+    -18px -18px 36px rgba(30, 37, 48, 0.5),
+    18px 18px 36px rgba(0, 0, 0, 0.9);
 }
 
 /* Card neumórfica para formularios (border-radius moderado) */
 .form-card {
-  border-radius: 24px;
-  background: linear-gradient(135deg, #F2F3F7, #FFFFFF);
+  border-radius: 32px;
+  background: var(--neuro-bg, #e6e6e6);
   box-shadow:
-    -10px -10px 22px #FFFFFF,
-    10px 10px 22px #D1D5DB;
+    10px 10px 20px var(--neuro-dark, #d1d1d1),
+    -10px -10px 20px var(--neuro-light, #ffffff);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
 }
 
 .dark .form-card {
-  background: linear-gradient(135deg, #151C23, #0F141A);
+  background: linear-gradient(135deg, #1A202C, #13181F);
   box-shadow:
-    -10px -10px 22px #1F2937,
-    10px 10px 22px #020617;
+    -14px -14px 28px rgba(30, 37, 48, 0.4),
+    14px 14px 28px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(55, 65, 81, 0.3);
 }
 
 /* ========== BUTTONS ========== */
 
 .neumor-button {
-  border-radius: 16px;
-  background: linear-gradient(145deg, #FFFFFF, #E8E8E8);
+  border-radius: 20px;
+  background: var(--neuro-bg, #e6e6e6);
   box-shadow:
-    -6px -6px 12px rgba(255, 255, 255, 0.8),
-    6px 6px 12px rgba(174, 174, 192, 0.4);
+    6px 6px 12px var(--neuro-dark, #d1d1d1),
+    -6px -6px 12px var(--neuro-light, #ffffff);
   border: none;
   cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .neumor-button:hover {
   box-shadow:
-    -4px -4px 8px rgba(255, 255, 255, 0.8),
-    4px 4px 8px rgba(174, 174, 192, 0.4);
+    4px 4px 8px var(--neuro-dark, #d1d1d1),
+    -4px -4px 8px var(--neuro-light, #ffffff);
+  transform: translateY(-1px);
 }
 
 .neumor-button:active {
   box-shadow:
-    inset -2px -2px 6px rgba(255, 255, 255, 0.7),
-    inset 2px 2px 6px rgba(174, 174, 192, 0.5);
+    inset 4px 4px 8px var(--neuro-dark, #d1d1d1),
+    inset -4px -4px 8px var(--neuro-light, #ffffff);
+  transform: translateY(0);
 }
 
 .dark .neumor-button {
-  background: linear-gradient(145deg, #1E1E1E, #151515);
+  background: linear-gradient(145deg, #1A202C, #13181F);
   box-shadow:
-    -6px -6px 12px rgba(38, 38, 38, 0.6),
-    6px 6px 12px rgba(0, 0, 0, 0.5);
+    -8px -8px 16px rgba(30, 37, 48, 0.5),
+    8px 8px 16px rgba(0, 0, 0, 0.8);
 }
 
 .dark .neumor-button:hover {
   box-shadow:
-    -4px -4px 8px rgba(38, 38, 38, 0.6),
-    4px 4px 8px rgba(0, 0, 0, 0.5);
+    -6px -6px 12px rgba(30, 37, 48, 0.6),
+    6px 6px 12px rgba(0, 0, 0, 0.9);
+  transform: translateY(-1px);
 }
 
 .dark .neumor-button:active {
   box-shadow:
-    inset -2px -2px 6px rgba(38, 38, 38, 0.5),
-    inset 2px 2px 6px rgba(0, 0, 0, 0.5);
+    inset -3px -3px 8px rgba(30, 37, 48, 0.4),
+    inset 3px 3px 8px rgba(0, 0, 0, 0.6);
+  transform: translateY(0);
 }
 
 /* ========== INPUTS ========== */
 
 .neumor-input {
   border-radius: 12px;
-  background: linear-gradient(145deg, #E8E8E8, #FFFFFF);
+  background: var(--neuro-bg, #e6e6e6);
   box-shadow:
-    inset -4px -4px 8px rgba(255, 255, 255, 0.7),
-    inset 4px 4px 8px rgba(174, 174, 192, 0.3);
+    inset 4px 4px 8px var(--neuro-dark, #d1d1d1),
+    inset -4px -4px 8px var(--neuro-light, #ffffff);
   border: none;
   outline: none;
 }
 
 .neumor-input:focus {
   box-shadow:
-    inset -4px -4px 8px rgba(255, 255, 255, 0.7),
-    inset 4px 4px 8px rgba(174, 174, 192, 0.3),
+    inset 4px 4px 8px var(--neuro-dark, #d1d1d1),
+    inset -4px -4px 8px var(--neuro-light, #ffffff),
     0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 
@@ -136,24 +172,40 @@
 /* Badge neumórfico reutilizable */
 .badge-pill {
   border-radius: 999px;
-  padding: 6px 14px;
+  padding: 8px 18px;
   font-size: 0.75rem;
+  font-weight: 600;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: #F2F3F7;
-  color: #1A1A1A;
+  background: var(--neuro-bg, #e6e6e6);
+  color: #475569;
   box-shadow:
-    -6px -6px 14px #FFFFFF,
-    6px 6px 14px #D1D5DB;
+    6px 6px 12px var(--neuro-dark, #d1d1d1),
+    -6px -6px 12px var(--neuro-light, #ffffff);
+  transition: all 0.2s ease;
+}
+
+.badge-pill:hover {
+  box-shadow:
+    4px 4px 8px var(--neuro-dark, #d1d1d1),
+    -4px -4px 8px var(--neuro-light, #ffffff);
+  transform: translateY(-1px);
 }
 
 .dark .badge-pill {
-  background: #151C23;
-  color: #E5E7EB;
+  background: linear-gradient(135deg, #1A202C, #13181F);
+  color: #CBD5E1;
   box-shadow:
-    -6px -6px 14px #1F2937,
-    6px 6px 14px #020617;
+    -8px -8px 16px rgba(30, 37, 48, 0.4),
+    8px 8px 16px rgba(0, 0, 0, 0.8);
+}
+
+.dark .badge-pill:hover {
+  box-shadow:
+    -10px -10px 20px rgba(30, 37, 48, 0.5),
+    10px 10px 20px rgba(0, 0, 0, 0.9);
+  transform: translateY(-1px);
 }
 
 /* ========== HERO 3D VIDEO ========== */
@@ -162,26 +214,41 @@
 .hero-3d-shell {
   width: min(320px, 80vw);
   aspect-ratio: 3 / 4;
-  border-radius: 32px;
-  padding: 10px;
-  background: linear-gradient(145deg, #F2F3F7, #ECEEF3);
+  border-radius: 40px;
+  padding: 12px;
+  background: var(--neuro-bg, #e6e6e6);
   box-shadow:
-    -14px -14px 28px #FFFFFF,
-    14px 14px 28px #D1D5DB;
+    14px 14px 28px var(--neuro-dark, #d1d1d1),
+    -14px -14px 28px var(--neuro-light, #ffffff);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(148, 163, 184, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.hero-3d-shell:hover {
+  box-shadow:
+    8px 8px 16px var(--neuro-dark, #d1d1d1),
+    -8px -8px 16px var(--neuro-light, #ffffff);
+  transform: translateY(-2px);
 }
 
 .dark .hero-3d-shell {
-  background: radial-gradient(circle at 20% 0%, #111827, #020617);
+  background: radial-gradient(circle at 20% 0%, #1A202C, #0F141A);
   box-shadow:
-    -14px -14px 28px #1F2937,
-    14px 14px 28px #020617;
-  border: 1px solid rgba(55, 65, 81, 0.9);
+    -18px -18px 36px rgba(30, 37, 48, 0.5),
+    18px 18px 36px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(55, 65, 81, 0.5);
+}
+
+.dark .hero-3d-shell:hover {
+  box-shadow:
+    -22px -22px 44px rgba(30, 37, 48, 0.6),
+    22px 22px 44px rgba(0, 0, 0, 1);
+  transform: translateY(-2px);
 }
 
 /* El vídeo en sí: fondo negro, pero con glow azul alrededor */
@@ -189,6 +256,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position:25% center;
   border-radius: 24px;
   background-color: #000000;
   box-shadow: 0 0 28px rgba(59, 130, 246, 0.9);

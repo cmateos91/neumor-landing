@@ -7,8 +7,11 @@
 @import "./neumorph.css";
 
 :root {
-  --background: #F2F3F7;
-  --foreground: #1A1A1A;
+  --background: #e6e6e6;
+  --foreground: #2c2c2c;
+  --neuro-light: #ffffff;
+  --neuro-dark: #d1d1d1;
+  --neuro-bg: #e6e6e6;
 }
 
 .dark {
