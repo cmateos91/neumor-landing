@@ -68,7 +68,7 @@ export function ContactForm() {
             value={formData.nombre}
             onChange={handleChange}
             required
-            className="w-full rounded-3xl px-4 py-2.5 text-sm bg-slate-100 outline-none shadow-[inset_4px_4px_10px_rgba(15,23,42,0.18),inset_-4px_-4px_10px_rgba(255,255,255,0.95)]"
+            className="w-full rounded-3xl px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 bg-slate-100 outline-none shadow-[inset_4px_4px_10px_rgba(15,23,42,0.18),inset_-4px_-4px_10px_rgba(255,255,255,0.95)]"
             placeholder="Cómo te llamas"
           />
         </div>
@@ -83,7 +83,7 @@ export function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full rounded-3xl px-4 py-2.5 text-sm bg-slate-100 outline-none shadow-[inset_4px_4px_10px_rgba(15,23,42,0.18),inset_-4px_-4px_10px_rgba(255,255,255,0.95)]"
+            className="w-full rounded-3xl px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 bg-slate-100 outline-none shadow-[inset_4px_4px_10px_rgba(15,23,42,0.18),inset_-4px_-4px_10px_rgba(255,255,255,0.95)]"
             placeholder="donde podamos escribirte"
           />
         </div>
@@ -98,7 +98,7 @@ export function ContactForm() {
             value={formData.tipo_negocio}
             onChange={handleChange}
             required
-            className="w-full rounded-3xl px-4 py-2.5 text-sm bg-slate-100 outline-none shadow-[inset_4px_4px_10px_rgba(15,23,42,0.18),inset_-4px_-4px_10px_rgba(255,255,255,0.95)]"
+            className="w-full rounded-3xl px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 bg-slate-100 outline-none shadow-[inset_4px_4px_10px_rgba(15,23,42,0.18),inset_-4px_-4px_10px_rgba(255,255,255,0.95)]"
             placeholder="restaurante, marca personal, estudio, etc."
           />
         </div>
@@ -112,7 +112,7 @@ export function ContactForm() {
             value={formData.mensaje}
             onChange={handleChange}
             rows={3}
-            className="w-full rounded-3xl px-4 py-2.5 text-sm bg-slate-100 outline-none resize-none shadow-[inset_4px_4px_10px_rgba(15,23,42,0.18),inset_-4px_-4px_10px_rgba(255,255,255,0.95)]"
+            className="w-full rounded-3xl px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 bg-slate-100 outline-none resize-none shadow-[inset_4px_4px_10px_rgba(15,23,42,0.18),inset_-4px_-4px_10px_rgba(255,255,255,0.95)]"
             placeholder="Cuéntame en pocas frases qué buscas."
           />
         </div>
