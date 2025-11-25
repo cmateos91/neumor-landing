@@ -1,0 +1,4805 @@
+/* ================================================
+   Neumorphic UI Kit - Base Styles
+   Inspired by uiverse.io
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.uiverse-page {
+    --bg-color: #e0e5ec;
+    --text-main: #4a4a4a;
+    --text-light: #8a8a8a;
+    --primary: #6d5dfc;
+
+    /* Shadows */
+    --shadow-light: #ffffff;
+    --shadow-dark: #a3b1c6;
+
+    --neu-flat: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light);
+    --neu-pressed: inset 6px 6px 10px var(--shadow-dark), inset -6px -6px 10px var(--shadow-light);
+    --neu-icon: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    min-height: 100vh;
+    padding: 40px;
+}
+
+.kit-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.kit-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.kit-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 10px;
+}
+
+.kit-subtitle {
+    color: var(--text-light);
+}
+
+/* --- Grid Layout --- */
+.kit-section {
+    margin-bottom: 80px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    display: inline-block;
+}
+
+.component-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 40px;
+}
+
+.component-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+    border-radius: 20px;
+    /* Optional: subtle border to define the area */
+    border: 1px dashed rgba(0, 0, 0, 0.05);
+}
+
+.component-label {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: auto;
+}
+
+/* --- COMPONENTS --- */
+
+/* 1. Buttons */
+.neu-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 50px;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.neu-btn:active,
+.neu-btn.active {
+    box-shadow: var(--neu-pressed);
+    transform: scale(0.98);
+}
+
+.neu-btn.primary {
+    color: var(--primary);
+}
+
+.neu-btn-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.neu-btn-icon:active {
+    box-shadow: var(--neu-pressed);
+}
+
+.neu-btn-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+}
+
+.neu-btn-square {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.neu-btn-square:active {
+    box-shadow: var(--neu-pressed);
+}
+
+/* 2. Inputs */
+.neu-input {
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 50px;
+    background: var(--bg-color);
+    box-shadow: var(--neu-pressed);
+    color: var(--text-main);
+    font-family: inherit;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.neu-input:focus {
+    box-shadow: var(--neu-pressed), inset 2px 2px 5px rgba(0, 0, 0, 0.05);
+    color: var(--primary);
+}
+
+.neu-input::placeholder {
+    color: var(--text-light);
+}
+
+.neu-search {
+    position: relative;
+    width: 100%;
+}
+
+.neu-search input {
+    padding-left: 45px;
+}
+
+.neu-search svg {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    width: 18px;
+    height: 18px;
+}
+
+/* 3. Toggles & Switches */
+.neu-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+}
+
+.neu-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-color);
+    border-radius: 30px;
+    box-shadow: var(--neu-pressed);
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--text-light);
+    border-radius: 50%;
+    box-shadow: var(--neu-flat);
+    transition: .4s;
+}
+
+input:checked+.slider:before {
+    transform: translateX(30px);
+    background-color: var(--primary);
+}
+
+.neu-checkbox {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 1rem;
+    user-select: none;
+}
+
+.neu-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    background-color: var(--bg-color);
+    border-radius: 6px;
+    box-shadow: var(--neu-flat);
+}
+
+.neu-checkbox:hover input~.checkmark {
+    box-shadow: var(--neu-pressed);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.neu-checkbox input:checked~.checkmark:after {
+    display: block;
+}
+
+.neu-checkbox .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 6px;
+    height: 12px;
+    border: solid var(--primary);
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+/* 4. Cards */
+.neu-card {
+    background: var(--bg-color);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--neu-flat);
+    width: 100%;
+}
+
+.neu-card-inset {
+    background: var(--bg-color);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--neu-pressed);
+    width: 100%;
+}
+
+/* 5. Loaders */
+.neu-loader {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.neu-loader::after {
+    content: '';
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: var(--primary);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 6. Radio Groups */
+.neu-radio-group {
+    display: flex;
+    gap: 20px;
+}
+
+.neu-radio {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 1rem;
+    user-select: none;
+}
+
+.neu-radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.radio-mark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    background-color: var(--bg-color);
+    border-radius: 50%;
+    box-shadow: var(--neu-flat);
+}
+
+.neu-radio:hover input~.radio-mark {
+    box-shadow: var(--neu-pressed);
+}
+
+.radio-mark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.neu-radio input:checked~.radio-mark:after {
+    display: block;
+}
+
+.neu-radio .radio-mark:after {
+    top: 6px;
+    left: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 5px var(--primary);
+}
+
+/* 7. Range Sliders */
+.neu-slider-container {
+    width: 100%;
+    padding: 10px 0;
+}
+
+.neu-range {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: var(--bg-color);
+    box-shadow: var(--neu-pressed);
+    outline: none;
+}
+
+.neu-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    cursor: pointer;
+    margin-top: -7px;
+    /* Adjust for alignment */
+    border: 2px solid var(--bg-color);
+}
+
+.neu-range::-webkit-slider-thumb:active {
+    box-shadow: var(--neu-pressed);
+    background: var(--primary);
+}
+
+/* 8. Tabs */
+.neu-tabs {
+    display: flex;
+    padding: 5px;
+    background: var(--bg-color);
+    border-radius: 50px;
+    box-shadow: var(--neu-pressed);
+    width: fit-content;
+}
+
+.neu-tab {
+    padding: 10px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-light);
+    transition: all 0.3s ease;
+}
+
+.neu-tab.active {
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    color: var(--primary);
+}
+
+/* 9. Pagination */
+.neu-pagination {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.page-item {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    color: var(--text-main);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.page-item:hover {
+    color: var(--primary);
+}
+
+.page-item.active {
+    box-shadow: var(--neu-pressed);
+    color: var(--primary);
+}
+
+/* 10. Media Player */
+.neu-player {
+    width: 300px;
+    padding: 30px;
+    border-radius: 30px;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.album-art {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--neu-pressed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.album-art::after {
+    content: '';
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    z-index: 2;
+}
+
+.spinning-disk {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(from 0deg, #333, #111, #333);
+    border-radius: 50%;
+    animation: spinDisk 5s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes spinDisk {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.player-controls {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.control-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-light);
+    transition: all 0.2s ease;
+}
+
+.control-btn:active {
+    box-shadow: var(--neu-pressed);
+    color: var(--primary);
+}
+
+.control-btn.play {
+    width: 70px;
+    height: 70px;
+    color: var(--primary);
+    box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light), inset 2px 2px 5px rgba(255, 255, 255, 0.5);
+}
+
+.control-btn.play:active {
+    box-shadow: var(--neu-pressed);
+}
+
+/* 11. Social Buttons */
+.social-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.5rem;
+}
+
+.social-btn:hover {
+    transform: translateY(-3px);
+}
+
+.social-btn.twitter {
+    color: #1DA1F2;
+}
+
+.social-btn.twitter:hover {
+    text-shadow: 0 0 10px rgba(29, 161, 242, 0.5);
+}
+
+.social-btn.github {
+    color: #333;
+}
+
+.social-btn.dribbble {
+    color: #EA4C89;
+}
+
+.social-btn.instagram {
+    color: #E1306C;
+}
+
+/* 12. Clock */
+.neu-clock {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.clock-face {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--neu-pressed);
+    position: relative;
+}
+
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom;
+    background: var(--text-main);
+    border-radius: 4px;
+}
+
+.hand.hour {
+    width: 4px;
+    height: 50px;
+    background: var(--text-main);
+}
+
+.hand.minute {
+    width: 3px;
+    height: 70px;
+    background: var(--text-light);
+}
+
+.hand.second {
+    width: 2px;
+    height: 75px;
+    background: var(--primary);
+}
+
+.center-dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--primary);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 5px var(--primary);
+}
+
+/* =========================================
+   DASHBOARD LAYOUT
+   ========================================= */
+.kit-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.kit-sidebar {
+    width: 250px;
+    background: var(--bg-color);
+    padding: 30px;
+    border-right: 1px solid rgba(255, 255, 255, 0.5);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.02);
+    z-index: 100;
+}
+
+.kit-nav-item {
+    display: block;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    color: var(--text-main);
+    text-decoration: none;
+    border-radius: 15px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.kit-nav-item:hover {
+    background: rgba(255, 255, 255, 0.4);
+    color: var(--primary);
+}
+
+.kit-nav-item.active {
+    box-shadow: var(--neu-pressed);
+    color: var(--primary);
+}
+
+.kit-main {
+    flex: 1;
+    margin-left: 250px;
+    padding: 50px;
+}
+
+/* =========================================
+   EXHAUSTIVE COMPONENT COLLECTION
+   ========================================= */
+
+/* --- BUTTON VARIANTS --- */
+
+/* 1. Pearl Button */
+.neu-btn-pearl {
+    padding: 15px 35px;
+    border-radius: 30px;
+    background: linear-gradient(145deg, #f0f5fc, #c9d1d9);
+    box-shadow: 8px 8px 16px #b8c0c9, -8px -8px 16px #ffffff;
+    color: #6d5dfc;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.neu-btn-pearl:hover {
+    background: linear-gradient(145deg, #ffffff, #e6eef7);
+    transform: translateY(-2px);
+}
+
+/* 2. Delete Button (Danger) */
+.neu-btn-delete {
+    padding: 12px 30px;
+    border-radius: 10px;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    color: #ff4757;
+    font-weight: 600;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.neu-btn-delete:hover {
+    color: #ff6b81;
+    box-shadow: var(--neu-pressed);
+    border-color: rgba(255, 71, 87, 0.1);
+}
+
+.neu-btn-delete:active {
+    transform: scale(0.95);
+}
+
+/* 3. Sign In (Primary Action) */
+.neu-btn-signin {
+    padding: 12px 40px;
+    border-radius: 50px;
+    background: var(--bg-color);
+    box-shadow: 6px 6px 10px #b1bcce, -6px -6px 10px #ffffff;
+    color: var(--primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.neu-btn-signin::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--primary);
+    z-index: -1;
+    transition: transform 0.4s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.neu-btn-signin:hover {
+    color: white;
+}
+
+.neu-btn-signin:hover::before {
+    transform: scaleX(1);
+}
+
+/* 4. Create Button (Rounded Square) */
+.neu-btn-create {
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2ed573;
+    font-size: 2rem;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.neu-btn-create:hover {
+    border-radius: 50%;
+    background: #2ed573;
+    color: white;
+    transform: rotate(90deg);
+}
+
+/* 5. Google Sign In */
+.neu-btn-google {
+    padding: 12px 25px;
+    border-radius: 12px;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: var(--text-main);
+    font-weight: 500;
+    transition: transform 0.2s;
+}
+
+.neu-btn-google:active {
+    box-shadow: var(--neu-pressed);
+    transform: scale(0.98);
+}
+
+/* 6. Support Us (Heart) */
+.neu-btn-support {
+    padding: 15px 30px;
+    border-radius: 50px;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    color: #ff4757;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.neu-btn-support svg {
+    fill: currentColor;
+    filter: drop-shadow(0 0 5px rgba(255, 71, 87, 0.5));
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.3);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.3);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 7. Main Button (Glow Ring) */
+.neu-btn-main {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    position: relative;
+    z-index: 1;
+}
+
+.neu-btn-main::after {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--primary), #a29bfe);
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.neu-btn-main:hover::after {
+    opacity: 0.6;
+}
+
+/* --- CARD VARIANTS --- */
+
+/* 1. Boost Card (Orange Accent) */
+.neu-card-boost {
+    width: 100%;
+    padding: 30px;
+    border-radius: 20px;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    position: relative;
+    overflow: hidden;
+}
+
+.neu-card-boost::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: #ff9f43;
+}
+
+.neu-card-boost h3 {
+    color: #ff9f43;
+    margin-bottom: 15px;
+}
+
+/* 2. Profile Card */
+.neu-card-profile {
+    width: 100%;
+    padding: 40px 20px;
+    border-radius: 30px;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #ddd;
+    box-shadow: var(--neu-pressed);
+    margin-bottom: 20px;
+    border: 4px solid var(--bg-color);
+}
+
+/* 3. Runtime Info (Dark) */
+.neu-card-runtime {
+    width: 100%;
+    padding: 25px;
+    border-radius: 15px;
+    background: #2d3436;
+    box-shadow: 5px 5px 10px #1e2324, -5px -5px 10px #3c4548;
+    color: #dfe6e9;
+}
+
+.neu-card-runtime h4 {
+    color: #00cec9;
+    margin-bottom: 10px;
+}
+
+.runtime-bar {
+    height: 6px;
+    background: #1e2324;
+    border-radius: 3px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.runtime-progress {
+    height: 100%;
+    width: 60%;
+    background: #00cec9;
+    box-shadow: 0 0 10px #00cec9;
+}
+
+/* --- FORM VARIANTS --- */
+
+/* 1. Login Form Container */
+.neu-form-login {
+    padding: 40px;
+    border-radius: 20px;
+    background: var(--bg-color);
+    box-shadow: var(--neu-flat);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 350px;
+}
+
+/* 2. Password Input (with Eye) */
+.neu-input-group {
+    position: relative;
+}
+
+.neu-input-icon-right {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    cursor: pointer;
+}
+
+/* 3. Floating Label Input */
+.neu-input-float {
+    position: relative;
+    padding-top: 10px;
+}
+
+.neu-input-float input {
+    width: 100%;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    background: var(--bg-color);
+    box-shadow: var(--neu-pressed);
+    outline: none;
+}
+
+.neu-input-float label {
+    position: absolute;
+    top: -10px;
+    left: 15px;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    background: var(--bg-color);
+    padding: 0 5px;
+}
+
+/* 4. OTP Input */
+.neu-otp-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.neu-input-otp {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background: var(--bg-color);
+    box-shadow: var(--neu-pressed);
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    outline: none;
+}
+
+.neu-input-otp:focus {
+    box-shadow: var(--neu-pressed), inset 2px 2px 5px rgba(0, 0, 0, 0.05);
+    color: var(--primary);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================
+   UIVERSE.IO NEUMORPHIC BUTTONS (35)
+   Nombres identificables para fácil uso
+   ========================================= */
+
+/* Dark background helper */
+.dark-bg {
+    background: #2d3436;
+    border-radius: 20px;
+}
+
+/* 1. neu-inset-basic - Botón con sombra inset */
+.neu-inset-basic {
+    background-color: #e0e0e0;
+    border-radius: 50px;
+    box-shadow: inset 4px 4px 10px #bcbcbc, inset -4px -4px 10px #ffffff;
+    color: #4d4d4d;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 15px 40px;
+    transition: all 0.2s ease-in-out;
+    border: 2px solid rgb(206, 206, 206);
+    font-family: inherit;
+}
+.neu-inset-basic:hover {
+    box-shadow: inset 2px 2px 5px #bcbcbc, inset -2px -2px 5px #ffffff, 2px 2px 5px #bcbcbc, -2px -2px 5px #ffffff;
+}
+.neu-inset-basic:active {
+    transform: scale(0.98);
+}
+
+/* 2. neu-classic - Botón clásico neumórfico */
+.neu-classic {
+    color: #090909;
+    padding: 0.7em 1.7em;
+    font-size: 16px;
+    border-radius: 0.5em;
+    background: #e8e8e8;
+    border: 1px solid #e8e8e8;
+    transition: all .3s;
+    box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+    cursor: pointer;
+    font-family: inherit;
+}
+.neu-classic:hover {
+    border: 1px solid white;
+}
+.neu-classic:active {
+    box-shadow: 4px 4px 12px #c5c5c5, -4px -4px 12px #ffffff;
+}
+
+/* 3. neu-double-layer - Botón con doble capa */
+.neu-double-layer {
+    cursor: pointer;
+    background: linear-gradient(145deg, #f0f0f0, #cacaca);
+    box-shadow: 5px 5px 21px #bababa, -5px -5px 21px #ffffff;
+    padding: 5px;
+    border-radius: 12px;
+    border: 1px solid #000000bc;
+    font-family: inherit;
+}
+.neu-double-layer-inner {
+    border-radius: 50px;
+    background: linear-gradient(145deg, #cacaca, #f0f0f0);
+    box-shadow: inset 5px 5px 15px #bababa, inset -5px -5px 15px #ffffff;
+    display: flex;
+    padding: 12px 15px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #4a4a4a;
+    font-weight: 500;
+}
+
+/* 4. neu-explore - Botón explore con icono */
+.neu-explore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #7e97b8;
+    background-color: #e0e8ef;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.333);
+    border-radius: 40px;
+    padding: 16px 24px;
+    transition: 0.2s;
+    box-shadow: -4px -2px 16px 0px #ffffff, 4px 2px 16px 0px rgb(95 157 231 / 48%);
+    cursor: pointer;
+}
+.neu-explore:hover {
+    color: #516d91;
+    background-color: #E5EDF5;
+    box-shadow: -2px -1px 8px 0px #ffffff, 2px 1px 8px 0px rgb(95 157 231 / 48%);
+}
+.neu-explore:active {
+    box-shadow: none;
+}
+
+/* 5. neu-github-icon - Botón GitHub cuadrado */
+.neu-github-icon {
+    display: grid;
+    place-items: center;
+    background: #e3edf7;
+    padding: 1.2em;
+    border-radius: 10px;
+    box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15), -6px -6px 10px -1px rgba(255,255,255,0.7);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+.neu-github-icon:hover {
+    box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.2), inset -4px -4px 6px -1px rgba(255,255,255,0.7), -0.5px -0.5px 0px rgba(255,255,255,1), 0.5px 0.5px 0px rgba(0,0,0,0.15), 0px 12px 10px -10px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.1);
+    transform: translateY(0.5em);
+}
+.neu-github-icon:hover svg {
+    transform: scale(0.9);
+    fill: #333333;
+}
+.neu-github-icon svg {
+    transition: transform 0.5s;
+}
+
+/* 6. neu-register-arrow - Botón registro con flecha */
+.neu-register-arrow {
+    position: relative;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(to bottom, #171717, #242424);
+    border-radius: 9999px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 1), 0 10px 20px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #292929;
+    font-family: inherit;
+}
+.neu-register-arrow::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    right: -1px;
+    bottom: -1px;
+    left: -1px;
+    background: linear-gradient(to bottom, #292929, #000000);
+    z-index: -1;
+    border-radius: 9999px;
+}
+.neu-register-arrow:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 1), 0 5px 10px rgba(0, 0, 0, 0.4);
+}
+.neu-register-arrow-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, #171717, #242424);
+    width: 36px;
+    height: 36px;
+    margin-left: 10px;
+    border-radius: 50%;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 1);
+    border: 1px solid #252525;
+}
+
+/* 7. neu-upload-green - Botón upload verde */
+.neu-upload-green {
+    --bg: linear-gradient(180deg, hsla(0, 0%, 100%, .1), hsla(0, 0%, 100%, 0)), hsl(128, 52%, 45%);
+    box-shadow: 0 1px 2px #25114f66, 0 0 0 1px hsla(128, 50%, 45%, 0.761);
+    background-color: transparent;
+    border: none;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: #fff;
+    background: var(--bg);
+    white-space: nowrap;
+    border-radius: 6px;
+    border: 1px solid #fff3;
+    font-family: inherit;
+    font-size: 14px;
+}
+.neu-upload-green:hover {
+    filter: brightness(1.1);
+}
+
+/* 8. neu-blob-hover - Botón con efecto blob */
+.neu-blob-hover {
+    position: relative;
+    font-family: inherit;
+    font-size: 16px;
+    border-radius: 40em;
+    width: 8em;
+    height: 3em;
+    z-index: 1;
+    color: white;
+    overflow: hidden;
+    border: none;
+    cursor: pointer;
+}
+.neu-blob-text {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    line-height: 3em;
+    border-radius: 40em;
+    background: linear-gradient(rgba(255, 255, 255, 0.473), rgba(150, 150, 150, 0.25));
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+.neu-blob {
+    position: absolute;
+    z-index: -1;
+    border-radius: 5em;
+    width: 5em;
+    height: 3em;
+    transition: transform .3s ease-in-out, background .3s ease-in-out;
+}
+.neu-blob:nth-child(2) { left: 0; top: 0; background: #ff930f; }
+.neu-blob:nth-child(3) { left: 1.8em; top: 0; background: #bf0fff; }
+.neu-blob:nth-child(4) { left: 4em; top: -1em; background: #ff1b6b; }
+.neu-blob:nth-child(5) { left: 4.3em; top: 1.6em; background: #0061ff; }
+.neu-blob-hover:hover .neu-blob:nth-child(2) { background: #0061ff; }
+.neu-blob-hover:hover .neu-blob:nth-child(3) { background: #ff1b6b; }
+.neu-blob-hover:hover .neu-blob:nth-child(4) { background: #bf0fff; }
+.neu-blob-hover:hover .neu-blob:nth-child(5) { background: #ff930f; }
+.neu-blob-hover:hover .neu-blob { transform: scale(1.3); }
+
+/* 9. neu-send-animated - Botón enviar con animación */
+.neu-send-animated {
+    --primary: #ff5569;
+    --neutral-1: #f7f8f7;
+    --neutral-2: #e7e7e7;
+    cursor: pointer;
+    border-radius: 14px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    border: none;
+    box-shadow: 0 0.5px 0.5px 1px rgba(255, 255, 255, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2), 0 4px 5px 0px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 25px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    background: linear-gradient(var(--neutral-1), var(--neutral-2));
+    transition: all 0.3s ease;
+}
+.neu-send-animated:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.3), 0 15px 30px rgba(0, 0, 0, 0.3), 0 10px 3px -3px rgba(0, 0, 0, 0.04);
+}
+.neu-send-animated:active {
+    transform: scale(1);
+}
+.neu-send-animated svg {
+    color: var(--primary);
+}
+
+/* 10. neu-concave - Botón cóncavo */
+.neu-concave {
+    padding: 15px 35px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #4a4a4a;
+    background: linear-gradient(145deg, #cacaca, #f0f0f0);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 5px 5px 15px #bebebe, -5px -5px 15px #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+.neu-concave:hover {
+    box-shadow: 2px 2px 8px #bebebe, -2px -2px 8px #ffffff;
+}
+.neu-concave:active {
+    box-shadow: inset 5px 5px 15px #bebebe, inset -5px -5px 15px #ffffff;
+}
+
+/* 11. neu-pressed - Botón siempre presionado */
+.neu-pressed {
+    padding: 15px 35px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary);
+    background: var(--bg-color);
+    border: none;
+    border-radius: 12px;
+    box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+.neu-pressed:hover {
+    color: #5a4ad4;
+}
+.neu-pressed:active {
+    box-shadow: inset 8px 8px 15px #a3b1c6, inset -8px -8px 15px #ffffff;
+}
+
+/* 12. neu-pill - Botón píldora */
+.neu-pill {
+    padding: 14px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #4a4a4a;
+    background: var(--bg-color);
+    border: none;
+    border-radius: 50px;
+    box-shadow: 8px 8px 16px #a3b1c6, -8px -8px 16px #ffffff;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+}
+.neu-pill:hover {
+    box-shadow: 4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff;
+    transform: translateY(-2px);
+}
+.neu-pill:active {
+    box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+    transform: translateY(0);
+}
+
+/* 13-15, 19, 22-25, 28-30. Botones circulares con iconos */
+.neu-heart-icon,
+.neu-home-icon,
+.neu-settings-icon,
+.neu-share-circle,
+.neu-play-circle,
+.neu-pause-circle,
+.neu-power-circle,
+.neu-nav-arrow,
+.neu-close-x,
+.neu-check-confirm,
+.neu-search-circle {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: var(--bg-color);
+    box-shadow: 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff;
+    color: #4a4a4a;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.neu-heart-icon:hover,
+.neu-home-icon:hover,
+.neu-settings-icon:hover,
+.neu-share-circle:hover,
+.neu-play-circle:hover,
+.neu-pause-circle:hover,
+.neu-power-circle:hover,
+.neu-nav-arrow:hover,
+.neu-close-x:hover,
+.neu-check-confirm:hover,
+.neu-search-circle:hover {
+    box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+}
+.neu-heart-icon:active,
+.neu-home-icon:active,
+.neu-settings-icon:active,
+.neu-share-circle:active,
+.neu-play-circle:active,
+.neu-pause-circle:active,
+.neu-power-circle:active,
+.neu-nav-arrow:active,
+.neu-close-x:active,
+.neu-check-confirm:active,
+.neu-search-circle:active {
+    box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+}
+.neu-heart-icon { color: #ff4757; }
+.neu-home-icon { color: #2ed573; }
+.neu-settings-icon { color: #747d8c; }
+.neu-play-circle { color: var(--primary); }
+.neu-pause-circle { color: #ff9f43; }
+.neu-power-circle { color: #ff4757; }
+.neu-check-confirm { color: #2ed573; }
+.neu-nav-arrow {
+    width: 45px;
+    height: 45px;
+}
+
+/* 16. neu-fab-plus - Botón FAB con + */
+.neu-fab-plus {
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: var(--bg-color);
+    box-shadow: 8px 8px 16px #a3b1c6, -8px -8px 16px #ffffff;
+    color: #2ed573;
+    font-size: 2.5rem;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-family: inherit;
+}
+.neu-fab-plus:hover {
+    border-radius: 50%;
+    background: #2ed573;
+    color: white;
+    transform: rotate(90deg);
+}
+.neu-fab-plus:active {
+    transform: rotate(90deg) scale(0.95);
+}
+
+/* 17. neu-dark-mode - Botón modo oscuro */
+.neu-dark-mode {
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #dfe6e9;
+    background: #2d3436;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 5px 5px 10px #1e2324, -5px -5px 10px #3c4548;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+.neu-dark-mode:hover {
+    box-shadow: 3px 3px 6px #1e2324, -3px -3px 6px #3c4548;
+    color: #00cec9;
+}
+.neu-dark-mode:active {
+    box-shadow: inset 4px 4px 8px #1e2324, inset -4px -4px 8px #3c4548;
+}
+
+/* 18. neu-glow-gradient - Botón con glow gradient */
+.neu-glow-gradient {
+    position: relative;
+    padding: 15px 35px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+.neu-glow-gradient::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    background: linear-gradient(135deg, #667eea, #764ba2, #667eea);
+    border-radius: 14px;
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.neu-glow-gradient:hover::before {
+    opacity: 0.7;
+}
+.neu-glow-gradient:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+.neu-glow-gradient:active {
+    transform: translateY(0);
+}
+
+/* 20. neu-download - Botón descarga */
+.neu-download {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 25px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #4a4a4a;
+    background: var(--bg-color);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+.neu-download:hover {
+    color: var(--primary);
+    box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+}
+.neu-download:active {
+    box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+}
+
+/* 21. neu-telegram - Botón Telegram */
+.neu-telegram {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    background: #2AABEE;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    box-shadow: 0 4px 15px rgba(42, 171, 238, 0.3);
+}
+.neu-telegram:hover {
+    background: #229ED9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(42, 171, 238, 0.4);
+}
+.neu-telegram:active {
+    transform: translateY(0);
+}
+
+/* 26. neu-notification-bell - Botón notificación con badge */
+.neu-notification-bell {
+    position: relative;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: var(--bg-color);
+    box-shadow: 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff;
+    color: #4a4a4a;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.neu-notification-bell:hover {
+    box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+}
+.neu-notification-bell:active {
+    box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+}
+.neu-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff4757;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(255, 71, 87, 0.4);
+}
+
+/* 27. neu-hamburger-menu - Botón menú hamburguesa */
+.neu-hamburger-menu {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: none;
+    background: var(--bg-color);
+    box-shadow: 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.neu-hamburger-menu span {
+    width: 22px;
+    height: 2px;
+    background: #4a4a4a;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+.neu-hamburger-menu:hover {
+    box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+}
+.neu-hamburger-menu:hover span {
+    background: var(--primary);
+}
+.neu-hamburger-menu:active {
+    box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+}
+
+/* 31. neu-email-btn - Botón email */
+.neu-email-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #4a4a4a;
+    background: var(--bg-color);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+.neu-email-btn:hover {
+    color: #0984e3;
+    box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+}
+.neu-email-btn:active {
+    box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+}
+
+/* 32. neu-call-btn - Botón llamada */
+.neu-call-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2ed573;
+    background: var(--bg-color);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+.neu-call-btn:hover {
+    background: #2ed573;
+    color: white;
+}
+.neu-call-btn:hover svg {
+    fill: white;
+}
+.neu-call-btn:active {
+    box-shadow: inset 4px 4px 8px #25b85f, inset -4px -4px 8px #37f287;
+}
+
+/* 33. neu-submit-primary - Botón submit primario */
+.neu-submit-primary {
+    padding: 14px 40px;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    background: var(--primary);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    box-shadow: 0 4px 15px rgba(109, 93, 252, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.neu-submit-primary:hover {
+    background: #5a4ad4;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(109, 93, 252, 0.4);
+}
+.neu-submit-primary:active {
+    transform: translateY(0);
+}
+
+/* 34. neu-cancel-danger - Botón cancelar/peligro */
+.neu-cancel-danger {
+    padding: 14px 35px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ff4757;
+    background: var(--bg-color);
+    border: 2px solid #ff4757;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    box-shadow: 4px 4px 10px #a3b1c6, -4px -4px 10px #ffffff;
+}
+.neu-cancel-danger:hover {
+    background: #ff4757;
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+}
+.neu-cancel-danger:active {
+    transform: scale(0.98);
+}
+
+/* 35. neu-loading-btn - Botón con spinner de carga */
+.neu-loading-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 30px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #8a8a8a;
+    background: var(--bg-color);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff;
+    cursor: wait;
+    font-family: inherit;
+}
+.neu-spinner {
+    width: 18px;
+    height: 18px;
+    border: 3px solid #e0e5ec;
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* =========================================
+   UIVERSE.IO NEUMORPHIC INPUTS & FORMS (16)
+   Nombres identificables para fácil uso
+   ========================================= */
+
+/* 1. neu-input-simple - Input básico neumórfico */
+.neu-input-simple {
+    border: none;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: #e8e8e8;
+    box-shadow: 20px 20px 60px #c5c5c5, -20px -20px 60px #ffffff;
+    transition: 0.3s;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+}
+.neu-input-simple:focus {
+    outline-color: #e8e8e8;
+    background: #e8e8e8;
+    box-shadow: inset 20px 20px 60px #c5c5c5, inset -20px -20px 60px #ffffff;
+}
+
+/* 2. neu-input-round - Input redondeado */
+.neu-input-round {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 50px;
+    background: #e0e5ec;
+    box-shadow: 6px 6px 12px #b8bec7, -6px -6px 12px #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    color: #4a4a4a;
+    outline: none;
+    transition: 0.3s;
+}
+.neu-input-round:focus {
+    box-shadow: inset 4px 4px 8px #b8bec7, inset -4px -4px 8px #ffffff;
+}
+.neu-input-round::placeholder {
+    color: #8a8a8a;
+}
+
+/* 3. neu-input-inset - Input siempre hundido */
+.neu-input-inset {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #e0e5ec;
+    box-shadow: inset 5px 5px 10px #b8bec7, inset -5px -5px 10px #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    color: #4a4a4a;
+    outline: none;
+    transition: 0.2s;
+}
+.neu-input-inset:focus {
+    box-shadow: inset 6px 6px 12px #b8bec7, inset -6px -6px 12px #ffffff;
+    color: var(--primary);
+}
+.neu-input-inset::placeholder {
+    color: #8a8a8a;
+}
+
+/* 4. neu-input-soft - Input suave */
+.neu-input-soft {
+    padding: 14px 20px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #f0f5fc, #d1d9e6);
+    box-shadow: 5px 5px 10px #b8bec7, -5px -5px 10px #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    color: #4a4a4a;
+    outline: none;
+    transition: 0.3s;
+}
+.neu-input-soft:focus {
+    box-shadow: inset 3px 3px 6px #b8bec7, inset -3px -3px 6px #ffffff;
+}
+.neu-input-soft::placeholder {
+    color: #8a8a8a;
+}
+
+/* 5. neu-input-focus-scale - Input con escala al focus */
+.neu-input-focus-scale {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #e0e5ec;
+    box-shadow: 4px 4px 8px #b8bec7, -4px -4px 8px #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    color: #4a4a4a;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.neu-input-focus-scale:focus {
+    transform: scale(1.02);
+    box-shadow: 6px 6px 12px #b8bec7, -6px -6px 12px #ffffff;
+    border: 1px solid rgba(109, 93, 252, 0.3);
+}
+.neu-input-focus-scale::placeholder {
+    color: #8a8a8a;
+}
+
+/* 6. neu-input-dark-float - Input oscuro con label flotante */
+.neu-input-dark-float-container {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    position: relative;
+    color: white;
+}
+.neu-input-dark-float-label {
+    font-size: 15px;
+    padding-left: 10px;
+    position: absolute;
+    top: 13px;
+    transition: 0.3s;
+    pointer-events: none;
+    color: #aaa;
+}
+.neu-input-dark-float {
+    width: 200px;
+    height: 45px;
+    border: none;
+    outline: none;
+    padding: 0px 7px;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 15px;
+    background-color: transparent;
+    box-shadow: 3px 3px 10px rgba(0,0,0,1), -1px -1px 6px rgba(255, 255, 255, 0.4);
+    font-family: inherit;
+}
+.neu-input-dark-float:focus {
+    border: 2px solid transparent;
+    color: #fff;
+    box-shadow: 3px 3px 10px rgba(0,0,0,1), -1px -1px 6px rgba(255, 255, 255, 0.4),
+                inset 3px 3px 10px rgba(0,0,0,1), inset -1px -1px 6px rgba(255, 255, 255, 0.4);
+}
+.neu-input-dark-float-container .neu-input-dark-float:valid ~ .neu-input-dark-float-label,
+.neu-input-dark-float-container .neu-input-dark-float:focus ~ .neu-input-dark-float-label {
+    transition: 0.3s;
+    padding-left: 2px;
+    transform: translateY(-35px);
+}
+
+/* 7. neu-input-dark-pill - Input oscuro píldora */
+.neu-input-dark-pill {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 50px;
+    background: #2d3436;
+    box-shadow: inset 4px 4px 8px #1e2324, inset -4px -4px 8px #3c4548;
+    font-family: inherit;
+    font-size: 14px;
+    color: #dfe6e9;
+    outline: none;
+    transition: 0.3s;
+}
+.neu-input-dark-pill:focus {
+    box-shadow: inset 6px 6px 12px #1e2324, inset -6px -6px 12px #3c4548;
+    color: #00cec9;
+}
+.neu-input-dark-pill::placeholder {
+    color: #636e72;
+}
+
+/* 8. neu-input-dark-search - Input búsqueda oscuro */
+.neu-input-dark-search {
+    padding: 14px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #2d3436;
+    box-shadow: 5px 5px 10px #1e2324, -5px -5px 10px #3c4548;
+    font-family: inherit;
+    font-size: 14px;
+    color: #dfe6e9;
+    outline: none;
+    transition: 0.3s;
+    min-width: 220px;
+}
+.neu-input-dark-search:focus {
+    box-shadow: inset 4px 4px 8px #1e2324, inset -4px -4px 8px #3c4548;
+}
+.neu-input-dark-search::placeholder {
+    color: #636e72;
+}
+
+/* 9. neu-otp-inputs - Inputs OTP */
+.neu-otp-container {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+.neu-otp-box {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background: #e0e5ec;
+    box-shadow: inset 4px 4px 8px #b8bec7, inset -4px -4px 8px #ffffff;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary);
+    outline: none;
+    font-family: inherit;
+    transition: 0.2s;
+}
+.neu-otp-box:focus {
+    box-shadow: inset 6px 6px 12px #b8bec7, inset -6px -6px 12px #ffffff;
+}
+
+/* 10. neu-form-dark-login - Formulario login oscuro */
+.neu-form-dark-login {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 2em;
+    background-color: #171717;
+    border-radius: 25px;
+    transition: .4s ease-in-out;
+}
+.neu-form-dark-login:hover {
+    transform: scale(1.02);
+    border: 1px solid #333;
+}
+.neu-form-dark-login-heading {
+    text-align: center;
+    margin: 0 0 1em;
+    color: #00bfff;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+.neu-form-dark-login-field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    border-radius: 25px;
+    padding: 0.6em;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: #171717;
+    box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+}
+.neu-form-dark-login-icon {
+    height: 1em;
+    width: 1em;
+    fill: white;
+}
+.neu-form-dark-login-input {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: #d3d3d3;
+    font-family: inherit;
+    font-size: 14px;
+}
+.neu-form-dark-login-input::placeholder {
+    color: #555;
+}
+.neu-form-dark-login-btns {
+    display: flex;
+    gap: 0.5em;
+}
+.neu-form-dark-login-btn1,
+.neu-form-dark-login-btn2 {
+    flex: 1;
+    padding: 0.5em;
+    border-radius: 25px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .4s ease-in-out;
+    font-family: inherit;
+}
+.neu-form-dark-login-btn1 {
+    background-color: #00bfff;
+    color: #171717;
+}
+.neu-form-dark-login-btn1:hover {
+    background-color: #00bfff96;
+}
+.neu-form-dark-login-btn2 {
+    background-color: #171717;
+    color: #00bfff;
+    border: 1px solid #00bfff;
+}
+.neu-form-dark-login-btn2:hover {
+    background-color: #00bfff;
+    color: #171717;
+}
+.neu-form-dark-login-btn3 {
+    background-color: transparent;
+    border: none;
+    color: #00bfff;
+    font-size: 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-family: inherit;
+}
+.neu-form-dark-login-btn3:hover {
+    text-decoration: underline;
+}
+
+/* 11. neu-form-light-login - Formulario login claro */
+.neu-form-light-login {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 25px;
+    background: #e8e8e8;
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px #c5c5c5, -10px -10px 20px #ffffff;
+}
+.neu-form-light-heading {
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #4a4a4a;
+    margin-bottom: 5px;
+}
+.neu-form-light-input {
+    padding: 12px 16px;
+    border: none;
+    border-radius: 10px;
+    background: #e8e8e8;
+    box-shadow: inset 5px 5px 10px #c5c5c5, inset -5px -5px 10px #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    color: #4a4a4a;
+}
+.neu-form-light-input::placeholder {
+    color: #8a8a8a;
+}
+.neu-form-light-btn {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #e8e8e8;
+    box-shadow: 5px 5px 10px #c5c5c5, -5px -5px 10px #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6d5dfc;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.neu-form-light-btn:hover {
+    box-shadow: 3px 3px 6px #c5c5c5, -3px -3px 6px #ffffff;
+}
+.neu-form-light-btn:active {
+    box-shadow: inset 3px 3px 6px #c5c5c5, inset -3px -3px 6px #ffffff;
+}
+
+/* 12. neu-form-soft-login - Formulario login suave */
+.neu-form-soft-login {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px;
+    background: #ecf0f3;
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px #cbced1, -10px -10px 20px #ffffff;
+}
+.neu-form-soft-text {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #4a4a4a;
+    text-align: center;
+}
+.neu-form-soft-field {
+    position: relative;
+}
+.neu-form-soft-input {
+    width: 100%;
+    padding: 15px 12px 8px;
+    border: none;
+    border-radius: 8px;
+    background: #ecf0f3;
+    box-shadow: inset 4px 4px 8px #cbced1, inset -4px -4px 8px #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    color: #4a4a4a;
+}
+.neu-form-soft-label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8a8a8a;
+    font-size: 14px;
+    pointer-events: none;
+    transition: 0.3s;
+}
+.neu-form-soft-input:focus ~ .neu-form-soft-label,
+.neu-form-soft-input:valid ~ .neu-form-soft-label {
+    top: -8px;
+    left: 8px;
+    font-size: 11px;
+    background: #ecf0f3;
+    padding: 0 5px;
+    color: #6d5dfc;
+}
+.neu-form-soft-btn {
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #f0f5fc, #d1d9e6);
+    box-shadow: 5px 5px 10px #cbced1, -5px -5px 10px #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6d5dfc;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.neu-form-soft-btn:hover {
+    box-shadow: 3px 3px 6px #cbced1, -3px -3px 6px #ffffff;
+}
+.neu-form-soft-btn:active {
+    box-shadow: inset 3px 3px 6px #cbced1, inset -3px -3px 6px #ffffff;
+}
+
+/* 13. neu-form-brutalist - Formulario estilo brutalista */
+.neu-form-brutalist {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 25px;
+    background: #e0e0e0;
+    border: 3px solid #1a1a1a;
+    border-radius: 0;
+}
+.neu-form-brutalist-title {
+    font-size: 1.2em;
+    font-weight: 900;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+}
+.neu-form-brutalist-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.neu-form-brutalist-subtitle {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-transform: uppercase;
+}
+.neu-form-brutalist-input {
+    padding: 10px;
+    border: 2px solid #1a1a1a;
+    border-radius: 0;
+    background: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+.neu-form-brutalist-input:focus {
+    box-shadow: 4px 4px 0 #1a1a1a;
+}
+.neu-form-brutalist-btn {
+    padding: 12px;
+    border: 2px solid #1a1a1a;
+    border-radius: 0;
+    background: #1a1a1a;
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.neu-form-brutalist-btn:hover {
+    background: #fff;
+    color: #1a1a1a;
+}
+
+/* 14. neu-form-instagram - Formulario estilo Instagram */
+.neu-form-instagram {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    max-width: 300px;
+}
+.neu-form-instagram-logo {
+    font-family: 'Billabong', cursive, sans-serif;
+    font-size: 2.2em;
+    text-align: center;
+    color: #262626;
+    margin-bottom: 10px;
+}
+.neu-form-instagram-input {
+    padding: 10px 12px;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    background: #fafafa;
+    font-family: inherit;
+    font-size: 12px;
+    outline: none;
+}
+.neu-form-instagram-input:focus {
+    border-color: #a8a8a8;
+}
+.neu-form-instagram-submit {
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    background: #0095f6;
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.neu-form-instagram-submit:hover {
+    background: #1877f2;
+}
+.neu-form-instagram-or {
+    text-align: center;
+    color: #8e8e8e;
+    font-size: 13px;
+    position: relative;
+}
+.neu-form-instagram-or::before,
+.neu-form-instagram-or::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: #dbdbdb;
+}
+.neu-form-instagram-or::before { left: 0; }
+.neu-form-instagram-or::after { right: 0; }
+.neu-form-instagram-fb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: #385185;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.neu-form-instagram-fb:hover {
+    color: #1877f2;
+}
+
+/* 15. neu-form-otp-verify - Formulario verificación OTP */
+.neu-form-otp-verify {
+    width: 290px;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    transition: .4s ease-in-out;
+}
+.neu-form-otp-verify:hover {
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+    transform: scale(0.99);
+}
+.neu-form-otp-heading {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+.neu-form-otp-box-group {
+    display: flex;
+    gap: 12px;
+}
+.neu-form-otp-input {
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-color: rgb(235, 235, 235);
+    box-shadow: inset 3px 3px 6px #d1d1d1, inset -3px -3px 6px #ffffff;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: inherit;
+    transition: .4s ease-in-out;
+}
+.neu-form-otp-input:hover,
+.neu-form-otp-input:focus {
+    box-shadow: inset 0px 0px 0px #d1d1d1, inset 0px 0px 0px #ffffff;
+    background-color: lightgrey;
+}
+.neu-form-otp-submit,
+.neu-form-otp-back {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    transition: .4s ease-in-out;
+    box-shadow: 1px 1px 3px #b5b5b5, -1px -1px 3px #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    background: #fff;
+}
+.neu-form-otp-submit:active,
+.neu-form-otp-back:active {
+    box-shadow: inset 3px 3px 6px #b5b5b5, inset -3px -3px 6px #ffffff;
+}
+
+/* 16. neu-form-dark-slider - Formulario oscuro con slider labels */
+.neu-form-dark-slider {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px;
+    background: #212121;
+    border-radius: 15px;
+    box-shadow: 10px 10px 20px #1a1a1a, -10px -10px 20px #282828;
+}
+.neu-form-dark-slider-title {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+}
+.neu-form-dark-slider-control {
+    position: relative;
+}
+.neu-form-dark-slider-input {
+    width: 100%;
+    padding: 15px 12px 8px;
+    border: none;
+    border-radius: 8px;
+    background: #212121;
+    box-shadow: inset 4px 4px 8px #1a1a1a, inset -4px -4px 8px #282828;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    color: #fff;
+}
+.neu-form-dark-slider-label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 14px;
+    pointer-events: none;
+    transition: 0.3s;
+}
+.neu-form-dark-slider-input:focus ~ .neu-form-dark-slider-label,
+.neu-form-dark-slider-input:valid ~ .neu-form-dark-slider-label {
+    top: -8px;
+    left: 8px;
+    font-size: 11px;
+    background: #212121;
+    padding: 0 5px;
+    color: #00cec9;
+}
+.neu-form-dark-slider-btn {
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #1f1f1f, #252525);
+    box-shadow: 5px 5px 10px #1a1a1a, -5px -5px 10px #282828;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: #00cec9;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.neu-form-dark-slider-btn:hover {
+    box-shadow: 3px 3px 6px #1a1a1a, -3px -3px 6px #282828;
+    color: #fff;
+}
+.neu-form-dark-slider-btn:active {
+    box-shadow: inset 3px 3px 6px #1a1a1a, inset -3px -3px 6px #282828;
+}
+
+/* =========================================
+   UIVERSE.IO NEUMORPHIC CARDS (23)
+   Nombres identificables para fácil uso
+   ========================================= */
+
+/* 1. neu-card-flat - Card plana neumórfica */
+.neu-card-flat {
+    width: 200px;
+    padding: 25px;
+    border-radius: 20px;
+    background: #e0e0e0;
+    box-shadow: 15px 15px 30px #bebebe, -15px -15px 30px #ffffff;
+}
+.neu-card-flat-title {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #4a4a4a;
+    margin: 0 0 10px 0;
+}
+.neu-card-flat-text {
+    font-size: 0.85em;
+    color: #8a8a8a;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* 2. neu-card-inset-shadow - Card con sombra inset */
+.neu-card-inset-shadow {
+    width: 200px;
+    padding: 25px;
+    border-radius: 30px;
+    background: lightgrey;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 26px -18px inset;
+}
+.neu-card-inset-title {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #4a4a4a;
+    margin: 0 0 10px 0;
+}
+.neu-card-inset-text {
+    font-size: 0.85em;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* 3. neu-card-profile-dark - Card perfil oscura */
+.neu-card-profile-dark {
+    width: 200px;
+    padding: 30px 20px;
+    border-radius: 2em;
+    background-color: #191919;
+    box-shadow: 5px 5px 30px rgb(4, 4, 4), -5px -5px 30px rgb(57, 57, 57);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.neu-card-profile-dark-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #252525;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    box-shadow: inset 2px 2px 5px #0a0a0a, inset -2px -2px 5px #282828;
+}
+.neu-card-profile-dark-avatar svg {
+    fill: #888;
+}
+.neu-card-profile-dark-name {
+    color: white;
+    font-size: 1.2em;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+}
+.neu-card-profile-dark-social {
+    display: flex;
+    gap: 15px;
+    padding: 12px 20px;
+    background-color: #191919;
+    border-radius: 3em;
+    box-shadow: 3px 3px 15px rgb(0, 0, 0), -3px -3px 15px rgb(58, 58, 58);
+}
+.neu-card-profile-dark-social a {
+    color: white;
+    transition: 0.3s;
+}
+.neu-card-social-github:hover { color: #c9510c; }
+.neu-card-social-twitter:hover { color: #00acee; }
+
+/* 4. neu-card-profile-light - Card perfil clara */
+.neu-card-profile-light {
+    width: 190px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f2f2f3;
+    border-radius: 12px;
+    box-shadow: inset 5px 5px 10px #a9a9aa77, inset -5px -5px 10px #ffffff7e;
+}
+.neu-card-profile-light-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 30%;
+    background: #f2f2f3;
+    margin-bottom: 15px;
+    box-shadow: -5px -5px 8px #ffffff7a, 5px 5px 8px #a9a9aa7a;
+}
+.neu-card-profile-light-info {
+    text-align: center;
+    margin-bottom: 15px;
+    background: linear-gradient(120deg, rgba(0,194,255,1) 0%, rgba(0,86,255,1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.neu-card-profile-light-info span {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.neu-card-profile-light-info p {
+    margin: 5px 0 0;
+    font-size: 0.9em;
+}
+.neu-card-profile-light-btn {
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(90deg, rgba(0,194,255,1) 0%, rgba(0,86,255,1) 100%);
+    padding: .5em 2em;
+    border-radius: 0.7em;
+    font-size: 0.9em;
+}
+.neu-card-profile-light-btn:active {
+    box-shadow: inset 3px 3px 3px #0056ff, inset -3px -3px 3px #00c2ff;
+}
+
+/* 5. neu-card-paper - Card textura papel */
+.neu-card-paper {
+    --bg: #e8e8e8;
+    --contrast: #e2e0e0;
+    --grey: #93a1a1;
+    position: relative;
+    padding: 9px;
+    background-color: var(--bg);
+    border-radius: 35px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+.neu-card-paper-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-conic-gradient(var(--bg) 0.0000001%, var(--grey) 0.000104%) 60% 60%/600% 600%;
+    filter: opacity(10%) contrast(105%);
+    border-radius: 35px;
+}
+.neu-card-paper-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 170px;
+    height: 200px;
+    background-color: var(--contrast);
+    border-radius: 30px;
+    font-size: 1.2em;
+    font-weight: 900;
+    color: #c7c4c4;
+    text-align: center;
+    font-family: monospace;
+}
+
+/* 6. neu-card-notification - Card notificación */
+.neu-card-notification {
+    width: fit-content;
+    background-color: #f2f3f7;
+    border-radius: 0.75em;
+    cursor: pointer;
+    transition: ease 0.2s;
+    box-shadow: 1em 1em 1em #d8dae0b1, -0.75em -0.75em 1em #ffffff;
+    border: 1.5px solid #f2f3f7;
+    padding: 1.25em;
+    display: flex;
+    gap: 0.75em;
+}
+.neu-card-notification:hover {
+    background-color: #d3ddf1;
+    border-color: #1677ff;
+}
+.neu-card-notif-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #ff0000;
+    border-radius: 50%;
+    margin-top: 5px;
+}
+.neu-card-notif-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+.neu-card-notif-text {
+    margin: 0;
+    font-size: 0.9em;
+    color: #333;
+}
+.neu-card-notif-time {
+    margin: 0;
+    font-size: 0.8em;
+    color: #777;
+}
+.neu-card-notif-actions {
+    display: flex;
+    gap: 1em;
+}
+.neu-card-notif-primary {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1677ff;
+    cursor: pointer;
+    padding: 0;
+}
+.neu-card-notif-secondary {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+}
+.neu-card-notif-primary:hover,
+.neu-card-notif-secondary:hover {
+    text-decoration: underline;
+}
+
+/* 7. neu-card-stats - Card estadísticas oscura */
+.neu-card-stats {
+    width: 220px;
+    height: 150px;
+    border-radius: 10px;
+    background: radial-gradient(circle 280px at 0% 0%, #444444, #0c0d0d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    color: #fff;
+    border: solid 1px #202222;
+    overflow: hidden;
+}
+.neu-card-stats-ray {
+    width: 150px;
+    height: 30px;
+    border-radius: 100px;
+    position: absolute;
+    background-color: #c7c7c7;
+    opacity: 0.4;
+    box-shadow: 0 0 50px #fff;
+    filter: blur(10px);
+    top: 0;
+    left: 0;
+    transform: rotate(40deg);
+}
+.neu-card-stats-number {
+    font-weight: bolder;
+    font-size: 2.5rem;
+    background: linear-gradient(45deg, #000000 4%, #fff, #000);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+.neu-card-stats-label {
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+/* 8. neu-card-product - Card producto */
+.neu-card-product {
+    width: 200px;
+    padding: 25px;
+    border-radius: 15px;
+    background: #e0e5ec;
+    box-shadow: 8px 8px 16px #b8bec7, -8px -8px 16px #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.neu-card-product-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #e0e5ec;
+    box-shadow: inset 4px 4px 8px #b8bec7, inset -4px -4px 8px #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    color: #abd373;
+}
+.neu-card-product-title {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #4a4a4a;
+    margin: 0 0 5px 0;
+}
+.neu-card-product-desc {
+    font-size: 0.8em;
+    color: #8a8a8a;
+    margin: 0 0 15px 0;
+}
+.neu-card-product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.neu-card-product-price {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #abd373;
+}
+.neu-card-product-btn {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 20px;
+    background: #abd373;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-family: inherit;
+}
+.neu-card-product-btn:hover {
+    filter: brightness(1.1);
+}
+
+/* 9. neu-card-purple-hover - Card morada con hover */
+.neu-card-purple-hover {
+    width: 180px;
+    height: 220px;
+    padding: 20px;
+    background-color: #2b223f;
+    border-radius: 10px;
+    box-shadow: -1rem 0 3rem #00000044;
+    transition: 0.4s ease-out;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.neu-card-purple-hover:hover {
+    transform: translateY(-10px);
+}
+.neu-card-purple-title {
+    color: #ffffff;
+    font-size: 1.3em;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+.neu-card-purple-content {
+    color: #eae0fd;
+    font-size: 0.75em;
+    line-height: 1.5;
+    flex: 1;
+}
+.neu-card-purple-btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background-color: #4a2f7c;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: inherit;
+    transition: 0.3s;
+}
+.neu-card-purple-btn:hover {
+    background-color: #8a4ff8;
+    box-shadow: 0px 0px 20px rgba(157, 71, 255, 0.5);
+}
+.neu-card-purple-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+}
+.neu-card-purple-bar-empty {
+    background-color: #201c29;
+    width: 100%;
+    height: 100%;
+    border-radius: 0 0 10px 10px;
+}
+.neu-card-purple-bar-filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #6831cfab, #a777ff 100%);
+    transition: 0.4s ease-out;
+    border-radius: 0 0 10px 10px;
+}
+.neu-card-purple-hover:hover .neu-card-purple-bar-filled {
+    width: 100%;
+}
+
+/* 10. neu-card-gradient-border - Card con borde gradiente */
+.neu-card-gradient-border {
+    padding: 3px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+.neu-card-gradient-content {
+    width: 180px;
+    padding: 25px;
+    background: #e0e5ec;
+    border-radius: 18px;
+}
+.neu-card-gradient-title {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #667eea;
+    margin: 0 0 10px 0;
+}
+.neu-card-gradient-text {
+    font-size: 0.85em;
+    color: #666;
+    margin: 0;
+}
+
+/* 11. neu-card-pricing - Card precios */
+.neu-card-pricing {
+    width: 200px;
+    padding: 30px 25px;
+    border-radius: 20px;
+    background: #e0e5ec;
+    box-shadow: 8px 8px 16px #b8bec7, -8px -8px 16px #ffffff;
+    text-align: center;
+}
+.neu-card-pricing-plan {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #8a8a8a;
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.neu-card-pricing-price {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 0 0 20px 0;
+}
+.neu-card-pricing-price span {
+    font-size: 0.4em;
+    font-weight: 400;
+    color: #8a8a8a;
+}
+.neu-card-pricing-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    text-align: left;
+}
+.neu-card-pricing-features li {
+    padding: 8px 0;
+    font-size: 0.85em;
+    color: #666;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.neu-card-pricing-features li:last-child {
+    border-bottom: none;
+}
+.neu-card-pricing-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: var(--primary);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: 0.3s;
+}
+.neu-card-pricing-btn:hover {
+    filter: brightness(1.1);
+}
+
+/* 12. neu-card-glass - Card glassmorphism */
+.neu-card-glass {
+    width: 200px;
+    padding: 25px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+.neu-card-glass-title {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 10px 0;
+}
+.neu-card-glass-text {
+    font-size: 0.85em;
+    color: rgba(255,255,255,0.8);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* 13. neu-card-image - Card con imagen */
+.neu-card-image {
+    width: 200px;
+    border-radius: 20px;
+    background: #e0e5ec;
+    box-shadow: 8px 8px 16px #b8bec7, -8px -8px 16px #ffffff;
+    overflow: hidden;
+}
+.neu-card-image-placeholder {
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+.neu-card-image-body {
+    padding: 20px;
+}
+.neu-card-image-title {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #4a4a4a;
+    margin: 0 0 8px 0;
+}
+.neu-card-image-text {
+    font-size: 0.85em;
+    color: #8a8a8a;
+    margin: 0;
+}
+
+/* 14. neu-card-testimonial - Card testimonial */
+.neu-card-testimonial {
+    width: 220px;
+    padding: 25px;
+    border-radius: 20px;
+    background: #e0e5ec;
+    box-shadow: 8px 8px 16px #b8bec7, -8px -8px 16px #ffffff;
+}
+.neu-card-testimonial-quote {
+    font-size: 0.95em;
+    font-style: italic;
+    color: #666;
+    margin: 0 0 20px 0;
+    line-height: 1.6;
+}
+.neu-card-testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.neu-card-testimonial-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #d0d5dc;
+    box-shadow: inset 3px 3px 6px #b8bec7, inset -3px -3px 6px #ffffff;
+}
+.neu-card-testimonial-name {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #4a4a4a;
+    margin: 0;
+}
+.neu-card-testimonial-role {
+    font-size: 0.75em;
+    color: #8a8a8a;
+    margin: 3px 0 0 0;
+}
+
+/* 15. neu-card-feature - Card feature oscura */
+.neu-card-feature {
+    width: 200px;
+    padding: 30px 25px;
+    border-radius: 20px;
+    background: #2d3436;
+    box-shadow: 5px 5px 10px #1e2324, -5px -5px 10px #3c4548;
+    text-align: center;
+}
+.neu-card-feature-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background: #2d3436;
+    box-shadow: inset 4px 4px 8px #1e2324, inset -4px -4px 8px #3c4548;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00cec9;
+}
+.neu-card-feature-title {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 8px 0;
+}
+.neu-card-feature-text {
+    font-size: 0.8em;
+    color: #aaa;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* 16. neu-card-accent-left - Card con acento izquierdo */
+.neu-card-accent-left {
+    width: 200px;
+    padding: 25px;
+    padding-left: 30px;
+    border-radius: 15px;
+    background: #e0e5ec;
+    box-shadow: 8px 8px 16px #b8bec7, -8px -8px 16px #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+.neu-card-accent-left::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: #ff9f43;
+}
+.neu-card-accent-title {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #ff9f43;
+    margin: 0 0 10px 0;
+}
+.neu-card-accent-text {
+    font-size: 0.85em;
+    color: #666;
+    margin: 0;
+}
+
+/* 17. neu-card-info - Card información */
+.neu-card-info {
+    width: 220px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #e0e5ec;
+    box-shadow: 6px 6px 12px #b8bec7, -6px -6px 12px #ffffff;
+}
+.neu-card-info-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+.neu-card-info-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #0984e3;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    font-weight: 700;
+    font-style: italic;
+}
+.neu-card-info-label {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #0984e3;
+}
+.neu-card-info-text {
+    font-size: 0.85em;
+    color: #666;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* 18. neu-card-metric - Card métrica oscura */
+.neu-card-metric {
+    width: 180px;
+    padding: 25px;
+    border-radius: 15px;
+    background: #2d3436;
+    box-shadow: 5px 5px 10px #1e2324, -5px -5px 10px #3c4548;
+}
+.neu-card-metric-label {
+    font-size: 0.8em;
+    color: #888;
+    margin: 0 0 8px 0;
+}
+.neu-card-metric-value {
+    font-size: 2em;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 8px 0;
+}
+.neu-card-metric-change {
+    font-size: 0.85em;
+    font-weight: 600;
+    margin: 0;
+}
+.neu-card-metric-change.neu-positive {
+    color: #00cec9;
+}
+.neu-card-metric-change.neu-negative {
+    color: #ff4757;
+}
+
+/* 19. neu-card-team - Card equipo */
+.neu-card-team {
+    width: 200px;
+    padding: 25px;
+    border-radius: 20px;
+    background: #e0e5ec;
+    box-shadow: 8px 8px 16px #b8bec7, -8px -8px 16px #ffffff;
+    text-align: center;
+}
+.neu-card-team-avatars {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+.neu-card-team-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #d0d5dc;
+    box-shadow: inset 2px 2px 4px #b8bec7, inset -2px -2px 4px #ffffff;
+    border: 2px solid #e0e5ec;
+    margin-left: -10px;
+}
+.neu-card-team-avatar:first-child {
+    margin-left: 0;
+}
+.neu-card-team-title {
+    font-size: 1em;
+    font-weight: 700;
+    color: #4a4a4a;
+    margin: 0 0 5px 0;
+}
+.neu-card-team-text {
+    font-size: 0.8em;
+    color: #8a8a8a;
+    margin: 0;
+}
+
+/* 20. neu-card-task - Card tarea */
+.neu-card-task {
+    width: 200px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #e0e5ec;
+    box-shadow: 6px 6px 12px #b8bec7, -6px -6px 12px #ffffff;
+}
+.neu-card-task-header {
+    margin-bottom: 12px;
+}
+.neu-card-task-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #ffeaa7;
+    color: #d68910;
+    font-size: 0.7em;
+    font-weight: 600;
+}
+.neu-card-task-title {
+    font-size: 1em;
+    font-weight: 700;
+    color: #4a4a4a;
+    margin: 0 0 5px 0;
+}
+.neu-card-task-desc {
+    font-size: 0.8em;
+    color: #8a8a8a;
+    margin: 0 0 15px 0;
+}
+.neu-card-task-progress {
+    height: 6px;
+    border-radius: 3px;
+    background: #d0d5dc;
+    box-shadow: inset 2px 2px 4px #b8bec7, inset -2px -2px 4px #ffffff;
+    overflow: hidden;
+}
+.neu-card-task-progress-bar {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 3px;
+}
+
+/* 21. neu-card-weather - Card clima oscura */
+.neu-card-weather {
+    width: 180px;
+    padding: 30px 25px;
+    border-radius: 25px;
+    background: #2d3436;
+    box-shadow: 8px 8px 16px #1e2324, -8px -8px 16px #3c4548;
+    text-align: center;
+}
+.neu-card-weather-icon {
+    color: #ffeaa7;
+    margin-bottom: 10px;
+}
+.neu-card-weather-temp {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 5px 0;
+}
+.neu-card-weather-city {
+    font-size: 0.9em;
+    color: #888;
+    margin: 0;
+}
+
+/* 22. neu-card-social - Card social */
+.neu-card-social {
+    width: 180px;
+    padding: 25px;
+    border-radius: 20px;
+    background: #e0e5ec;
+    box-shadow: 8px 8px 16px #b8bec7, -8px -8px 16px #ffffff;
+    text-align: center;
+}
+.neu-card-social-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 15px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #833AB4, #FD1D1D, #F77737);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+.neu-card-social-handle {
+    font-size: 1em;
+    font-weight: 600;
+    color: #4a4a4a;
+    margin: 0 0 5px 0;
+}
+.neu-card-social-followers {
+    font-size: 0.8em;
+    color: #8a8a8a;
+    margin: 0;
+}
+
+/* 23. neu-card-cta - Card call to action */
+.neu-card-cta {
+    width: 220px;
+    padding: 30px 25px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    text-align: center;
+}
+.neu-card-cta-title {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 10px 0;
+}
+.neu-card-cta-text {
+    font-size: 0.85em;
+    color: rgba(255,255,255,0.9);
+    margin: 0 0 20px 0;
+    line-height: 1.5;
+}
+.neu-card-cta-btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    background: #fff;
+    color: #667eea;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: 0.3s;
+}
+.neu-card-cta-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+/* ============================================
+   CONTROLS SECTION - TOGGLES, CHECKBOXES, RADIOS
+   ============================================ */
+
+/* TOGGLES / SWITCHES */
+
+/* 1. neu-toggle-pill */
+.neu-toggle-pill {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.neu-toggle-pill input {
+    display: none;
+}
+.neu-toggle-pill-slider {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    border-radius: 15px;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-inset);
+    transition: 0.3s;
+}
+.neu-toggle-pill-slider::before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    transition: 0.3s;
+}
+.neu-toggle-pill input:checked + .neu-toggle-pill-slider::before {
+    transform: translateX(30px);
+    background: linear-gradient(145deg, #6366f1, #8b5cf6);
+}
+
+/* 2. neu-toggle-classic */
+.neu-toggle-classic {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.neu-toggle-classic-input {
+    display: none;
+}
+.neu-toggle-classic-indicator {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: -8px -4px 8px 0px #ffffff,
+        8px 4px 12px 0px #d1d9e6,
+        4px 4px 4px 0px #d1d9e6 inset,
+        -4px -4px 4px 0px #ffffff inset;
+    background: var(--bg-color);
+}
+.neu-toggle-classic-indicator::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 200%;
+    background: var(--bg-color);
+    border-radius: 15px;
+    transform: translate3d(-75%, 0, 0);
+    transition: transform 0.4s cubic-bezier(0.85, 0.05, 0.18, 1.35);
+    box-shadow: -8px -4px 8px 0px #ffffff, 8px 4px 12px 0px #d1d9e6;
+}
+.neu-toggle-classic-input:checked ~ .neu-toggle-classic-indicator::before {
+    transform: translate3d(25%, 0, 0);
+}
+
+/* 3. neu-toggle-dark */
+.neu-toggle-dark {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.neu-toggle-dark input {
+    display: none;
+}
+.neu-toggle-dark-slider {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    border-radius: 15px;
+    background: #2d2d2d;
+    box-shadow: inset 3px 3px 6px #1a1a1a, inset -3px -3px 6px #404040;
+    transition: 0.3s;
+}
+.neu-toggle-dark-slider::before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    background: linear-gradient(145deg, #3d3d3d, #2a2a2a);
+    box-shadow: 2px 2px 4px #1a1a1a, -2px -2px 4px #404040;
+    transition: 0.3s;
+}
+.neu-toggle-dark input:checked + .neu-toggle-dark-slider {
+    background: linear-gradient(145deg, #6366f1, #4f46e5);
+}
+.neu-toggle-dark input:checked + .neu-toggle-dark-slider::before {
+    transform: translateX(30px);
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(99, 102, 241, 0.5);
+}
+
+/* 4. neu-toggle-ios */
+.neu-toggle-ios {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.neu-toggle-ios input {
+    display: none;
+}
+.neu-toggle-ios-slider {
+    position: relative;
+    width: 51px;
+    height: 31px;
+    border-radius: 16px;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-inset);
+    transition: 0.3s;
+}
+.neu-toggle-ios-slider::before {
+    content: '';
+    position: absolute;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+.neu-toggle-ios input:checked + .neu-toggle-ios-slider {
+    background: #34c759;
+    box-shadow: inset 0 0 0 15px #34c759;
+}
+.neu-toggle-ios input:checked + .neu-toggle-ios-slider::before {
+    transform: translateX(20px);
+}
+
+/* 5. neu-toggle-line */
+.neu-toggle-line {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.neu-toggle-line input {
+    display: none;
+}
+.neu-toggle-line-slider {
+    position: relative;
+    width: 50px;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-inset);
+    transition: 0.3s;
+}
+.neu-toggle-line-slider::before {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    top: -8px;
+    left: 0;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    transition: 0.3s;
+}
+.neu-toggle-line input:checked + .neu-toggle-line-slider {
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+}
+.neu-toggle-line input:checked + .neu-toggle-line-slider::before {
+    transform: translateX(28px);
+    background: linear-gradient(145deg, #6366f1, #8b5cf6);
+    box-shadow: 0 3px 10px rgba(99, 102, 241, 0.4);
+}
+
+/* 6. neu-toggle-glow */
+.neu-toggle-glow {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.neu-toggle-glow input {
+    display: none;
+}
+.neu-toggle-glow-slider {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    border-radius: 15px;
+    background: #1a1a2e;
+    box-shadow: inset 3px 3px 6px #0d0d17, inset -3px -3px 6px #272745;
+    transition: 0.3s;
+}
+.neu-toggle-glow-slider::before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    background: #2d2d4a;
+    box-shadow: 2px 2px 4px #0d0d17, -2px -2px 4px #272745;
+    transition: 0.3s;
+}
+.neu-toggle-glow input:checked + .neu-toggle-glow-slider {
+    background: #1a1a2e;
+    box-shadow: inset 3px 3px 6px #0d0d17, inset -3px -3px 6px #272745, 0 0 20px rgba(139, 92, 246, 0.3);
+}
+.neu-toggle-glow input:checked + .neu-toggle-glow-slider::before {
+    transform: translateX(30px);
+    background: linear-gradient(145deg, #8b5cf6, #6366f1);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.6), 0 0 30px rgba(139, 92, 246, 0.3);
+}
+
+/* 7. neu-toggle-square */
+.neu-toggle-square {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.neu-toggle-square input {
+    display: none;
+}
+.neu-toggle-square-slider {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-inset);
+    transition: 0.3s;
+}
+.neu-toggle-square-slider::before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    top: 3px;
+    left: 3px;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    transition: 0.3s;
+}
+.neu-toggle-square input:checked + .neu-toggle-square-slider::before {
+    transform: translateX(30px);
+    background: linear-gradient(145deg, #6366f1, #8b5cf6);
+}
+
+/* 8. neu-toggle-sun-moon */
+.neu-toggle-sun-moon {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.neu-toggle-sun-moon input {
+    display: none;
+}
+.neu-toggle-sun-moon-slider {
+    position: relative;
+    width: 70px;
+    height: 35px;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #87ceeb, #add8e6);
+    box-shadow: var(--shadow-raised);
+    transition: 0.5s;
+    overflow: hidden;
+}
+.neu-toggle-sun-moon-slider::before {
+    content: '☀️';
+    position: absolute;
+    width: 29px;
+    height: 29px;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    background: #ffd700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+.neu-toggle-sun-moon input:checked + .neu-toggle-sun-moon-slider {
+    background: linear-gradient(145deg, #1a1a2e, #2d2d4a);
+}
+.neu-toggle-sun-moon input:checked + .neu-toggle-sun-moon-slider::before {
+    content: '🌙';
+    transform: translateX(35px);
+    background: #c0c0c0;
+    box-shadow: 0 0 10px rgba(192, 192, 192, 0.6);
+}
+
+/* CHECKBOXES */
+
+/* 9. neu-checkbox-round */
+.neu-checkbox-round {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.neu-checkbox-round input {
+    display: none;
+}
+.neu-checkbox-round-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+.neu-checkbox-round-mark::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: transparent;
+    transition: 0.3s;
+}
+.neu-checkbox-round input:checked + .neu-checkbox-round-mark {
+    box-shadow: var(--shadow-inset);
+}
+.neu-checkbox-round input:checked + .neu-checkbox-round-mark::before {
+    background: linear-gradient(145deg, #6366f1, #8b5cf6);
+}
+
+/* 10. neu-checkbox-green */
+.neu-checkbox-green {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-family: inherit;
+}
+.neu-checkbox-green input {
+    display: none;
+}
+.neu-checkbox-green-label {
+    font-size: 14px;
+    color: var(--text-color);
+}
+.neu-checkbox-green-mark {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+.neu-checkbox-green-mark::before {
+    content: '✓';
+    font-size: 14px;
+    color: transparent;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.neu-checkbox-green input:checked + .neu-checkbox-green-mark {
+    background: #22c55e;
+    box-shadow: 0 3px 10px rgba(34, 197, 94, 0.4);
+}
+.neu-checkbox-green input:checked + .neu-checkbox-green-mark::before {
+    color: #fff;
+}
+
+/* 11. neu-checkbox-dark */
+.neu-checkbox-dark {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.neu-checkbox-dark input {
+    display: none;
+}
+.neu-checkbox-dark-mark {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: #2d2d2d;
+    box-shadow: 3px 3px 6px #1a1a1a, -3px -3px 6px #404040;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+.neu-checkbox-dark-mark::before {
+    content: '✓';
+    font-size: 14px;
+    color: transparent;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.neu-checkbox-dark input:checked + .neu-checkbox-dark-mark {
+    box-shadow: inset 3px 3px 6px #1a1a1a, inset -3px -3px 6px #404040;
+}
+.neu-checkbox-dark input:checked + .neu-checkbox-dark-mark::before {
+    color: #8b5cf6;
+}
+
+/* 12. neu-checkbox-soft */
+.neu-checkbox-soft {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-family: inherit;
+}
+.neu-checkbox-soft input {
+    display: none;
+}
+.neu-checkbox-soft-mark {
+    width: 22px;
+    height: 22px;
+    border-radius: 5px;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+.neu-checkbox-soft-mark::before {
+    content: '✓';
+    font-size: 12px;
+    color: transparent;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.neu-checkbox-soft input:checked + .neu-checkbox-soft-mark {
+    box-shadow: var(--shadow-inset);
+}
+.neu-checkbox-soft input:checked + .neu-checkbox-soft-mark::before {
+    color: #6366f1;
+}
+.neu-checkbox-soft-text {
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+/* 13. neu-checkbox-bounce */
+.neu-checkbox-bounce {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.neu-checkbox-bounce input {
+    display: none;
+}
+.neu-checkbox-bounce-mark {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+.neu-checkbox-bounce-mark::before {
+    content: '✓';
+    font-size: 14px;
+    color: transparent;
+    font-weight: bold;
+    transform: scale(0);
+    transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.neu-checkbox-bounce input:checked + .neu-checkbox-bounce-mark {
+    box-shadow: var(--shadow-inset);
+}
+.neu-checkbox-bounce input:checked + .neu-checkbox-bounce-mark::before {
+    color: #6366f1;
+    transform: scale(1);
+}
+
+/* 14. neu-checkbox-scale */
+.neu-checkbox-scale {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.neu-checkbox-scale input {
+    display: none;
+}
+.neu-checkbox-scale-mark {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+.neu-checkbox-scale-mark::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    background: transparent;
+    transform: scale(0);
+    transition: 0.3s;
+}
+.neu-checkbox-scale input:checked + .neu-checkbox-scale-mark {
+    box-shadow: var(--shadow-inset);
+}
+.neu-checkbox-scale input:checked + .neu-checkbox-scale-mark::before {
+    background: linear-gradient(145deg, #6366f1, #8b5cf6);
+    transform: scale(1);
+}
+
+/* RADIO BUTTONS */
+
+/* 15. neu-radio-classic */
+.neu-radio-classic-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.neu-radio-classic {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-family: inherit;
+}
+.neu-radio-classic input {
+    display: none;
+}
+.neu-radio-classic-mark {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+.neu-radio-classic-mark::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: transparent;
+    transition: 0.3s;
+}
+.neu-radio-classic input:checked + .neu-radio-classic-mark {
+    box-shadow: var(--shadow-inset);
+}
+.neu-radio-classic input:checked + .neu-radio-classic-mark::before {
+    background: linear-gradient(145deg, #6366f1, #8b5cf6);
+}
+.neu-radio-classic-text {
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+/* 16. neu-radio-cross */
+.neu-radio-cross-group {
+    display: flex;
+    gap: 15px;
+}
+.neu-radio-cross {
+    display: inline-flex;
+    cursor: pointer;
+}
+.neu-radio-cross input {
+    display: none;
+}
+.neu-radio-cross-mark {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2d2d2d;
+    box-shadow: 3px 3px 6px #1a1a1a, -3px -3px 6px #404040;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+.neu-radio-cross-plus {
+    width: 16px;
+    height: 16px;
+    position: relative;
+}
+.neu-radio-cross-plus::before,
+.neu-radio-cross-plus::after {
+    content: '';
+    position: absolute;
+    background: #555;
+    transition: 0.3s;
+}
+.neu-radio-cross-plus::before {
+    width: 100%;
+    height: 3px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+.neu-radio-cross-plus::after {
+    width: 3px;
+    height: 100%;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+}
+.neu-radio-cross input:checked + .neu-radio-cross-mark {
+    box-shadow: inset 3px 3px 6px #1a1a1a, inset -3px -3px 6px #404040;
+}
+.neu-radio-cross input:checked + .neu-radio-cross-mark .neu-radio-cross-plus::before,
+.neu-radio-cross input:checked + .neu-radio-cross-mark .neu-radio-cross-plus::after {
+    background: #8b5cf6;
+}
+
+/* 17. neu-radio-card */
+.neu-radio-card-group {
+    display: flex;
+    gap: 15px;
+}
+.neu-radio-card {
+    display: inline-flex;
+    cursor: pointer;
+}
+.neu-radio-card input {
+    display: none;
+}
+.neu-radio-card-content {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+.neu-radio-card-icon {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-color);
+    transition: 0.3s;
+}
+.neu-radio-card input:checked + .neu-radio-card-content {
+    box-shadow: var(--shadow-inset);
+}
+.neu-radio-card input:checked + .neu-radio-card-content .neu-radio-card-icon {
+    color: #6366f1;
+}
+
+/* 18. neu-radio-pill */
+.neu-radio-pill-group {
+    display: flex;
+    gap: 10px;
+}
+.neu-radio-pill {
+    display: inline-flex;
+    cursor: pointer;
+}
+.neu-radio-pill input {
+    display: none;
+}
+.neu-radio-pill-text {
+    padding: 10px 25px;
+    border-radius: 25px;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-color);
+    transition: 0.3s;
+}
+.neu-radio-pill input:checked + .neu-radio-pill-text {
+    box-shadow: var(--shadow-inset);
+    color: #6366f1;
+}
+
+/* 19. neu-radio-glow */
+.neu-radio-glow-group {
+    display: flex;
+    gap: 20px;
+}
+.neu-radio-glow {
+    display: inline-flex;
+    cursor: pointer;
+}
+.neu-radio-glow input {
+    display: none;
+}
+.neu-radio-glow-mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #1a1a2e;
+    box-shadow: 3px 3px 6px #0d0d17, -3px -3px 6px #272745;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+.neu-radio-glow-mark::before {
+    content: '';
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #2d2d4a;
+    transition: 0.3s;
+}
+.neu-radio-glow input:checked + .neu-radio-glow-mark {
+    box-shadow: inset 3px 3px 6px #0d0d17, inset -3px -3px 6px #272745, 0 0 15px rgba(139, 92, 246, 0.4);
+}
+.neu-radio-glow input:checked + .neu-radio-glow-mark::before {
+    background: linear-gradient(145deg, #8b5cf6, #6366f1);
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
+}
+
+/* ============================================
+   WIDGETS SECTION - LOADERS & TOOLTIPS
+   ============================================ */
+
+/* LOADERS */
+
+/* 1. neu-loader-gradient */
+.neu-loader-gradient {
+    width: 10rem;
+    height: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 50%;
+    box-shadow: -5px -5px 9px rgba(255,255,255,0.45), 5px 5px 9px rgba(94, 104, 121, 0.137);
+}
+.neu-loader-gradient::before {
+    height: 4rem;
+    width: 4rem;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    background: var(--bg-color);
+    border-radius: 50%;
+    border: 2px solid #e2e1e1;
+    box-shadow: inset -5px -5px 9px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3);
+}
+.neu-loader-gradient span {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    background: linear-gradient(to bottom, rgb(89, 92, 252), rgb(226, 57, 241));
+    animation: neu-loader-gradient-rotate 1s infinite linear;
+}
+@keyframes neu-loader-gradient-rotate {
+    100% { transform: rotate(360deg); }
+}
+
+/* 2. neu-loader-cube */
+.neu-loader-cube-wrapper {
+    perspective: 800px;
+}
+.neu-loader-cube {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: neu-loader-cube-spin 3s linear infinite;
+}
+.neu-loader-cube .face {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    opacity: 0.8;
+}
+.neu-loader-cube .front { transform: translateZ(20px); background-color: #3498db; }
+.neu-loader-cube .back { transform: translateZ(-20px); background-color: #e74c3c; }
+.neu-loader-cube .left { transform: rotateY(90deg) translateZ(20px); background-color: #2ecc71; }
+.neu-loader-cube .right { transform: rotateY(-90deg) translateZ(20px); background-color: #f39c12; }
+.neu-loader-cube .top { transform: rotateX(90deg) translateZ(20px); background-color: #9b59b6; }
+.neu-loader-cube .bottom { transform: rotateX(-90deg) translateZ(20px); background-color: #e67e22; }
+@keyframes neu-loader-cube-spin {
+    0% { transform: rotateX(0) rotateY(0) rotateZ(0); }
+    100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+}
+
+/* 3. neu-loader-dots */
+.neu-loader-dots {
+    display: flex;
+    gap: 8px;
+}
+.neu-loader-dots .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    animation: neu-loader-dots-bounce 1.4s ease-in-out infinite both;
+}
+.neu-loader-dots .dot:nth-child(1) { animation-delay: -0.32s; }
+.neu-loader-dots .dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes neu-loader-dots-bounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+    40% { transform: scale(1); opacity: 1; }
+}
+
+/* 4. neu-loader-pulse */
+.neu-loader-pulse {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    animation: neu-loader-pulse-anim 1.5s ease-in-out infinite;
+}
+@keyframes neu-loader-pulse-anim {
+    0% { transform: scale(0.8); box-shadow: var(--shadow-inset); }
+    50% { transform: scale(1); box-shadow: var(--shadow-raised); }
+    100% { transform: scale(0.8); box-shadow: var(--shadow-inset); }
+}
+
+/* 5. neu-loader-spinner */
+.neu-loader-spinner {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    position: relative;
+}
+.neu-loader-spinner::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #6366f1;
+    animation: neu-loader-spinner-rotate 1s linear infinite;
+}
+@keyframes neu-loader-spinner-rotate {
+    100% { transform: rotate(360deg); }
+}
+
+/* 6. neu-loader-ring */
+.neu-loader-ring {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-inset);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: neu-loader-ring-rotate 2s linear infinite;
+}
+.neu-loader-ring .ring-inner {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #6366f1, #8b5cf6);
+    box-shadow: 0 3px 10px rgba(99, 102, 241, 0.4);
+}
+@keyframes neu-loader-ring-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 7. neu-loader-bars */
+.neu-loader-bars {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    height: 40px;
+}
+.neu-loader-bars .bar {
+    width: 6px;
+    height: 20px;
+    border-radius: 3px;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    animation: neu-loader-bars-anim 1.2s ease-in-out infinite;
+}
+.neu-loader-bars .bar:nth-child(1) { animation-delay: 0s; }
+.neu-loader-bars .bar:nth-child(2) { animation-delay: 0.1s; }
+.neu-loader-bars .bar:nth-child(3) { animation-delay: 0.2s; }
+.neu-loader-bars .bar:nth-child(4) { animation-delay: 0.3s; }
+@keyframes neu-loader-bars-anim {
+    0%, 100% { height: 20px; }
+    50% { height: 40px; }
+}
+
+/* 8. neu-loader-bounce */
+.neu-loader-bounce {
+    display: flex;
+    gap: 10px;
+}
+.neu-loader-bounce .ball {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    animation: neu-loader-bounce-anim 0.6s ease-in-out infinite alternate;
+}
+.neu-loader-bounce .ball:nth-child(2) { animation-delay: 0.2s; }
+.neu-loader-bounce .ball:nth-child(3) { animation-delay: 0.4s; }
+@keyframes neu-loader-bounce-anim {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+
+/* 9. neu-loader-glow */
+.neu-loader-glow {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #1a1a2e;
+    box-shadow: inset 3px 3px 6px #0d0d17, inset -3px -3px 6px #272745;
+    position: relative;
+    animation: neu-loader-glow-pulse 1.5s ease-in-out infinite;
+}
+.neu-loader-glow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #8b5cf6, #6366f1);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+    animation: neu-loader-glow-inner 1.5s ease-in-out infinite;
+}
+@keyframes neu-loader-glow-pulse {
+    0%, 100% { box-shadow: inset 3px 3px 6px #0d0d17, inset -3px -3px 6px #272745, 0 0 20px rgba(139, 92, 246, 0.3); }
+    50% { box-shadow: inset 3px 3px 6px #0d0d17, inset -3px -3px 6px #272745, 0 0 40px rgba(139, 92, 246, 0.5); }
+}
+@keyframes neu-loader-glow-inner {
+    0%, 100% { transform: translate(-50%, -50%) scale(0.8); }
+    50% { transform: translate(-50%, -50%) scale(1.2); }
+}
+
+/* 10. neu-loader-text */
+.neu-loader-text {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: monospace;
+    color: var(--text-color);
+    background: linear-gradient(90deg, var(--text-color) 50%, transparent 50%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: neu-loader-text-anim 2s linear infinite;
+}
+@keyframes neu-loader-text-anim {
+    0% { background-position: 100% 0; }
+    100% { background-position: -100% 0; }
+}
+
+/* 11. neu-loader-pacman */
+.neu-loader-pacman {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #ffd700;
+    box-shadow: 2px -6px 12px 0px inset rgba(0, 0, 0, 0.7);
+    position: relative;
+    animation: neu-loader-pacman-anim 0.5s infinite steps(5) alternate;
+}
+.neu-loader-pacman::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #000;
+    top: 20%;
+    right: 30%;
+}
+@keyframes neu-loader-pacman-anim {
+    0% { clip-path: polygon(50% 50%, 100% 0, 100% 0, 0 0, 0 100%, 100% 100%, 100% 100%); }
+    100% { clip-path: polygon(50% 50%, 100% 65%, 100% 0, 0 0, 0 100%, 100% 100%, 100% 35%); }
+}
+
+/* 12. neu-loader-wave */
+.neu-loader-wave {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    height: 40px;
+}
+.neu-loader-wave .wave-bar {
+    width: 4px;
+    height: 30px;
+    border-radius: 2px;
+    background: linear-gradient(145deg, #6366f1, #8b5cf6);
+    animation: neu-loader-wave-anim 1s ease-in-out infinite;
+}
+.neu-loader-wave .wave-bar:nth-child(1) { animation-delay: 0s; }
+.neu-loader-wave .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+.neu-loader-wave .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+.neu-loader-wave .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+.neu-loader-wave .wave-bar:nth-child(5) { animation-delay: 0.4s; }
+@keyframes neu-loader-wave-anim {
+    0%, 100% { transform: scaleY(0.5); }
+    50% { transform: scaleY(1.5); }
+}
+
+/* 13. neu-loader-orbit */
+.neu-loader-orbit {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-inset);
+    position: relative;
+    animation: neu-loader-orbit-spin 2s linear infinite;
+}
+.neu-loader-orbit .orbit-dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #6366f1, #8b5cf6);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+@keyframes neu-loader-orbit-spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* 14. neu-loader-squares */
+.neu-loader-squares {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+    animation: neu-loader-squares-rotate 2s linear infinite;
+}
+.neu-loader-squares .square {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    animation: neu-loader-squares-pulse 1s ease-in-out infinite alternate;
+}
+.neu-loader-squares .square:nth-child(2) { animation-delay: 0.25s; }
+.neu-loader-squares .square:nth-child(3) { animation-delay: 0.75s; }
+.neu-loader-squares .square:nth-child(4) { animation-delay: 0.5s; }
+@keyframes neu-loader-squares-rotate {
+    100% { transform: rotate(360deg); }
+}
+@keyframes neu-loader-squares-pulse {
+    0% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+/* 15. neu-loader-clock */
+.neu-loader-clock {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    position: relative;
+}
+.neu-loader-clock::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #6366f1;
+    transform: translate(-50%, -50%);
+}
+.neu-loader-clock .clock-hand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 18px;
+    background: #6366f1;
+    border-radius: 1px;
+    transform-origin: bottom center;
+    transform: translateX(-50%);
+    animation: neu-loader-clock-rotate 1s linear infinite;
+}
+@keyframes neu-loader-clock-rotate {
+    100% { transform: translateX(-50%) rotate(360deg); }
+}
+
+/* 16. neu-loader-circle */
+.neu-loader-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    position: relative;
+}
+.neu-loader-circle::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    border-radius: 50%;
+    border: 3px solid var(--bg-color);
+    border-top-color: #6366f1;
+    border-right-color: #8b5cf6;
+    animation: neu-loader-circle-rotate 1s linear infinite;
+}
+@keyframes neu-loader-circle-rotate {
+    100% { transform: rotate(360deg); }
+}
+
+/* TOOLTIPS */
+
+/* 17. neu-tooltip-simple */
+.neu-tooltip-simple {
+    position: relative;
+    display: inline-block;
+}
+.neu-tooltip-simple .tooltip-trigger {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: var(--bg-color);
+    box-shadow: var(--shadow-raised);
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.neu-tooltip-simple .tooltip-trigger:hover {
+    box-shadow: var(--shadow-inset);
+}
+.neu-tooltip-simple .tooltip-text {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 15px;
+    border-radius: 8px;
+    background: #333;
+    color: #fff;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    margin-bottom: 10px;
+}
+.neu-tooltip-simple .tooltip-text::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #333;
+}
+.neu-tooltip-simple:hover .tooltip-text {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 18. neu-tooltip-flip */
+.neu-tooltip-flip {
+    height: 70px;
+    width: 110px;
+    border-radius: 5px;
+    background-color: #fff;
+    background-image: linear-gradient(to left bottom, #f2f5f8, #ecf1f2, #e7eceb, #e3e7e4, #e1e2de);
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.151);
+    position: relative;
+    transition: transform 0.3s ease;
+}
+.neu-tooltip-flip::before {
+    position: absolute;
+    content: "";
+    top: -50%;
+    clip-path: polygon(50% 0, 0 100%, 100% 100%);
+    border-radius: 5px;
+    background-image: linear-gradient(to left bottom, #1288ff, #e4eaec, #d8dfde, #cdd3cf, #c5c7c1);
+    width: 100%;
+    height: 50%;
+    transform-style: preserve-3d;
+    transform: perspective(1000px) rotateX(-150deg) translateY(-110%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+.neu-tooltip-flip .tooltip-flip-trigger {
+    color: rgb(32, 30, 30);
+    font-weight: bold;
+    font-size: 40px;
+}
+.neu-tooltip-flip .tooltip-flip-text {
+    position: absolute;
+    top: -20px;
+    opacity: 0;
+    background: linear-gradient(-90deg, rgba(0, 0, 0, 0.05) 1px, white 1px),
+        linear-gradient(rgba(0, 0, 0, 0.05) 1px, white 1px),
+        linear-gradient(-90deg, rgba(0, 0, 0, 0.04) 1px, white 1px),
+        linear-gradient(rgba(0, 0, 0, 0.04) 1px, white 1px),
+        linear-gradient(white 3px, #f2f2f2 3px, #f2f2f2 78px, white 78px),
+        linear-gradient(-90deg, #aaa 1px, white 1px),
+        linear-gradient(-90deg, white 3px, #f2f2f2 3px, #f2f2f2 78px, white 78px),
+        linear-gradient(#aaa 1px, white 1px), #f2f2f2;
+    background-size: 4px 4px, 4px 4px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px;
+    padding: 5px 10px;
+    border: 1px solid rgb(206, 204, 204);
+    height: 70px;
+    width: 110px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition-duration: 0.2s;
+    pointer-events: none;
+    letter-spacing: 0.5px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.neu-tooltip-flip:hover {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.neu-tooltip-flip:hover::before {
+    transform: rotateY(0);
+    background-image: none;
+    background-color: white;
+}
+.neu-tooltip-flip:hover .tooltip-flip-text {
+    top: -90px;
+    opacity: 1;
+    transition-duration: 0.3s;
+}
+
+/* 19. neu-tooltip-profile */
+.neu-tooltip-profile {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 17px;
+    border-radius: 10px;
+}
+.neu-tooltip-profile .profile-tooltip {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s;
+    border-radius: 15px;
+    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2),
+        inset -5px -5px 15px rgba(255, 255, 255, 0.1),
+        5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
+    background: #2a2b2f;
+    border: 1px solid rgba(11, 63, 95, 1);
+}
+.neu-tooltip-profile .profile-content {
+    display: flex;
+    gap: 10px;
+}
+.neu-tooltip-profile .profile-avatar {
+    width: 50px;
+    height: 50px;
+    font-size: 25px;
+    font-weight: 700;
+    border: 1px solid #1da1f2;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+.neu-tooltip-profile .profile-info {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+}
+.neu-tooltip-profile .profile-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1da1f2;
+}
+.neu-tooltip-profile .profile-username {
+    color: #ccc;
+    font-size: 14px;
+}
+.neu-tooltip-profile .profile-stats {
+    color: #ccc;
+    padding-top: 5px;
+    font-size: 14px;
+}
+.neu-tooltip-profile .profile-trigger {
+    width: 55px;
+    height: 55px;
+    border-radius: 10px;
+    background: #2a2b2f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 3px 3px 6px #1a1a1a, -3px -3px 6px #3a3a3a;
+    transition: 0.3s;
+}
+.neu-tooltip-profile .profile-trigger:hover {
+    box-shadow: inset 3px 3px 6px #1a1a1a, inset -3px -3px 6px #3a3a3a;
+}
+.neu-tooltip-profile:hover .profile-tooltip {
+    top: -130px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
