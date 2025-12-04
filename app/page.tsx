@@ -1,70 +1,16 @@
 // src/app/page.tsx
-import { NeumorfSection } from "@/components/ui/NeumorfSection";
-import { NeumorfCard } from "@/components/ui/NeumorfCard";
-import { NeumorfButton } from "@/components/ui/NeumorfButton";
-import { ThemeToggleWrapper } from "@/components/theme/ThemeToggleWrapper";
-import { MovingDotCard } from "@/components/sections/MovingDotCard";
 import { Hero3DVideo } from "@/components/sections/Hero3DVideo";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { NeumorfSection } from "@/components/ui/NeumorfSection";
+import { NeumorfCard } from "@/components/ui/NeumorfCard";
 
 
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center gap-6">
       <Hero3DVideo />
-      {/* Fondo general */}
+      {/* Contenido principal */}
       <div className="min-h-screen flex flex-col items-center">
-        {/* HERO */}
-        <header className="w-full pt-10 md:pt-14 pb-6">
-          <NeumorfSection className="flex flex-col gap-10 md:flex-row md:items-center">
-            {/* Lado texto */}
-            <div className="flex-1 space-y-6">
-              <div className="badge-pill">
-                <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                <span >Estudio de interfaces neumórficas + automatización</span>
-              </div>
-              <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">
-                NeumorStudio 
-              </h1>
-              
-              <ThemeToggleWrapper/>
-              <MovingDotCard></MovingDotCard>
-
-              <p className="text-base md:text-lg text-slate-600 max-w-xl">
-                Diseñamos webs con estética <strong>neumórfica</strong>, capturamos
-                tus <strong>leads</strong> y automatizamos las respuestas para que
-                tú te centres en tu negocio, no en perseguir formularios.
-              </p>
-
-              <div className="flex flex-wrap items-center gap-4">
-                <NeumorfButton className="neumor-pill">
-                  Quiero una web neumórfica
-                </NeumorfButton>
-                <span className="text-xs md:text-sm text-slate-500">
-                  Diseño + leads + automatización en un solo sistema.
-                </span>
-              </div>
-            </div>
-
-            {/* Lado “visual” / tarjeta */}
-            <div className="flex-1 mt-4 md:mt-0">
-              <NeumorfCard className="max-w-md mx-auto">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400 mb-3">
-                  Vista previa
-                </p>
-                <h2 className="text-lg font-semibold mb-2">
-                  Un estudio, tres piezas:
-                </h2>
-                <ul className="space-y-2 text-sm text-slate-600">
-                  <li>• Interfaz neumórfica que se siente suave y premium.</li>
-                  <li>• Sistema de captación de leads conectado a base de datos.</li>
-                  <li>• Respuestas automáticas con n8n (tu mini-ManyChat propio).</li>
-                </ul>
-              </NeumorfCard>
-            </div>
-          </NeumorfSection>
-        </header>
-
         {/* SECCIÓN: QUÉ HACEMOS */}
         <NeumorfSection id="servicios" className="space-y-6">
           <div className="text-center mb-4">

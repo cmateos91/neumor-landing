@@ -181,7 +181,7 @@ export default function Tipo2Page() {
 
       {/* Contenedor de paneles (position fixed, apilados) */}
       <div className="panels-wrapper">
-        {sections.map((section, index) => (
+        {sections.map((section) => (
           <div key={section.id} className="panel">
             <div className="panel-inner">
               <div className="panel-left">

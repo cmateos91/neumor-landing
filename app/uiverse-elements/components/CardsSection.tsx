@@ -184,7 +184,7 @@ export default function CardsSection() {
                 {/* 14 */}
                 <div className="component-wrapper" data-name="neu-card-testimonial">
                     <div className="neu-card-testimonial">
-                        <p className="neu-card-testimonial-quote">"Great product! Highly recommend it to everyone."</p>
+                        <p className="neu-card-testimonial-quote">&quot;Great product! Highly recommend it to everyone.&quot;</p>
                         <div className="neu-card-testimonial-author">
                             <div className="neu-card-testimonial-avatar"></div>
                             <div>

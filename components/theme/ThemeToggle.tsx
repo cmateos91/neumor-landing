@@ -4,38 +4,21 @@ import { useEffect, useState } from "react";
 import { toggleTheme } from "@/lib/toggleTheme";
 
 export function ThemeToggle() {
-  const [dark, setDark] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [dark, setDark] = useState<boolean>(() => {
+    if (typeof document === "undefined") return false;
+    return document.documentElement.classList.contains("dark");
+  });
 
   useEffect(() => {
-    if (typeof document === "undefined") return;
-
-    const root = document.documentElement;
-    const stored = localStorage.getItem("theme");
-
-    if (stored === "dark") {
-      root.classList.add("dark");
-      setDark(true);
-      return;
-    }
-
-    if (stored === "light") {
-      root.classList.remove("dark");
-      setDark(false);
-      return;
-    }
-
-    const prefersDark = window.matchMedia?.(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-
-    if (prefersDark) {
-      root.classList.add("dark");
-      setDark(true);
-    } else {
-      root.classList.remove("dark");
-      setDark(false);
-    }
+    // Estamos habilitando el render del toggle solo en cliente para evitar desajustes de hidratación
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
   }, []);
+
+  if (!mounted) {
+    return <div className="h-[2.2rem] w-[4.2rem]" aria-hidden />;
+  }
 
   const handleToggle = () => {
     const next = !dark;
