@@ -1,71 +1,9 @@
+/* Hero - full screen clean animation */
 .tipo3-hero {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
   position: relative;
-}
-
-.tipo3-hero__copy {
-  position: absolute;
-  bottom: 3rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  text-align: center;
-  padding: 1.5rem 2rem;
-  background: rgba(10, 10, 15, 0.7);
-  backdrop-filter: blur(12px);
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  max-width: 90%;
-  width: 600px;
-}
-
-.tipo3-hero__copy h1 {
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
-  font-weight: 700;
-  line-height: 1.2;
-  color: #ffffff;
-  margin-bottom: 0.5rem;
-}
-
-.tipo3-hero__copy h1 span {
-  display: block;
-  background: linear-gradient(135deg, #00d4ff, #ff00d4, #ffaa00);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.tipo3-hero__copy p {
-  margin-top: 0.75rem;
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.tipo3-hero__ctas {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
-  margin-top: 1rem;
-}
-
-.tipo3-hero__note {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.badge-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.8rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50px;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 0.75rem;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .tipo3-hero__canvas {
@@ -89,6 +27,135 @@
   display: block;
 }
 
+/* Hint at top */
+.tipo3-hint {
+  position: absolute;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Scroll indicator */
+.tipo3-scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  animation: fadeInUp 1s ease-out 2s both;
+}
+
+.tipo3-scroll-arrow {
+  width: 20px;
+  height: 20px;
+  border-right: 2px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+  transform: rotate(45deg);
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: rotate(45deg) translateY(0); }
+  40% { transform: rotate(45deg) translateY(6px); }
+  60% { transform: rotate(45deg) translateY(3px); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Loading state - elegant fade */
+.tipo3-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0f;
+  z-index: 100;
+  transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+}
+
+.tipo3-loading--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.tipo3-loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.tipo3-loading-logo {
+  font-size: 4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #00d4ff, #00ffaa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.tipo3-loading-bar {
+  width: 200px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.tipo3-loading-bar__fill {
+  height: 100%;
+  width: 30%;
+  background: linear-gradient(90deg, #00d4ff, #00ffaa);
+  border-radius: 3px;
+  animation: loading 1.5s ease-in-out infinite;
+}
+
+.tipo3-loading p {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.98); }
+}
+
+@keyframes loading {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(250%); }
+  100% { transform: translateX(250%); }
+}
+
+/* Fallback */
 .tipo3-fallback {
   position: absolute;
   inset: 0;
@@ -99,43 +166,94 @@
   background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
 }
 
-.tipo3-loading {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
+/* Info section below hero */
+.tipo3-info {
+  background: linear-gradient(180deg, #0a0a0f 0%, #0f0f18 50%, #1a1a2e 100%);
+  padding: 5rem 1.5rem;
+}
+
+.tipo3-info__content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.badge-pill {
+  display: inline-flex;
   align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tipo3-info__content h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
+
+.tipo3-info__content h1 span {
+  display: block;
+  background: linear-gradient(135deg, #00d4ff, #ff00d4, #ffaa00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tipo3-info__content p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+
+.tipo3-info__ctas {
+  margin-bottom: 3rem;
+}
+
+.tipo3-info__features {
+  display: flex;
   justify-content: center;
-  gap: 1rem;
-  background: #0a0a0f;
-  color: rgba(255, 255, 255, 0.7);
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.tipo3-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.5);
   font-size: 0.9rem;
 }
 
-.tipo3-loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #00d4ff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+.tipo3-feature__icon {
+  font-size: 1.1rem;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+/* Responsive */
+@media (max-width: 640px) {
+  .tipo3-hint {
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+  }
 
-/* Hint text */
-.tipo3-hint {
-  position: absolute;
-  top: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.4);
-  background: rgba(0, 0, 0, 0.3);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  backdrop-filter: blur(8px);
+  .tipo3-info {
+    padding: 3rem 1rem;
+  }
+
+  .tipo3-info__features {
+    gap: 1rem;
+  }
+
+  .tipo3-feature {
+    font-size: 0.8rem;
+  }
 }

@@ -9,34 +9,55 @@ import { ContactForm } from "@/components/forms/ContactForm";
 
 export default function Tipo3Page() {
   return (
-    <main className="min-h-screen flex flex-col">
+    <main className="min-h-screen flex flex-col bg-[#0a0a0f]">
+      {/* Hero limpio - solo animación */}
       <section className="tipo3-hero">
         <div className="tipo3-hint">
-          Mueve el cursor para interactuar - Haz clic para explosión
+          Cursor: repele · Click: explosión · Doble click: gravedad · Espacio: explosión global
         </div>
         <div className="tipo3-hero__canvas">
           <ParticleHero />
         </div>
-        <div className="tipo3-hero__copy">
+        {/* Scroll indicator */}
+        <div className="tipo3-scroll-indicator">
+          <span>Scroll</span>
+          <div className="tipo3-scroll-arrow" />
+        </div>
+      </section>
+
+      {/* Info section below hero */}
+      <section className="tipo3-info">
+        <div className="tipo3-info__content">
           <div className="badge-pill">
             <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            <span>100K partículas WebGPU</span>
+            <span>150K partículas WebGPU</span>
           </div>
           <h1>
             Visualización de alto rendimiento
             <span>que responde a tu cursor.</span>
           </h1>
           <p>
-            100,000 partículas GPGPU con física en tiempo real, morphing de texto
+            150,000 partículas GPGPU con física en tiempo real, morphing de texto
             y efectos de repulsión interactivos. Todo procesado en tu GPU.
           </p>
-          <div className="tipo3-hero__ctas">
+          <div className="tipo3-info__ctas">
             <Link href="#contacto">
               <NeumorfButton className="neumor-pill">Hablemos</NeumorfButton>
             </Link>
-            <span className="tipo3-hero__note">
-              Compute shaders, additive blending y simulación física en WebGPU.
-            </span>
+          </div>
+          <div className="tipo3-info__features">
+            <div className="tipo3-feature">
+              <span className="tipo3-feature__icon">⚡</span>
+              <span>Compute Shaders</span>
+            </div>
+            <div className="tipo3-feature">
+              <span className="tipo3-feature__icon">✨</span>
+              <span>Additive Blending</span>
+            </div>
+            <div className="tipo3-feature">
+              <span className="tipo3-feature__icon">🎯</span>
+              <span>Física en GPU</span>
+            </div>
           </div>
         </div>
       </section>
@@ -52,7 +73,7 @@ export default function Tipo3Page() {
               efectos que impresionan desde el primer segundo.
             </p>
             <ul className="text-xs md:text-sm text-slate-600 space-y-1">
-              <li>• 100K+ partículas renderizadas en GPU</li>
+              <li>• 150K+ partículas renderizadas en GPU</li>
               <li>• Interactividad fluida con cursor</li>
               <li>• Fallback elegante para navegadores sin WebGPU</li>
             </ul>
