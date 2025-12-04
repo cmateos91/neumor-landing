@@ -70,7 +70,11 @@ export function ParticleHero() {
       const repulsionStrength = uniform(0.08);
       const repulsionRadius = uniform(3.0);
       const gravityActive = uniform(0.0); // 1.0 = gravity on, 0.0 = off
-      const globalExplosion = uniform(0.0); // 1.0 = explode, 0.0 = normal
+
+      // UFO abduction system
+      const ufoPosition = uniform(new THREE.Vector3(-20, 5, 0));
+      const ufoActive = uniform(0.0); // 1.0 = abducting, 0.0 = off
+      const abductionRadius = uniform(1.5); // Beam width matching UFO
 
       // Storage buffers for GPGPU
       const positions = instancedArray(PARTICLE_COUNT, "vec3");
@@ -78,13 +82,14 @@ export function ParticleHero() {
       const targetPositions = instancedArray(PARTICLE_COUNT, "vec3");
       const colors = instancedArray(PARTICLE_COUNT, "vec3");
       const isTextParticle = instancedArray(PARTICLE_COUNT, "float"); // 1.0 = text, 0.0 = background
+      const isAbsorbedPermanent = instancedArray(PARTICLE_COUNT, "float"); // 1.0 = absorbed by UFO
 
       // Generate text positions for "Neumor Studio" (with space)
       const textPoints: Vec3Like[] = [];
       const textParticleCount = Math.floor(PARTICLE_COUNT * TEXT_PARTICLE_RATIO);
 
       const text = "Neumor Studio";
-      const letterSpacing = 2.0;
+      const letterSpacing = 2.4;
       const startX = -(text.length * letterSpacing) / 2 + letterSpacing / 2;
       const scale = 2.4;
 
@@ -126,14 +131,20 @@ export function ParticleHero() {
           ...generateLinePoints(0.15, 0.35, 0.85, 0.35, 15),
           ...generateLinePoints(0.15, 0.42, 0.85, 0.42, 15),
         ],
-        // u - lowercase
+        // u - lowercase (improved alignment)
         u: [
-          ...generateLinePoints(0.1, 0.7, 0.1, 0.2, 18),
-          ...generateLinePoints(0.2, 0.7, 0.2, 0.2, 18),
-          ...generateArc(0.5, 0.2, 0.3, Math.PI, Math.PI * 2, 20),
-          ...generateArc(0.5, 0.2, 0.2, Math.PI, Math.PI * 2, 18),
-          ...generateLinePoints(0.8, 0.2, 0.8, 0.7, 18),
-          ...generateLinePoints(0.9, 0, 0.9, 0.7, 20),
+          // Left vertical stem
+          ...generateLinePoints(0.15, 0.7, 0.15, 0.25, 18),
+          ...generateLinePoints(0.25, 0.7, 0.25, 0.25, 18),
+          // Bottom curve - centered and connecting both stems
+          ...generateArc(0.5, 0.25, 0.25, Math.PI, Math.PI * 2, 22),
+          ...generateArc(0.5, 0.25, 0.35, Math.PI, Math.PI * 2, 25),
+          ...generateArc(0.5, 0.25, 0.30, Math.PI, Math.PI * 2, 23),
+          // Right vertical stem (matching left)
+          ...generateLinePoints(0.75, 0.25, 0.75, 0.7, 18),
+          ...generateLinePoints(0.85, 0.25, 0.85, 0.7, 18),
+          // Small tail on right
+          ...generateLinePoints(0.85, 0.0, 0.85, 0.25, 10),
         ],
         // m - lowercase
         m: [
@@ -172,14 +183,15 @@ export function ParticleHero() {
           ...generateArc(0.5, 0.25, 0.25, Math.PI * 1.15, Math.PI * 2.05, 22),
           ...generateArc(0.5, 0.25, 0.3, Math.PI * 1.1, Math.PI * 2.1, 23),
         ],
-        // t - lowercase (improved)
+        // t - lowercase (clean)
         t: [
-          ...generateLinePoints(0.45, 0, 0.45, 1, 25),
-          ...generateLinePoints(0.55, 0, 0.55, 1, 25),
+          // Vertical stem
+          ...generateLinePoints(0.4, 0, 0.4, 1, 25),
           ...generateLinePoints(0.5, 0, 0.5, 1, 25),
-          ...generateLinePoints(0.15, 0.65, 0.85, 0.65, 18),
-          ...generateLinePoints(0.15, 0.72, 0.85, 0.72, 18),
-          ...generateArc(0.7, 0.12, 0.12, -Math.PI/2, Math.PI/2, 12),
+          ...generateLinePoints(0.6, 0, 0.6, 1, 25),
+          // Horizontal crossbar
+          ...generateLinePoints(0.1, 0.65, 0.9, 0.65, 20),
+          ...generateLinePoints(0.1, 0.72, 0.9, 0.72, 20),
         ],
         // d - lowercase (improved)
         d: [
@@ -261,6 +273,10 @@ export function ParticleHero() {
         const color = colors.element(idx);
         const isText = isTextParticle.element(idx);
         const target = targetPositions.element(idx);
+        const absorbed = isAbsorbedPermanent.element(idx);
+
+        // Initialize as not absorbed
+        absorbed.assign(float(0.0));
 
         // Start particles VERY close to their target with tiny random offset
         // This makes the initial formation nearly instant
@@ -306,23 +322,55 @@ export function ParticleHero() {
         const velocity = velocities.element(idx);
         const target = targetPositions.element(idx);
         const isText = isTextParticle.element(idx);
+        const absorbed = isAbsorbedPermanent.element(idx);
+
+        // If already absorbed, keep hidden far away
+        If(absorbed.greaterThan(0.5), () => {
+          position.assign(vec3(0, 100, 0)); // Keep far off screen
+          velocity.assign(vec3(0, 0, 0));
+        });
 
         // GRAVITY EFFECT: Apply downward force when active
         const gravityForce = vec3(0, -0.15, 0).mul(gravityActive);
         velocity.addAssign(gravityForce);
 
-        // GLOBAL EXPLOSION: Apply outward force from center
-        const centerExplosion = position.normalize().mul(globalExplosion).mul(0.8);
-        const randomBurst = vec3(
-          hash(idx).sub(0.5),
-          hash(idx.add(1)).sub(0.5),
-          hash(idx.add(2)).sub(0.5)
-        ).mul(globalExplosion).mul(0.5);
-        velocity.addAssign(centerExplosion.add(randomBurst));
+        // UFO ABDUCTION: Pull particles up towards UFO when in beam
+        const toUfo = ufoPosition.sub(position);
+        const horizontalDist = toUfo.x.abs(); // Distance in X axis
+        const beamStrength = float(1.0).sub(horizontalDist.div(abductionRadius)).max(0.0);
+        const inBeam = beamStrength.greaterThan(0.1).and(ufoActive.greaterThan(0.5));
 
-        // Attraction to target - reduced when gravity/explosion active
-        const effectsActive = gravityActive.add(globalExplosion).min(1.0);
-        const attractionMultiplier = float(1.0).sub(effectsActive.mul(0.7));
+        // When particle reaches UFO, mark as permanently absorbed
+        const reachedUfo = position.y.greaterThan(ufoPosition.y.sub(1.0));
+        const shouldAbsorb = inBeam.and(reachedUfo);
+
+        If(shouldAbsorb, () => {
+          absorbed.assign(float(1.0)); // Mark as permanently absorbed
+          position.assign(vec3(0, 100, 0)); // Teleport away
+          velocity.assign(vec3(0, 0, 0));
+        });
+
+        // Strong upward pull (only if not absorbed and in beam)
+        const abductForce = vec3(
+          toUfo.x.mul(0.05),  // Horizontal centering
+          float(0.3),         // Strong upward pull
+          toUfo.z.mul(0.03)   // Z centering
+        ).mul(beamStrength).mul(ufoActive);
+
+        // Add spiral motion for cool effect
+        const spiralAngle = timeNode.mul(4.0).add(hash(idx).mul(6.28));
+        const spiralForce = vec3(
+          sin(spiralAngle).mul(0.04),
+          float(0),
+          cos(spiralAngle).mul(0.04)
+        ).mul(beamStrength).mul(ufoActive);
+
+        velocity.addAssign(abductForce.add(spiralForce));
+
+        // Attraction to target - disabled for absorbed particles
+        const isNotAbsorbed = absorbed.lessThan(0.5);
+        const effectsActive = gravityActive.add(ufoActive.mul(beamStrength)).min(1.0);
+        const attractionMultiplier = float(1.0).sub(effectsActive.mul(0.85)).mul(isNotAbsorbed.select(float(1.0), float(0.0)));
 
         const toTarget = target.sub(position);
         const distToTarget = toTarget.length();
@@ -394,6 +442,26 @@ export function ParticleHero() {
 
       })().compute(PARTICLE_COUNT);
 
+      // Compute shader: Global explosion (one-shot, runs once on spacebar)
+      const computeGlobalExplosion = Fn(() => {
+        const idx = instanceIndex;
+        const position = positions.element(idx);
+        const velocity = velocities.element(idx);
+
+        // Explosion from center outward
+        const direction = position.normalize();
+        // Random variation for organic feel
+        const randomX = hash(idx).sub(0.5).mul(0.8);
+        const randomY = hash(idx.add(1)).sub(0.5).mul(0.8);
+        const randomZ = hash(idx.add(2)).sub(0.5).mul(1.5);
+        const explosionDir = direction.add(vec3(randomX, randomY, randomZ)).normalize();
+
+        // Strong impulse
+        const force = float(1.8);
+        velocity.addAssign(explosionDir.mul(force));
+
+      })().compute(PARTICLE_COUNT);
+
       // Particle material with TSL
       const material = new THREE.SpriteNodeMaterial();
 
@@ -431,6 +499,90 @@ export function ParticleHero() {
       particles.count = PARTICLE_COUNT;
       particles.frustumCulled = false;
       scene.add(particles);
+
+      // UFO mesh - classic flying saucer using LatheGeometry
+      const ufoGroup = new THREE.Group();
+
+      // Create saucer profile (classic UFO shape)
+      const saucerPoints = [];
+      // Bottom center
+      saucerPoints.push(new THREE.Vector2(0, -0.08));
+      // Bottom curve outward
+      saucerPoints.push(new THREE.Vector2(0.15, -0.1));
+      saucerPoints.push(new THREE.Vector2(0.35, -0.08));
+      // Wide rim
+      saucerPoints.push(new THREE.Vector2(0.6, 0));
+      // Top curve inward
+      saucerPoints.push(new THREE.Vector2(0.35, 0.06));
+      saucerPoints.push(new THREE.Vector2(0.2, 0.08));
+      // Top center (where dome sits)
+      saucerPoints.push(new THREE.Vector2(0.12, 0.08));
+
+      const saucerGeometry = new THREE.LatheGeometry(saucerPoints, 32);
+      const saucerMaterial = new THREE.MeshBasicMaterial({
+        color: 0x556677,
+        transparent: true,
+        opacity: 0.95,
+      });
+      const saucer = new THREE.Mesh(saucerGeometry, saucerMaterial);
+      ufoGroup.add(saucer);
+
+      // Glass dome on top (cockpit)
+      const domeGeometry = new THREE.SphereGeometry(0.15, 16, 12, 0, Math.PI * 2, 0, Math.PI / 2);
+      const domeMaterial = new THREE.MeshBasicMaterial({
+        color: 0x66ffff,
+        transparent: true,
+        opacity: 0.7,
+      });
+      const dome = new THREE.Mesh(domeGeometry, domeMaterial);
+      dome.position.y = 0.08;
+      ufoGroup.add(dome);
+
+      // Glowing rim light
+      const rimGeometry = new THREE.TorusGeometry(0.58, 0.025, 8, 32);
+      const rimMaterial = new THREE.MeshBasicMaterial({
+        color: 0x00ff88,
+      });
+      const rim = new THREE.Mesh(rimGeometry, rimMaterial);
+      rim.rotation.x = Math.PI / 2;
+      rim.position.y = 0;
+      ufoGroup.add(rim);
+
+      // Small lights around the rim
+      for (let i = 0; i < 8; i++) {
+        const angle = (i / 8) * Math.PI * 2;
+        const lightGeom = new THREE.SphereGeometry(0.03, 8, 8);
+        const lightMat = new THREE.MeshBasicMaterial({
+          color: i % 2 === 0 ? 0xff3333 : 0x33ff66,
+        });
+        const light = new THREE.Mesh(lightGeom, lightMat);
+        light.position.set(Math.cos(angle) * 0.5, -0.04, Math.sin(angle) * 0.5);
+        ufoGroup.add(light);
+      }
+
+      // Tractor beam (wide at bottom, narrow at top) - very translucent
+      const beamPoints = [];
+      beamPoints.push(new THREE.Vector2(0.08, 0));    // Top (narrow, at UFO)
+      beamPoints.push(new THREE.Vector2(0.5, -2.5));  // Middle
+      beamPoints.push(new THREE.Vector2(1.0, -5));    // Bottom (wide)
+      const beamGeometry = new THREE.LatheGeometry(beamPoints, 24);
+      const beamMaterial = new THREE.MeshBasicMaterial({
+        color: 0x00ff88,
+        transparent: true,
+        opacity: 0.03,  // Much more translucent
+        side: THREE.DoubleSide,
+      });
+      const beam = new THREE.Mesh(beamGeometry, beamMaterial);
+      beam.position.y = -0.1;
+      ufoGroup.add(beam);
+
+      // Scale the whole UFO
+      ufoGroup.scale.set(1.5, 1.5, 1.5);
+
+      // Position UFO off-screen initially
+      ufoGroup.position.set(-20, 5, 0);
+      ufoGroup.visible = false;
+      scene.add(ufoGroup);
 
       // Renderer
       const renderer = new THREE.WebGPURenderer({
@@ -497,19 +649,99 @@ export function ParticleHero() {
         }, 1500);
       };
 
-      // Spacebar: Global explosion
-      let explosionTimeout: ReturnType<typeof setTimeout> | null = null;
+      // Spacebar: Global explosion (one-shot)
+      // U key: UFO abduction sequence
+      let ufoAnimationId: number | null = null;
+      let isUfoAnimating = false;
+
+      const startUfoAbduction = () => {
+        if (isUfoAnimating) return;
+        isUfoAnimating = true;
+
+        // Letter positions (based on text and spacing)
+        const letterCount = text.replace(" ", "").length; // 12 letters without space
+        const letterPositions: number[] = [];
+        for (let i = 0; i < text.length; i++) {
+          if (text[i] !== " ") {
+            letterPositions.push(startX + i * letterSpacing);
+          }
+        }
+
+        // Animation parameters
+        const startPos = startX - 3; // Start before first letter
+        const endPos = letterPositions[letterPositions.length - 1] + 3; // End after last
+        let currentLetterIndex = 0;
+        let pauseTime = 0;
+        const pauseDuration = 800; // ms to pause at each letter
+        const moveSpeed = 0.08; // Speed between letters
+
+        ufoGroup.visible = true;
+        ufoGroup.position.x = startPos;
+        ufoPosition.value.x = startPos;
+        ufoActive.value = 1.0;
+
+        let lastTime = performance.now();
+
+        const animateUfo = () => {
+          const now = performance.now();
+          const delta = now - lastTime;
+          lastTime = now;
+
+          if (currentLetterIndex < letterPositions.length) {
+            const targetX = letterPositions[currentLetterIndex];
+
+            if (Math.abs(ufoGroup.position.x - targetX) > 0.1) {
+              // Move towards letter
+              ufoGroup.position.x += moveSpeed * Math.sign(targetX - ufoGroup.position.x);
+              ufoPosition.value.x = ufoGroup.position.x;
+            } else {
+              // At letter, pause and abduct
+              pauseTime += delta;
+              if (pauseTime >= pauseDuration) {
+                pauseTime = 0;
+                currentLetterIndex++;
+              }
+            }
+          } else {
+            // All letters done, fly away
+            ufoGroup.position.x += moveSpeed * 1.5;
+            ufoGroup.position.y += 0.02;
+            ufoPosition.value.x = ufoGroup.position.x;
+            ufoPosition.value.y = ufoGroup.position.y;
+
+            if (ufoGroup.position.x > endPos + 10) {
+              // Animation complete, reset after delay
+              ufoActive.value = 0.0;
+              ufoGroup.visible = false;
+              isUfoAnimating = false;
+
+              // Reset UFO position for next time
+              setTimeout(() => {
+                ufoGroup.position.set(-20, 5, 0);
+                ufoPosition.value.set(-20, 5, 0);
+              }, 3000);
+              return;
+            }
+          }
+
+          // Wobble effect
+          ufoGroup.rotation.z = Math.sin(now * 0.003) * 0.1;
+          ufoGroup.rotation.x = Math.sin(now * 0.002) * 0.05;
+
+          ufoAnimationId = requestAnimationFrame(animateUfo);
+        };
+
+        animateUfo();
+      };
+
       const handleKeyDown = (event: KeyboardEvent) => {
         if (event.code === "Space") {
           event.preventDefault();
-          // Trigger explosion
-          globalExplosion.value = 1.0;
-
-          // Quickly ramp down explosion
-          if (explosionTimeout) clearTimeout(explosionTimeout);
-          explosionTimeout = setTimeout(() => {
-            globalExplosion.value = 0.0;
-          }, 150);
+          // Single compute call - instant explosion
+          renderer.compute(computeGlobalExplosion);
+        } else if (event.code === "KeyU") {
+          event.preventDefault();
+          startUfoAbduction();
         }
       };
 
@@ -543,8 +775,8 @@ export function ParticleHero() {
       // Cleanup function
       cleanupRef.current = () => {
         cancelAnimationFrame(animationId);
+        if (ufoAnimationId) cancelAnimationFrame(ufoAnimationId);
         if (gravityTimeout) clearTimeout(gravityTimeout);
-        if (explosionTimeout) clearTimeout(explosionTimeout);
         container.removeEventListener("mousemove", handleMouseMove);
         container.removeEventListener("click", handleClick);
         container.removeEventListener("dblclick", handleDoubleClick);

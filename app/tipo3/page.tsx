@@ -13,7 +13,7 @@ export default function Tipo3Page() {
       {/* Hero limpio - solo animación */}
       <section className="tipo3-hero">
         <div className="tipo3-hint">
-          Cursor: repele · Click: explosión · Doble click: gravedad · Espacio: explosión global
+          Cursor: repele · Click: explosión · Doble click: gravedad · Espacio: explosión · U: OVNI
         </div>
         <div className="tipo3-hero__canvas">
           <ParticleHero />
