@@ -1,5 +1,5 @@
 // src/app/page.tsx
-import { Hero3DVideo } from "@/components/sections/Hero3DVideo";
+import { Hero3DVideo, Logo3DMini } from "@/components/sections/Hero3DVideo";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { NeumorfSection } from "@/components/ui/NeumorfSection";
 import { NeumorfCard } from "@/components/ui/NeumorfCard";
@@ -8,6 +8,7 @@ import { NeumorfCard } from "@/components/ui/NeumorfCard";
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center gap-6">
+      <Logo3DMini />
       <Hero3DVideo />
       {/* Contenido principal */}
       <div className="min-h-screen flex flex-col items-center">

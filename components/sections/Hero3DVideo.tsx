@@ -67,7 +67,7 @@ function LogoSVG({ url }: { url: string }) {
   )
 }
 
-// Escena 3D interactiva
+// Escena 3D interactiva (grande)
 export function Hero3DScene() {
   return (
     <div className="w-full h-[500px] md:h-[600px] flex items-center justify-center bg-transparent relative z-10">
@@ -75,6 +75,23 @@ export function Hero3DScene() {
         <ambientLight intensity={0.7} />
         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={2} color="#3b82f6" />
         <pointLight position={[-10, -10, -10]} intensity={1} color="#10b981" />
+
+        <LogoSVG url="/logo3d.svg" />
+
+        <Environment preset="city" />
+      </Canvas>
+    </div>
+  )
+}
+
+// Logo 3D mini para esquina
+export function Logo3DMini() {
+  return (
+    <div className="fixed bottom-6 right-6 w-24 h-24 md:w-32 md:h-32 z-50 opacity-80 hover:opacity-100 hover:scale-110 transition-all duration-300 cursor-pointer">
+      <Canvas camera={{ position: [0, 0, 15], fov: 45 }} gl={{ alpha: true }}>
+        <ambientLight intensity={0.7} />
+        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1.5} color="#3b82f6" />
+        <pointLight position={[-10, -10, -10]} intensity={0.8} color="#10b981" />
 
         <LogoSVG url="/logo3d.svg" />
 
