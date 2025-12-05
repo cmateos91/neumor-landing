@@ -134,6 +134,7 @@ export default function Home() {
             <span>Diseño neumórfico + leads + automatización.</span>
           </NeumorfSection>
         </footer>
+
       </div>
     </main>
   );
