@@ -262,6 +262,54 @@
   box-shadow: 0 0 28px rgba(59, 130, 246, 0.9);
 }
 
+/* ========== DEMO VIDEO SHELL ========== */
+
+.demo-video-shell {
+  width: 100%;
+  border-radius: 32px;
+  padding: 10px;
+  background: var(--neuro-bg, #e6e6e6);
+  box-shadow:
+    12px 12px 24px var(--neuro-dark, #d1d1d1),
+    -12px -12px 24px var(--neuro-light, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.demo-video-shell:hover {
+  box-shadow:
+    8px 8px 16px var(--neuro-dark, #d1d1d1),
+    -8px -8px 16px var(--neuro-light, #ffffff);
+  transform: translateY(-2px);
+}
+
+.dark .demo-video-shell {
+  background: radial-gradient(circle at 20% 0%, #1A202C, #0F141A);
+  box-shadow:
+    -14px -14px 28px rgba(30, 37, 48, 0.5),
+    14px 14px 28px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(55, 65, 81, 0.5);
+}
+
+.dark .demo-video-shell:hover {
+  box-shadow:
+    -18px -18px 36px rgba(30, 37, 48, 0.6),
+    18px 18px 36px rgba(0, 0, 0, 1);
+  transform: translateY(-2px);
+}
+
+.demo-video-shell video {
+  width: 100%;
+  height: auto;
+  border-radius: 22px;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.7);
+}
+
 /* ========== UNIVERSE CARD ========== */
 
 .outer {
