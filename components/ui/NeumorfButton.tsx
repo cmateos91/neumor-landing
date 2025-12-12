@@ -3,6 +3,7 @@ interface NeumorfButtonProps {
   className?: string;
   type?: "button" | "submit";
   disabled?: boolean;
+  onClick?: () => void; // ⬅️ AÑADIDO
 }
 
 export function NeumorfButton({
@@ -10,11 +11,13 @@ export function NeumorfButton({
   className = "",
   type = "button",
   disabled = false,
+  onClick, // ⬅️ AÑADIDO
 }: NeumorfButtonProps) {
   return (
     <button
       type={type}
       disabled={disabled}
+      onClick={onClick} // ⬅️ AÑADIDO
       className={`
         inline-flex items-center justify-center
         rounded-full px-6 py-2.5
