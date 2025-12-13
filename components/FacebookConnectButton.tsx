@@ -7,7 +7,6 @@ export function FacebookConnectButton() {
     // Redirigimos a nuestra ruta de API que inicia el flujo
     window.location.href = '/auth/facebook'
   }
-
   return (
     <NeumorfButton onClick={handleLogin} className="gap-2 bg-[#1877F2] text-white dark:bg-[#1877F2] hover:bg-[#166fe5]">
       <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">

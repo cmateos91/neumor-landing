@@ -12,36 +12,45 @@ export async function GET(request: Request) {
   const clienteId = searchParams.get('clienteId');
   const secret = searchParams.get('secret');
 
-  // Seguridad básica: Verificar API Secret compartida
+  // Seguridad: Solo n8n o sistemas con el SECRET pueden leer esto
   if (secret !== process.env.CORE_API_SECRET) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  if (!clienteId) {
-    return NextResponse.json({ error: 'Missing clienteId' }, { status: 400 });
-  }
-
   // Buscar token
-  const { data, error } = await supabaseAdmin
+  let { data, error } = await supabaseAdmin
     .from('fb_tokens')
     .select('*')
     .eq('cliente_id', clienteId)
     .eq('provider', 'meta')
     .single();
 
-  if (error || !data) {
-    return NextResponse.json({ error: 'Token no encontrado' }, { status: 404 });
+  if (error || !data) return NextResponse.json({ error: 'Token no encontrado' }, { status: 404 });
+
+  // AUTO-REFRESH: Si quedan menos de 10 días, refrescar
+  const now = new Date();
+  const expiresAt = new Date(data.expires_at);
+  const daysDiff = (expiresAt.getTime() - now.getTime()) / (1000 * 3600 * 24);
+
+  if (daysDiff < 10) {
+    try {
+      const refreshUrl = `https://graph.facebook.com/${process.env.META_API_VERSION}/oauth/access_token?grant_type=fb_exchange_token&client_id=${process.env.META_APP_ID}&client_secret=${process.env.META_APP_SECRET}&fb_exchange_token=${data.access_token}`;
+      const res = await fetch(refreshUrl);
+      const refreshData = await res.json();
+
+      if (refreshData.access_token) {
+        const newExpiresAt = new Date(Date.now() + (refreshData.expires_in || 5184000) * 1000);
+        await supabaseAdmin.from('fb_tokens').update({
+            access_token: refreshData.access_token,
+            expires_at: newExpiresAt.toISOString(),
+            updated_at: new Date().toISOString()
+        }).eq('id', data.id);
+        data.access_token = refreshData.access_token; // Usar el nuevo
+      }
+    } catch (e) {
+      console.error('Error auto-refreshing token:', e);
+    }
   }
 
-  // Verificar caducidad (Opcional: aquí podrías implementar lógica de refresco si fuera necesario)
-  if (new Date(data.expires_at) < new Date()) {
-    return NextResponse.json({ error: 'Token expirado' }, { status: 401 });
-  }
-
-  return NextResponse.json({
-    access_token: data.access_token,
-    meta_user_id: data.meta_user_id,
-    page_id: data.page_id, // Puedes llenar esto más tarde manualmente o con otro flujo
-    expires_at: data.expires_at
-  });
+  return NextResponse.json(data);
 }

@@ -5,12 +5,13 @@ import { buildMetaLoginUrl } from '@/lib/metaOAuth';
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const clienteId = searchParams.get('clienteId');
-  const redirectAfterAuth = searchParams.get('redirectAfterAuth'); // Url de vuelta al admin del restaurante
+  const redirectAfterAuth = searchParams.get('redirectAfterAuth');
 
   if (!clienteId || !redirectAfterAuth) {
-    return NextResponse.json({ error: 'Faltan parámetros' }, { status: 400 });
+    return NextResponse.json({ error: 'Faltan parámetros required' }, { status: 400 });
   }
 
+  // Construye la URL de Facebook usando las variables de entorno del CORE
   const url = buildMetaLoginUrl({ clienteId, redirectAfterAuth });
 
   return NextResponse.json({ url });
