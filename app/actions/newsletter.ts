@@ -37,12 +37,16 @@ export async function subscribeToComing(email: string) {
     return { success: false, error: 'Error al guardar el email' }
   }
 
-  // Enviar email de bienvenida via n8n (no bloqueante)
-  fetch(N8N_WEBHOOK_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: email.toLowerCase() })
-  }).catch(err => console.error('Error enviando a n8n:', err))
+  // Enviar email de bienvenida via n8n
+  try {
+    await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email.toLowerCase() })
+    })
+  } catch (err) {
+    console.error('Error enviando a n8n:', err)
+  }
 
   return { success: true }
 }
