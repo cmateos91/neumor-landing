@@ -5,9 +5,15 @@ import { NeumorfSection } from "@/components/ui/NeumorfSection";
 import { NeumorfCard } from "@/components/ui/NeumorfCard";
 import { Navbar } from "@/components/ui/Navbar";
 import { ImageModal } from "@/components/ui/ImageModal";
+import { ComingSoon } from "@/components/ComingSoon";
 
+const isComingSoon = process.env.NEXT_PUBLIC_COMING_SOON === 'true'
 
 export default function Home() {
+  if (isComingSoon) {
+    return <ComingSoon />
+  }
+
   return (
     <>
       <Navbar />

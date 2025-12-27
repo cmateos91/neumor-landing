@@ -47,3 +47,11 @@ body {
   width: 0px;
   background: transparent;
 }
+
+/* Safe area para iPhones con notch */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
