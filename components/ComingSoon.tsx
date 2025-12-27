@@ -130,16 +130,9 @@ export function ComingSoon() {
           ref={videoContainerRef}
           className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#ffffff] px-4 pb-safe pt-safe"
         >
-          {/* Contenedor del video - tamaños adaptativos */}
+          {/* Contenedor del video - pantalla completa en móvil */}
           <div
-            className="relative w-[min(65vw,200px)] h-[min(65vw,200px)] sm:w-[280px] sm:h-[280px] md:w-[350px] md:h-[350px] rounded-[24px] sm:rounded-[40px] md:rounded-[50px] overflow-hidden flex-shrink-0"
-            style={{
-              boxShadow: `
-                0 0 30px rgba(251,191,36,0.3),
-                0 0 60px rgba(251,191,36,0.15),
-                0 10px 25px rgba(0,0,0,0.15)
-              `,
-            }}
+            className="absolute inset-0 sm:relative sm:inset-auto sm:w-[350px] sm:h-[350px] md:w-[450px] md:h-[450px] sm:rounded-[40px] md:rounded-[50px] overflow-hidden"
           >
             <video
               ref={videoRef}
@@ -153,32 +146,35 @@ export function ComingSoon() {
             </video>
           </div>
 
-          {/* Título */}
-          <h1
-            className="mt-4 sm:mt-6 md:mt-8 text-xl sm:text-3xl md:text-4xl font-bold text-gray-900 tracking-wide text-center"
-            style={{
-              textShadow: '0 0 30px rgba(251,191,36,0.25)'
-            }}
-          >
-            NeumorStudio
-          </h1>
+          {/* Contenido sobre el video en móvil */}
+          <div className="absolute bottom-20 left-0 right-0 z-10 flex flex-col items-center sm:relative sm:bottom-auto">
+            {/* Título */}
+            <h1
+              className="mt-4 sm:mt-6 md:mt-8 text-xl sm:text-3xl md:text-4xl font-bold text-white sm:text-gray-900 tracking-wide text-center"
+              style={{
+                textShadow: '0 2px 10px rgba(0,0,0,0.5)'
+              }}
+            >
+              NeumorStudio
+            </h1>
 
-          {/* Subtítulo - visible en todas las pantallas */}
-          <p className="mt-1.5 sm:mt-2 text-xs sm:text-sm text-gray-500 text-center">
-            Diseño que conecta
-          </p>
+            {/* Subtítulo - visible en todas las pantallas */}
+            <p className="mt-1.5 sm:mt-2 text-xs sm:text-sm text-white/80 sm:text-gray-500 text-center">
+              Diseño que conecta
+            </p>
 
-          {/* Botón continuar */}
-          <button
-            onClick={handleSkipIntro}
-            className="mt-5 sm:mt-8 px-5 sm:px-8 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-medium text-gray-700 hover:text-gray-900 border border-gray-300 hover:border-gray-400 transition-all duration-300 active:scale-95 sm:hover:scale-105"
-            style={{
-              background: 'rgba(0,0,0,0.03)',
-              backdropFilter: 'blur(10px)',
-            }}
-          >
-            Continuar
-          </button>
+            {/* Botón continuar */}
+            <button
+              onClick={handleSkipIntro}
+              className="mt-5 sm:mt-8 px-5 sm:px-8 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-medium text-white sm:text-gray-700 hover:text-gray-900 border border-white/40 sm:border-gray-300 hover:border-gray-400 transition-all duration-300 active:scale-95 sm:hover:scale-105"
+              style={{
+                background: 'rgba(0,0,0,0.2)',
+                backdropFilter: 'blur(10px)',
+              }}
+            >
+              Continuar
+            </button>
+          </div>
         </div>
       )}
 
