@@ -2,6 +2,8 @@
 
 import { supabase } from '@/lib/supabase'
 
+const N8N_WEBHOOK_URL = 'https://n8n.neumorstudio.com/webhook/coming-soon'
+
 export async function subscribeToComing(email: string) {
   // Validar formato de email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -34,6 +36,13 @@ export async function subscribeToComing(email: string) {
     console.error('Error insertando suscriptor:', error)
     return { success: false, error: 'Error al guardar el email' }
   }
+
+  // Enviar email de bienvenida via n8n (no bloqueante)
+  fetch(N8N_WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email.toLowerCase() })
+  }).catch(err => console.error('Error enviando a n8n:', err))
 
   return { success: true }
 }
