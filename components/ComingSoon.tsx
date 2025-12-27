@@ -113,7 +113,7 @@ export function ComingSoon() {
   }
 
   return (
-    <div className="relative min-h-screen min-h-[100dvh] bg-[#0a0a0f] overflow-hidden">
+    <div className="relative min-h-screen min-h-[100dvh] bg-[#ffffff] overflow-hidden">
       {/* Canvas 3D con partículas de fondo */}
       <div ref={particlesRef} className="fixed inset-0 opacity-0">
         <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
@@ -128,16 +128,16 @@ export function ComingSoon() {
       {phase === 'video' && (
         <div
           ref={videoContainerRef}
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#0a0a0f] px-4 pb-safe pt-safe"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#ffffff] px-4 pb-safe pt-safe"
         >
           {/* Contenedor del video - tamaños adaptativos */}
           <div
             className="relative w-[min(65vw,200px)] h-[min(65vw,200px)] sm:w-[280px] sm:h-[280px] md:w-[350px] md:h-[350px] rounded-[24px] sm:rounded-[40px] md:rounded-[50px] overflow-hidden flex-shrink-0"
             style={{
               boxShadow: `
-                0 0 30px rgba(251,191,36,0.2),
-                0 0 60px rgba(251,191,36,0.08),
-                0 10px 25px rgba(0,0,0,0.5)
+                0 0 30px rgba(251,191,36,0.3),
+                0 0 60px rgba(251,191,36,0.15),
+                0 10px 25px rgba(0,0,0,0.15)
               `,
             }}
           >
@@ -155,7 +155,7 @@ export function ComingSoon() {
 
           {/* Título */}
           <h1
-            className="mt-4 sm:mt-6 md:mt-8 text-xl sm:text-3xl md:text-4xl font-bold text-white tracking-wide text-center"
+            className="mt-4 sm:mt-6 md:mt-8 text-xl sm:text-3xl md:text-4xl font-bold text-gray-900 tracking-wide text-center"
             style={{
               textShadow: '0 0 30px rgba(251,191,36,0.25)'
             }}
@@ -171,9 +171,9 @@ export function ComingSoon() {
           {/* Botón continuar */}
           <button
             onClick={handleSkipIntro}
-            className="mt-5 sm:mt-8 px-5 sm:px-8 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-medium text-white/80 hover:text-white border border-white/20 hover:border-white/40 transition-all duration-300 active:scale-95 sm:hover:scale-105"
+            className="mt-5 sm:mt-8 px-5 sm:px-8 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-medium text-gray-700 hover:text-gray-900 border border-gray-300 hover:border-gray-400 transition-all duration-300 active:scale-95 sm:hover:scale-105"
             style={{
-              background: 'rgba(255,255,255,0.05)',
+              background: 'rgba(0,0,0,0.03)',
               backdropFilter: 'blur(10px)',
             }}
           >
@@ -192,10 +192,10 @@ export function ComingSoon() {
           <div
             className="p-5 sm:p-8 md:p-10 rounded-[24px] sm:rounded-[40px] text-center"
             style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)',
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%)',
               backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              boxShadow: '0 25px 50px rgba(0,0,0,0.4)',
+              border: '1px solid rgba(0,0,0,0.08)',
+              boxShadow: '0 25px 50px rgba(0,0,0,0.1)',
             }}
           >
             {/* Mini logo */}
@@ -214,10 +214,10 @@ export function ComingSoon() {
             </div>
 
             {/* Mensaje */}
-            <h2 className="text-base sm:text-xl md:text-2xl font-semibold text-white mb-1.5 sm:mb-3">
+            <h2 className="text-base sm:text-xl md:text-2xl font-semibold text-gray-900 mb-1.5 sm:mb-3">
               Estamos preparando algo especial
             </h2>
-            <p className="text-xs sm:text-sm text-gray-400 mb-5 sm:mb-8 leading-relaxed">
+            <p className="text-xs sm:text-sm text-gray-600 mb-5 sm:mb-8 leading-relaxed">
               Webs con panel propio, leads centralizados y automatizaciones.
               <br className="hidden sm:block" />
               <span className="sm:hidden"> </span>
@@ -230,11 +230,11 @@ export function ComingSoon() {
                 className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl"
                 style={{
                   background: 'rgba(16, 185, 129, 0.1)',
-                  border: '1px solid rgba(16, 185, 129, 0.2)'
+                  border: '1px solid rgba(16, 185, 129, 0.3)'
                 }}
               >
-                <div className="text-emerald-400 text-2xl sm:text-4xl mb-2 sm:mb-3">✓</div>
-                <p className="text-emerald-300 text-xs sm:text-sm">Te avisaremos cuando lancemos</p>
+                <div className="text-emerald-500 text-2xl sm:text-4xl mb-2 sm:mb-3">✓</div>
+                <p className="text-emerald-600 text-xs sm:text-sm">Te avisaremos cuando lancemos</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3">
@@ -244,15 +244,15 @@ export function ComingSoon() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="tu@email.com"
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 rounded-full text-white text-sm placeholder:text-gray-500 outline-none transition-all duration-300 focus:ring-2 focus:ring-amber-500/40"
+                  className="w-full px-4 sm:px-6 py-3 sm:py-4 rounded-full text-gray-900 text-sm placeholder:text-gray-400 outline-none transition-all duration-300 focus:ring-2 focus:ring-amber-500/40"
                   style={{
-                    background: 'rgba(255,255,255,0.05)',
-                    border: '1px solid rgba(255,255,255,0.08)',
+                    background: 'rgba(0,0,0,0.03)',
+                    border: '1px solid rgba(0,0,0,0.1)',
                   }}
                 />
 
                 {status === 'error' && (
-                  <p className="text-red-400 text-xs sm:text-sm">{errorMsg}</p>
+                  <p className="text-red-500 text-xs sm:text-sm">{errorMsg}</p>
                 )}
 
                 <button
@@ -295,7 +295,7 @@ export function ComingSoon() {
       <div
         className="fixed inset-0 pointer-events-none z-20"
         style={{
-          background: 'radial-gradient(ellipse at center, transparent 0%, #0a0a0f 70%)'
+          background: 'radial-gradient(ellipse at center, transparent 0%, rgba(255,255,255,0.8) 70%)'
         }}
       />
     </div>
