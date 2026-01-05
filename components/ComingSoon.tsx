@@ -152,7 +152,7 @@ export function ComingSoon() {
               loop
               className="w-full h-full object-cover"
             >
-              <source src="/videos/videointro.mp4" type="video/mp4" />
+              <source src="/videos/videointro-boomerang.mp4" type="video/mp4" />
             </video>
           </div>
 
