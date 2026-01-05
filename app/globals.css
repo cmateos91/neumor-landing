@@ -55,3 +55,19 @@ body {
 .pt-safe {
   padding-top: env(safe-area-inset-top, 0px);
 }
+
+/* Animación flotante para cards */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.15), 0 15px 30px rgba(0,0,0,0.1);
+  }
+  50% {
+    transform: translateY(-8px);
+    box-shadow: 0 40px 80px rgba(0,0,0,0.18), 0 20px 40px rgba(0,0,0,0.12);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}

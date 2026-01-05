@@ -58,6 +58,7 @@ export function ComingSoon() {
   const videoContainerRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const particlesRef = useRef<HTMLDivElement>(null)
+  const bgVideoRef = useRef<HTMLVideoElement>(null)
 
   // Manejar fin del video o transición
   const handleVideoEnd = () => {
@@ -89,6 +90,13 @@ export function ComingSoon() {
     }
   }, [phase])
 
+  // Reproducir video de fondo cuando aparece el contenido
+  useEffect(() => {
+    if (phase === 'content' && bgVideoRef.current) {
+      bgVideoRef.current.play()
+    }
+  }, [phase])
+
   const handleSkipIntro = () => {
     if (videoRef.current) {
       videoRef.current.pause()
@@ -114,15 +122,17 @@ export function ComingSoon() {
 
   return (
     <div className="relative min-h-screen min-h-[100dvh] bg-[#ffffff] overflow-hidden">
-      {/* Canvas 3D con partículas de fondo */}
-      <div ref={particlesRef} className="fixed inset-0 opacity-0">
-        <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-          <Suspense fallback={null}>
-            <StarField />
-          </Suspense>
-          <ambientLight intensity={0.5} />
-        </Canvas>
-      </div>
+      {/* Canvas 3D con partículas - solo en fase intro (oculto cuando hay video de fondo) */}
+      {phase === 'video' && (
+        <div ref={particlesRef} className="fixed inset-0 opacity-0">
+          <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+            <Suspense fallback={null}>
+              <StarField />
+            </Suspense>
+            <ambientLight intensity={0.5} />
+          </Canvas>
+        </div>
+      )}
 
       {/* Video Intro */}
       {phase === 'video' && (
@@ -178,20 +188,36 @@ export function ComingSoon() {
         </div>
       )}
 
+      {/* Video de fondo neumórfico con efecto boomerang */}
+      {phase === 'content' && (
+        <div className="fixed inset-0 z-10 overflow-hidden">
+          <video
+            ref={bgVideoRef}
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="w-full h-full object-cover scale-110"
+          >
+            <source src="/videos/fondoneu-boomerang.mp4" type="video/mp4" />
+          </video>
+        </div>
+      )}
+
       {/* Contenido principal */}
       <div className="relative z-30 min-h-screen min-h-[100dvh] flex items-center justify-center px-4 py-6 sm:p-6">
         <div
           ref={contentRef}
           className={`w-full max-w-[340px] sm:max-w-md ${phase === 'content' ? '' : 'opacity-0 pointer-events-none'}`}
         >
-          {/* Card glassmorphism */}
+          {/* Card glassmorphism flotante */}
           <div
-            className="p-5 sm:p-8 md:p-10 rounded-[24px] sm:rounded-[40px] text-center"
+            className="p-5 sm:p-8 md:p-10 rounded-[24px] sm:rounded-[40px] text-center animate-float"
             style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%)',
-              backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(0,0,0,0.08)',
-              boxShadow: '0 25px 50px rgba(0,0,0,0.1)',
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%)',
+              backdropFilter: 'blur(24px)',
+              border: '1px solid rgba(255,255,255,0.5)',
+              boxShadow: '0 30px 60px rgba(0,0,0,0.15), 0 15px 30px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8)',
             }}
           >
             {/* Mini logo */}
@@ -378,13 +404,15 @@ export function ComingSoon() {
         </div>
       </div>
 
-      {/* Gradiente de ambiente */}
-      <div
-        className="fixed inset-0 pointer-events-none z-20"
-        style={{
-          background: 'radial-gradient(ellipse at center, transparent 0%, rgba(255,255,255,0.8) 70%)'
-        }}
-      />
+      {/* Gradiente de ambiente - solo en fase video */}
+      {phase === 'video' && (
+        <div
+          className="fixed inset-0 pointer-events-none z-20"
+          style={{
+            background: 'radial-gradient(ellipse at center, transparent 0%, rgba(255,255,255,0.8) 70%)'
+          }}
+        />
+      )}
     </div>
   )
 }
