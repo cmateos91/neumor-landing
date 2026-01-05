@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/utils/SmoothScroll";
@@ -26,10 +26,77 @@ const setInitialTheme = `
 })();
 `;
 
+// Registrar Service Worker
+const registerSW = `
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then((reg) => console.log('SW registrado:', reg.scope))
+      .catch((err) => console.warn('SW error:', err));
+  });
+}
+`;
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#fbbf24' },
+    { media: '(prefers-color-scheme: dark)', color: '#0F141A' },
+  ],
+};
+
 export const metadata: Metadata = {
-  title: "NeumorStudio | Interfaces neumórficas + automatización",
+  title: "NeumorStudio | Interfaces neumorficas + automatizacion",
   description:
-    "Estudio que diseña webs neumórficas, capta leads y automatiza respuestas con n8n para que tu negocio no pierda oportunidades.",
+    "Estudio que disena webs neumorficas, capta leads y automatiza respuestas para que tu negocio no pierda oportunidades.",
+  keywords: ['diseno web', 'neumorfismo', 'leads', 'automatizacion', 'n8n', 'landing page'],
+  authors: [{ name: 'NeumorStudio' }],
+  creator: 'NeumorStudio',
+  publisher: 'NeumorStudio',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'NeumorStudio',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'es_ES',
+    url: 'https://neumorstudio.com',
+    siteName: 'NeumorStudio',
+    title: 'NeumorStudio | Diseno que conecta',
+    description: 'Webs con panel propio, leads centralizados y automatizaciones.',
+    images: [
+      {
+        url: '/images/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'NeumorStudio',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'NeumorStudio | Diseno que conecta',
+    description: 'Webs con panel propio, leads centralizados y automatizaciones.',
+    images: ['/images/og-image.png'],
+    creator: '@neumorstudio',
+  },
+  icons: {
+    icon: [
+      { url: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -43,6 +110,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <script dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
+        <script dangerouslySetInnerHTML={{ __html: registerSW }} />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
