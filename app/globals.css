@@ -56,7 +56,16 @@ body {
   padding-top: env(safe-area-inset-top, 0px);
 }
 
-/* Animación flotante para cards */
+/* Animación flotante para cards - sutil en móvil */
+@keyframes float-mobile {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);
@@ -69,5 +78,11 @@ body {
 }
 
 .animate-float {
-  animation: float 4s ease-in-out infinite;
+  animation: float-mobile 5s ease-in-out infinite;
+}
+
+@media (min-width: 640px) {
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
 }

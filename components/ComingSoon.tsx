@@ -1,48 +1,9 @@
 'use client'
 
-import { useState, useEffect, useRef, Suspense } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { subscribeToComing } from '@/app/actions/newsletter'
 import Image from 'next/image'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Points, PointMaterial } from '@react-three/drei'
-import * as THREE from 'three'
 import gsap from 'gsap'
-
-// ============================================
-// PARTÍCULAS DE FONDO - Reducidas para móvil
-// ============================================
-function StarField({ count = 1000 }) {
-  const ref = useRef<THREE.Points>(null)
-  const [positions] = useState(() => {
-    const pos = new Float32Array(count * 3)
-    for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 20
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 20
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 20
-    }
-    return pos
-  })
-
-  useFrame((state, delta) => {
-    if (ref.current) {
-      ref.current.rotation.x -= delta * 0.015
-      ref.current.rotation.y -= delta * 0.02
-    }
-  })
-
-  return (
-    <Points ref={ref} positions={positions} stride={3} frustumCulled={false}>
-      <PointMaterial
-        transparent
-        color="#fbbf24"
-        size={0.012}
-        sizeAttenuation={true}
-        depthWrite={false}
-        opacity={0.6}
-      />
-    </Points>
-  )
-}
 
 // ============================================
 // COMPONENTE PRINCIPAL
@@ -52,57 +13,57 @@ export function ComingSoon() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
   const [phase, setPhase] = useState<'video' | 'content'>('video')
+  const [isTransitioning, setIsTransitioning] = useState(false)
 
   // Refs
   const videoRef = useRef<HTMLVideoElement>(null)
   const videoContainerRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
-  const particlesRef = useRef<HTMLDivElement>(null)
+  const contentWrapperRef = useRef<HTMLDivElement>(null)
   const bgVideoRef = useRef<HTMLVideoElement>(null)
 
-  // Manejar fin del video o transición
+  // Manejar fin del video - transición crossfade suave
   const handleVideoEnd = () => {
-    const tl = gsap.timeline()
+    if (isTransitioning) return
+    setIsTransitioning(true)
 
-    tl.to(videoContainerRef.current, {
-      opacity: 0,
-      scale: 1.05,
-      filter: 'blur(10px)',
-      duration: 0.8,
-      ease: 'power2.inOut',
-      onComplete: () => setPhase('content')
-    })
-  }
-
-  // Animación del contenido cuando aparece
-  useEffect(() => {
-    if (phase === 'content' && contentRef.current) {
-      gsap.to(particlesRef.current, {
-        opacity: 1,
-        duration: 1,
-        ease: 'power2.out'
-      })
-
-      gsap.fromTo(contentRef.current,
-        { y: 40, opacity: 0, scale: 0.95 },
-        { y: 0, opacity: 1, scale: 1, duration: 1, ease: 'power3.out', delay: 0.2 }
-      )
-    }
-  }, [phase])
-
-  // Reproducir video de fondo cuando aparece el contenido
-  useEffect(() => {
-    if (phase === 'content' && bgVideoRef.current) {
+    // Iniciar video de fondo antes de la transición
+    if (bgVideoRef.current) {
       bgVideoRef.current.play()
     }
-  }, [phase])
 
-  const handleSkipIntro = () => {
-    if (videoRef.current) {
-      videoRef.current.pause()
-    }
-    handleVideoEnd()
+    const tl = gsap.timeline({
+      onComplete: () => {
+        setPhase('content')
+        setIsTransitioning(false)
+      }
+    })
+
+    // Crossfade: video sale mientras contenido entra
+    tl.to(videoContainerRef.current, {
+      autoAlpha: 0,
+      scale: 1.02,
+      duration: 1.4,
+      ease: 'power3.out'
+    })
+    .fromTo(contentWrapperRef.current,
+      { autoAlpha: 0 },
+      { autoAlpha: 1, duration: 1.2, ease: 'power2.inOut' },
+      '-=1.0' // Empieza antes de que termine el fade out del video
+    )
+    .fromTo(contentRef.current,
+      { y: 30, scale: 0.97 },
+      { y: 0, scale: 1, duration: 0.8, ease: 'power2.out' },
+      '-=0.6'
+    )
   }
+
+  // Preparar contenido invisible al montar (para crossfade)
+  useEffect(() => {
+    if (contentWrapperRef.current) {
+      gsap.set(contentWrapperRef.current, { autoAlpha: 0 })
+    }
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -122,93 +83,31 @@ export function ComingSoon() {
 
   return (
     <div className="relative min-h-screen min-h-[100dvh] bg-[#ffffff] overflow-hidden">
-      {/* Canvas 3D con partículas - solo en fase intro (oculto cuando hay video de fondo) */}
-      {phase === 'video' && (
-        <div ref={particlesRef} className="fixed inset-0 opacity-0">
-          <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-            <Suspense fallback={null}>
-              <StarField />
-            </Suspense>
-            <ambientLight intensity={0.5} />
-          </Canvas>
-        </div>
-      )}
-
-      {/* Video Intro */}
-      {phase === 'video' && (
-        <div
-          ref={videoContainerRef}
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#ffffff] px-4 pb-safe pt-safe"
+      {/* Video de fondo neumórfico - siempre renderizado para crossfade */}
+      <div className="fixed inset-0 z-10 overflow-hidden">
+        <video
+          ref={bgVideoRef}
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover scale-110"
+          style={{ willChange: 'transform' }}
         >
-          {/* Contenedor del video - pantalla completa en móvil */}
-          <div
-            className="absolute inset-0 sm:relative sm:inset-auto sm:w-[350px] sm:h-[350px] md:w-[450px] md:h-[450px] sm:rounded-[40px] md:rounded-[50px] overflow-hidden"
-          >
-            <video
-              ref={videoRef}
-              autoPlay
-              muted
-              playsInline
-              loop
-              className="w-full h-full object-cover"
-            >
-              <source src="/videos/videointro-boomerang.mp4" type="video/mp4" />
-            </video>
-          </div>
+          <source src="/videos/fondoneu-boomerang.mp4" type="video/mp4" />
+        </video>
+      </div>
 
-          {/* Contenido sobre el video en móvil */}
-          <div className="absolute bottom-20 left-0 right-0 z-10 flex flex-col items-center sm:relative sm:bottom-auto">
-            {/* Título */}
-            <h1
-              className="mt-4 sm:mt-6 md:mt-8 text-xl sm:text-3xl md:text-4xl font-bold text-white sm:text-gray-900 tracking-wide text-center"
-              style={{
-                textShadow: '0 2px 10px rgba(0,0,0,0.5)'
-              }}
-            >
-              NeumorStudio
-            </h1>
-
-            {/* Subtítulo - visible en todas las pantallas */}
-            <p className="mt-1.5 sm:mt-2 text-xs sm:text-sm text-white/80 sm:text-gray-500 text-center">
-              Diseño que conecta
-            </p>
-
-            {/* Botón continuar */}
-            <button
-              onClick={handleSkipIntro}
-              className="mt-5 sm:mt-8 px-5 sm:px-8 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-medium text-white sm:text-gray-700 hover:text-gray-900 border border-white/40 sm:border-gray-300 hover:border-gray-400 transition-all duration-300 active:scale-95 sm:hover:scale-105"
-              style={{
-                background: 'rgba(0,0,0,0.2)',
-                backdropFilter: 'blur(10px)',
-              }}
-            >
-              Continuar
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Video de fondo neumórfico con efecto boomerang */}
-      {phase === 'content' && (
-        <div className="fixed inset-0 z-10 overflow-hidden">
-          <video
-            ref={bgVideoRef}
-            muted
-            loop
-            playsInline
-            preload="auto"
-            className="w-full h-full object-cover scale-110"
-          >
-            <source src="/videos/fondoneu-boomerang.mp4" type="video/mp4" />
-          </video>
-        </div>
-      )}
-
-      {/* Contenido principal */}
-      <div className="relative z-30 min-h-screen min-h-[100dvh] flex items-center justify-center px-4 py-6 sm:p-6">
+      {/* Contenido principal - siempre renderizado, controlado por GSAP */}
+      <div
+        ref={contentWrapperRef}
+        className="relative z-30 min-h-screen min-h-[100dvh] flex items-center justify-center px-4 py-6 sm:p-6"
+        style={{ willChange: 'opacity, visibility' }}
+      >
         <div
           ref={contentRef}
-          className={`w-full max-w-[340px] sm:max-w-md ${phase === 'content' ? '' : 'opacity-0 pointer-events-none'}`}
+          className="w-full max-w-[340px] sm:max-w-md"
+          style={{ willChange: 'transform, opacity' }}
         >
           {/* Card glassmorphism flotante */}
           <div
@@ -404,15 +303,23 @@ export function ComingSoon() {
         </div>
       </div>
 
-      {/* Gradiente de ambiente - solo en fase video */}
-      {phase === 'video' && (
-        <div
-          className="fixed inset-0 pointer-events-none z-20"
-          style={{
-            background: 'radial-gradient(ellipse at center, transparent 0%, rgba(255,255,255,0.8) 70%)'
-          }}
-        />
-      )}
+      {/* Video Intro - Pantalla completa sin barras negras */}
+      <div
+        ref={videoContainerRef}
+        className="fixed inset-0 z-50 overflow-hidden bg-black"
+        style={{ willChange: 'opacity, visibility, transform' }}
+      >
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          playsInline
+          onEnded={handleVideoEnd}
+          className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover"
+        >
+          <source src="/videos/VideoIntroducción.mp4" type="video/mp4" />
+        </video>
+      </div>
     </div>
   )
 }
