@@ -3,9 +3,16 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-const navLinks = [
+interface NavLink {
+  href: string;
+  label: string;
+  isPage?: boolean;
+}
+
+const navLinks: NavLink[] = [
   { href: "#servicios", label: "Servicios" },
   { href: "#proceso", label: "Proceso" },
+  { href: "/docs", label: "Docs", isPage: true },
 ];
 
 export function Navbar() {
@@ -52,14 +59,24 @@ export function Navbar() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={(e) => handleLinkClick(e, link.href)}
-              className="text-sm text-slate-600 dark:text-slate-300 hover:text-[#2c2c2c] dark:hover:text-white transition-colors"
-            >
-              {link.label}
-            </a>
+            link.isPage ? (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm text-slate-600 dark:text-slate-300 hover:text-[#2c2c2c] dark:hover:text-white transition-colors"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleLinkClick(e, link.href)}
+                className="text-sm text-slate-600 dark:text-slate-300 hover:text-[#2c2c2c] dark:hover:text-white transition-colors"
+              >
+                {link.label}
+              </a>
+            )
           ))}
 
           {/* CTA Button */}
@@ -124,14 +141,25 @@ export function Navbar() {
       >
         <div className="px-4 py-4 space-y-4 bg-[#e6e6e6]/95 dark:bg-[#0F141A]/95 backdrop-blur-md">
           {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={(e) => handleLinkClick(e, link.href)}
-              className="block text-sm text-slate-600 dark:text-slate-300 hover:text-[#2c2c2c] dark:hover:text-white transition-colors"
-            >
-              {link.label}
-            </a>
+            link.isPage ? (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block text-sm text-slate-600 dark:text-slate-300 hover:text-[#2c2c2c] dark:hover:text-white transition-colors"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleLinkClick(e, link.href)}
+                className="block text-sm text-slate-600 dark:text-slate-300 hover:text-[#2c2c2c] dark:hover:text-white transition-colors"
+              >
+                {link.label}
+              </a>
+            )
           ))}
           <a
             href="#contacto"
