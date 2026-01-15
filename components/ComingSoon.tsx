@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { subscribeToComing } from '@/app/actions/newsletter'
 import Image from 'next/image'
 import gsap from 'gsap'
-import { FluidBackground } from './backgrounds/FluidBackground'
+import { BackgroundBeams } from './ui/background-beams'
 
 // ============================================
 // COMPONENTE PRINCIPAL
@@ -76,10 +76,8 @@ export function ComingSoon() {
 
   return (
     <div className="relative min-h-screen min-h-[100dvh] bg-[#ffffff] overflow-hidden">
-      {/* Fondo de partículas fluidas interactivas */}
-      <div className="fixed inset-0 z-10 overflow-hidden">
-        <FluidBackground />
-      </div>
+      {/* Background Beams Effect */}
+      <BackgroundBeams className="fixed inset-0 z-10" />
 
       {/* Contenido principal - siempre renderizado, controlado por GSAP */}
       <div
