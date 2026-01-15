@@ -107,10 +107,10 @@ export function FluidBackground() {
             const lineIntensity = Math.max(intensity, intensityRight);
             const alpha = LINE_BASE_ALPHA + lineIntensity * (LINE_GLOW_ALPHA - LINE_BASE_ALPHA);
 
-            // Color for light theme (blue/indigo glow)
-            const r = Math.round(120 - lineIntensity * 70);
-            const g = Math.round(140 - lineIntensity * 40);
-            const b = Math.round(180 + lineIntensity * 50);
+            // Color for light theme (amber/gold glow)
+            const r = Math.round(180 + lineIntensity * 65);
+            const g = Math.round(160 + lineIntensity * 30);
+            const b = Math.round(140 - lineIntensity * 100);
 
             ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
             ctx.lineWidth = 0.5 + lineIntensity * 0.5;
@@ -127,9 +127,9 @@ export function FluidBackground() {
             const lineIntensity = Math.max(intensity, intensityBelow);
             const alpha = LINE_BASE_ALPHA + lineIntensity * (LINE_GLOW_ALPHA - LINE_BASE_ALPHA);
 
-            const r = Math.round(120 - lineIntensity * 70);
-            const g = Math.round(140 - lineIntensity * 40);
-            const b = Math.round(180 + lineIntensity * 50);
+            const r = Math.round(180 + lineIntensity * 65);
+            const g = Math.round(160 + lineIntensity * 30);
+            const b = Math.round(140 - lineIntensity * 100);
 
             ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
             ctx.lineWidth = 0.5 + lineIntensity * 0.5;
@@ -148,38 +148,38 @@ export function FluidBackground() {
         const alpha = DOT_BASE_ALPHA + intensity * (DOT_GLOW_ALPHA - DOT_BASE_ALPHA);
         const size = DOT_SIZE + intensity * 2;
 
-        // Glow effect for bright dots (blue/indigo for light theme)
+        // Glow effect for bright dots (amber/gold for light theme)
         if (intensity > 0.1) {
           const glowSize = size * 4;
           const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowSize);
-          glow.addColorStop(0, `rgba(80, 100, 220, ${intensity * 0.25})`);
-          glow.addColorStop(0.5, `rgba(100, 120, 200, ${intensity * 0.08})`);
-          glow.addColorStop(1, "rgba(120, 140, 200, 0)");
+          glow.addColorStop(0, `rgba(251, 191, 36, ${intensity * 0.35})`);
+          glow.addColorStop(0.5, `rgba(245, 158, 11, ${intensity * 0.12})`);
+          glow.addColorStop(1, "rgba(245, 158, 11, 0)");
           ctx.fillStyle = glow;
           ctx.beginPath();
           ctx.arc(p.x, p.y, glowSize, 0, Math.PI * 2);
           ctx.fill();
         }
 
-        // Main dot (darker blue when glowing)
-        const r = Math.round(150 - intensity * 100);
-        const g = Math.round(160 - intensity * 60);
-        const b = Math.round(190 + intensity * 40);
+        // Main dot (amber/gold when glowing)
+        const r = Math.round(180 + intensity * 65);
+        const g = Math.round(170 + intensity * 20);
+        const b = Math.round(160 - intensity * 120);
         ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
         ctx.fill();
       }
 
-      // Subtle center glow around mouse (soft blue for light theme)
+      // Subtle center glow around mouse (amber/gold for light theme)
       if (target.x > 0) {
         const centerGlow = ctx.createRadialGradient(
           mouse.x, mouse.y, 0,
           mouse.x, mouse.y, GLOW_RADIUS * 0.8
         );
-        centerGlow.addColorStop(0, "rgba(80, 120, 200, 0.06)");
-        centerGlow.addColorStop(0.5, "rgba(100, 130, 190, 0.02)");
-        centerGlow.addColorStop(1, "rgba(120, 140, 180, 0)");
+        centerGlow.addColorStop(0, "rgba(251, 191, 36, 0.08)");
+        centerGlow.addColorStop(0.5, "rgba(245, 158, 11, 0.03)");
+        centerGlow.addColorStop(1, "rgba(245, 158, 11, 0)");
         ctx.fillStyle = centerGlow;
         ctx.beginPath();
         ctx.arc(mouse.x, mouse.y, GLOW_RADIUS * 0.8, 0, Math.PI * 2);
@@ -236,7 +236,7 @@ export function FluidBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-full h-full"
+      className="fixed inset-0 w-full h-full z-0"
     />
   );
 }

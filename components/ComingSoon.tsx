@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from 'react'
 import { subscribeToComing } from '@/app/actions/newsletter'
 import Image from 'next/image'
 import gsap from 'gsap'
-import { BackgroundBeams } from './ui/background-beams'
+import { BackgroundBeamsWithCollision } from './ui/background-beams-collision'
+import { FluidBackground } from './backgrounds/FluidBackground'
 
 // ============================================
 // COMPONENTE PRINCIPAL
@@ -75,9 +76,9 @@ export function ComingSoon() {
   }
 
   return (
-    <div className="relative min-h-screen min-h-[100dvh] bg-[#ffffff] overflow-hidden">
-      {/* Background Beams Effect */}
-      <BackgroundBeams className="fixed inset-0 z-10" />
+    <BackgroundBeamsWithCollision className="min-h-screen min-h-[100dvh]">
+      {/* Fondo interactivo con grid */}
+      <FluidBackground />
 
       {/* Contenido principal - siempre renderizado, controlado por GSAP */}
       <div
@@ -92,6 +93,7 @@ export function ComingSoon() {
         >
           {/* Card glassmorphism flotante */}
           <div
+            data-collision-target
             className="p-5 sm:p-8 md:p-10 rounded-[24px] sm:rounded-[40px] text-center animate-float"
             style={{
               background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%)',
@@ -301,6 +303,6 @@ export function ComingSoon() {
           <source src="/videos/VideoIntroducción.mp4" type="video/mp4" />
         </video>
       </div>
-    </div>
+    </BackgroundBeamsWithCollision>
   )
 }
