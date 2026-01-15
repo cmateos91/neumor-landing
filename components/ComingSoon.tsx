@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react'
 import { subscribeToComing } from '@/app/actions/newsletter'
 import Image from 'next/image'
 import gsap from 'gsap'
-import { BackgroundBeamsWithCollision } from './ui/background-beams-collision'
 import { FluidBackground } from './backgrounds/FluidBackground'
 
 // ============================================
@@ -76,7 +75,7 @@ export function ComingSoon() {
   }
 
   return (
-    <BackgroundBeamsWithCollision className="min-h-screen min-h-[100dvh]">
+    <div className="relative min-h-screen min-h-[100dvh]">
       {/* Fondo interactivo con grid */}
       <FluidBackground />
 
@@ -303,6 +302,6 @@ export function ComingSoon() {
           <source src="/videos/VideoIntroducción.mp4" type="video/mp4" />
         </video>
       </div>
-    </BackgroundBeamsWithCollision>
+    </div>
   )
 }
