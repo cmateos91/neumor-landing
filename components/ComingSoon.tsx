@@ -112,6 +112,8 @@ export function ComingSoon() {
                 src="/images/logoneumor.jpeg"
                 alt="NeumorStudio"
                 fill
+                priority
+                sizes="(max-width: 640px) 48px, 64px"
                 className="object-cover"
               />
             </div>
@@ -288,16 +290,30 @@ export function ComingSoon() {
       {/* Video Intro - Pantalla completa sin barras negras */}
       <div
         ref={videoContainerRef}
-        className="fixed inset-0 z-50 overflow-hidden bg-black"
-        style={{ willChange: 'opacity, visibility, transform' }}
+        className="fixed inset-0 z-50 overflow-hidden"
+        style={{
+          willChange: 'opacity, visibility, transform',
+          backgroundColor: '#000'
+        }}
       >
+        {/* Imagen poster como LCP element visible inmediatamente */}
+        <img
+          src="/images/video-poster.jpg"
+          alt=""
+          aria-hidden="true"
+          className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover"
+          style={{ zIndex: 1 }}
+          fetchPriority="high"
+        />
         <video
           ref={videoRef}
           autoPlay
           muted
           playsInline
+          preload="auto"
           onEnded={handleVideoEnd}
           className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover"
+          style={{ zIndex: 2 }}
         >
           <source src="/videos/VideoIntroducción.mp4" type="video/mp4" />
         </video>

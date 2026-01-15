@@ -104,8 +104,29 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isComingSoon = process.env.NEXT_PUBLIC_COMING_SOON === 'true'
+
   return (
     <html lang="es" suppressHydrationWarning>
+      <head>
+        {/* Preload crítico para LCP */}
+        {isComingSoon && (
+          <>
+            <link
+              rel="preload"
+              href="/images/video-poster.jpg"
+              as="image"
+              fetchPriority="high"
+            />
+            <link
+              rel="preload"
+              href="/videos/VideoIntroducción.mp4"
+              as="video"
+              type="video/mp4"
+            />
+          </>
+        )}
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
