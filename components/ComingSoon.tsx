@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { subscribeToComing } from '@/app/actions/newsletter'
 import Image from 'next/image'
 import gsap from 'gsap'
+import { FluidBackground } from './backgrounds/FluidBackground'
 
 // ============================================
 // COMPONENTE PRINCIPAL
@@ -12,7 +13,6 @@ export function ComingSoon() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
-  const [phase, setPhase] = useState<'video' | 'content'>('video')
   const [isTransitioning, setIsTransitioning] = useState(false)
 
   // Refs
@@ -20,21 +20,14 @@ export function ComingSoon() {
   const videoContainerRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const contentWrapperRef = useRef<HTMLDivElement>(null)
-  const bgVideoRef = useRef<HTMLVideoElement>(null)
 
-  // Manejar fin del video - transición crossfade suave
+  // Manejar fin del video intro - transición crossfade suave
   const handleVideoEnd = () => {
     if (isTransitioning) return
     setIsTransitioning(true)
 
-    // Iniciar video de fondo antes de la transición
-    if (bgVideoRef.current) {
-      bgVideoRef.current.play()
-    }
-
     const tl = gsap.timeline({
       onComplete: () => {
-        setPhase('content')
         setIsTransitioning(false)
       }
     })
@@ -49,7 +42,7 @@ export function ComingSoon() {
     .fromTo(contentWrapperRef.current,
       { autoAlpha: 0 },
       { autoAlpha: 1, duration: 1.2, ease: 'power2.inOut' },
-      '-=1.0' // Empieza antes de que termine el fade out del video
+      '-=1.0'
     )
     .fromTo(contentRef.current,
       { y: 30, scale: 0.97 },
@@ -83,19 +76,9 @@ export function ComingSoon() {
 
   return (
     <div className="relative min-h-screen min-h-[100dvh] bg-[#ffffff] overflow-hidden">
-      {/* Video de fondo neumórfico - siempre renderizado para crossfade */}
+      {/* Fondo de partículas fluidas interactivas */}
       <div className="fixed inset-0 z-10 overflow-hidden">
-        <video
-          ref={bgVideoRef}
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="w-full h-full object-cover scale-110"
-          style={{ willChange: 'transform' }}
-        >
-          <source src="/videos/fondoneu-boomerang.mp4" type="video/mp4" />
-        </video>
+        <FluidBackground />
       </div>
 
       {/* Contenido principal - siempre renderizado, controlado por GSAP */}
