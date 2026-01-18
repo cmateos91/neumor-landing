@@ -1,10 +1,15 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, type MouseEvent } from 'react'
 import { subscribeToComing } from '@/app/actions/newsletter'
 import Image from 'next/image'
 import gsap from 'gsap'
 import { FluidBackground } from './backgrounds/FluidBackground'
+
+type BeforeInstallPromptEvent = Event & {
+  prompt: () => Promise<void>
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>
+}
 
 // ============================================
 // COMPONENTE PRINCIPAL
@@ -14,6 +19,10 @@ export function ComingSoon() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null)
+  const [isInstalled, setIsInstalled] = useState(false)
+  const [isIos, setIsIos] = useState(false)
+  const [showInstallHelp, setShowInstallHelp] = useState(false)
 
   // Refs
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -58,6 +67,41 @@ export function ComingSoon() {
     }
   }, [])
 
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (event: Event) => {
+      event.preventDefault()
+      setInstallPrompt(event as BeforeInstallPromptEvent)
+    }
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+    }
+  }, [])
+
+  useEffect(() => {
+    const checkInstalled = () => {
+      const isStandalone = window.matchMedia?.('(display-mode: standalone)').matches ?? false
+      const isIosStandalone = (window.navigator as Navigator & { standalone?: boolean }).standalone === true
+      setIsInstalled(isStandalone || isIosStandalone)
+    }
+
+    const handleAppInstalled = () => {
+      setIsInstalled(true)
+      setInstallPrompt(null)
+    }
+
+    setIsIos(/iphone|ipad|ipod/i.test(window.navigator.userAgent))
+    checkInstalled()
+
+    window.addEventListener('appinstalled', handleAppInstalled)
+
+    return () => {
+      window.removeEventListener('appinstalled', handleAppInstalled)
+    }
+  }, [])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setStatus('loading')
@@ -73,6 +117,25 @@ export function ComingSoon() {
       setErrorMsg(result.error || 'Error al suscribirse')
     }
   }
+
+  const handleInstallClick = async (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+
+    if (installPrompt) {
+      await installPrompt.prompt()
+      const choice = await installPrompt.userChoice
+      if (choice.outcome === 'accepted') {
+        setIsInstalled(true)
+      }
+      setInstallPrompt(null)
+      setShowInstallHelp(false)
+      return
+    }
+
+    setShowInstallHelp(true)
+  }
+
+  const showInstallButton = !isInstalled && (installPrompt || isIos)
 
   return (
     <div className="relative min-h-screen min-h-[100dvh]">
@@ -187,6 +250,40 @@ export function ComingSoon() {
                   )}
                 </button>
               </form>
+            )}
+
+            {showInstallButton && (
+              <div className="mt-4 sm:mt-5">
+                <a
+                  href="#instalar"
+                  onClick={handleInstallClick}
+                  className="w-full py-2.5 sm:py-3 px-4 sm:px-6 rounded-full font-medium text-xs sm:text-sm text-gray-700 flex items-center justify-center gap-2 transition-all duration-300 active:scale-[0.98] sm:hover:brightness-95"
+                  style={{
+                    background: 'rgba(0,0,0,0.04)',
+                    border: '1px solid rgba(0,0,0,0.12)',
+                  }}
+                  aria-label="Añadir a pantalla de inicio"
+                >
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  Añadir a pantalla de inicio
+                </a>
+
+                {showInstallHelp && !installPrompt && (
+                  <p className="mt-2 text-[10px] sm:text-xs text-gray-500">
+                    En iOS: toca Compartir y luego "Añadir a pantalla de inicio".
+                    <a
+                      href="https://support.apple.com/es-es/guide/iphone/iph42ab2f3a7/ios"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-2 underline decoration-gray-300 underline-offset-2 hover:text-gray-700"
+                    >
+                      Ver guia
+                    </a>
+                  </p>
+                )}
+              </div>
             )}
 
             <p className="mt-4 sm:mt-6 text-[10px] sm:text-xs text-gray-500">
