@@ -40,14 +40,21 @@ export function ContactForm() {
   if (status === 'success') {
     return (
       <div className="form-card p-8 text-center">
-        <div className="text-emerald-500 text-4xl mb-4">✓</div>
-        <h3 className="text-lg font-semibold mb-2">Proyecto recibido</h3>
-        <p className="text-sm text-slate-600">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full
+                      bg-emerald-500/10 dark:bg-emerald-500/20
+                      flex items-center justify-center
+                      shadow-[0_4px_16px_rgba(16,185,129,0.2)]">
+          <svg className="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h3 className="text-lg font-semibold mb-2 text-slate-800 dark:text-slate-100">Proyecto recibido</h3>
+        <p className="text-sm text-slate-600 dark:text-slate-400">
           Te responderemos pronto con una propuesta personalizada.
         </p>
         <button
           onClick={() => setStatus('idle')}
-          className="mt-4 text-sm text-slate-500 underline"
+          className="glass-pill mt-4 px-4 py-2 text-sm text-slate-600 dark:text-slate-300"
         >
           Enviar otro proyecto
         </button>
@@ -59,7 +66,7 @@ export function ContactForm() {
     <div className="form-card p-8">
       <form onSubmit={handleSubmit} className="space-y-3">
         <div>
-          <label className="block text-xs font-medium text-slate-600 mb-1">
+          <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5">
             Nombre
           </label>
           <input
@@ -68,13 +75,13 @@ export function ContactForm() {
             value={formData.nombre}
             onChange={handleChange}
             required
-            className="w-full rounded-3xl px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 bg-slate-100 outline-none shadow-[inset_4px_4px_10px_rgba(15,23,42,0.18),inset_-4px_-4px_10px_rgba(255,255,255,0.95)]"
+            className="neumor-input w-full px-4 py-3 text-sm text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500"
             placeholder="Cómo te llamas"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-slate-600 mb-1">
+          <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5">
             Email
           </label>
           <input
@@ -83,13 +90,13 @@ export function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full rounded-3xl px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 bg-slate-100 outline-none shadow-[inset_4px_4px_10px_rgba(15,23,42,0.18),inset_-4px_-4px_10px_rgba(255,255,255,0.95)]"
+            className="neumor-input w-full px-4 py-3 text-sm text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500"
             placeholder="donde podamos escribirte"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-slate-600 mb-1">
+          <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5">
             Tipo de negocio
           </label>
           <input
@@ -98,13 +105,13 @@ export function ContactForm() {
             value={formData.tipo_negocio}
             onChange={handleChange}
             required
-            className="w-full rounded-3xl px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 bg-slate-100 outline-none shadow-[inset_4px_4px_10px_rgba(15,23,42,0.18),inset_-4px_-4px_10px_rgba(255,255,255,0.95)]"
+            className="neumor-input w-full px-4 py-3 text-sm text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500"
             placeholder="restaurante, marca personal, estudio, etc."
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-slate-600 mb-1">
+          <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5">
             ¿Qué te gustaría conseguir con la web?
           </label>
           <textarea
@@ -112,7 +119,7 @@ export function ContactForm() {
             value={formData.mensaje}
             onChange={handleChange}
             rows={3}
-            className="w-full rounded-3xl px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 bg-slate-100 outline-none resize-none shadow-[inset_4px_4px_10px_rgba(15,23,42,0.18),inset_-4px_-4px_10px_rgba(255,255,255,0.95)]"
+            className="neumor-input w-full px-4 py-3 text-sm text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none"
             placeholder="Cuéntame en pocas frases qué buscas."
           />
         </div>

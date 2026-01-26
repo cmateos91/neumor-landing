@@ -11,8 +11,7 @@ interface NavLink {
 
 const navLinks: NavLink[] = [
   { href: "#servicios", label: "Servicios" },
-  { href: "#proceso", label: "Proceso" },
-  { href: "/docs", label: "Docs", isPage: true },
+  { href: "#contacto", label: "Contacto" },
 ];
 
 export function Navbar() {
@@ -42,7 +41,7 @@ export function Navbar() {
         fixed top-0 left-0 right-0 z-50
         transition-all duration-300
         ${isScrolled
-          ? "py-3 bg-[#e6e6e6]/80 dark:bg-[#0F141A]/80 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
+          ? "py-3 bg-white/70 dark:bg-[#0F141A]/75 backdrop-blur-xl border-b border-white/50 dark:border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.06),inset_0_-1px_0_rgba(255,255,255,0.5)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.25),inset_0_-1px_0_rgba(255,255,255,0.03)]"
           : "py-5 bg-transparent"
         }
       `}
@@ -139,7 +138,7 @@ export function Navbar() {
           ${isMobileMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"}
         `}
       >
-        <div className="px-4 py-4 space-y-4 bg-[#e6e6e6]/95 dark:bg-[#0F141A]/95 backdrop-blur-md">
+        <div className="px-4 py-4 space-y-4 bg-white/80 dark:bg-[#0F141A]/85 backdrop-blur-xl border-b border-white/40 dark:border-white/5">
           {navLinks.map((link) => (
             link.isPage ? (
               <Link

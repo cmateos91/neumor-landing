@@ -7,16 +7,31 @@
 @import "./neumorph.css";
 
 :root {
+  /* Colores base */
   --background: #e6e6e6;
   --foreground: #2c2c2c;
   --neuro-light: #ffffff;
   --neuro-dark: #d1d1d1;
   --neuro-bg: #e6e6e6;
+
+  /* Nuevas variables para profundidad */
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --glass-shadow: rgba(0, 0, 0, 0.04);
+  --gradient-subtle: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 119, 198, 0.08), transparent);
+  --card-highlight: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.1) 100%);
 }
 
 .dark {
   --background: #0F141A;
   --foreground: #E5E7EB;
+
+  /* Glass para dark mode */
+  --glass-bg: rgba(15, 20, 26, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: rgba(0, 0, 0, 0.3);
+  --gradient-subtle: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.06), transparent);
+  --card-highlight: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 50%, transparent 100%);
 }
 html.lenis, html.lenis body {
   height: auto;
@@ -42,6 +57,20 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), "Inter", system-ui, -apple-system, sans-serif;
   transition: background-color 0.3s, color 0.3s;
+  position: relative;
+}
+
+/* Gradiente atmosférico sutil */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  background: var(--gradient-subtle);
+  pointer-events: none;
+  z-index: 0;
 }
 ::-webkit-scrollbar {
   width: 0px;
