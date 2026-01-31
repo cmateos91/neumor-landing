@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { DesignSwitcher } from "./DesignSwitcher";
 
 interface NavLink {
   href: string;
@@ -77,6 +78,9 @@ export function Navbar() {
               </a>
             )
           ))}
+
+          {/* Design Switcher */}
+          <DesignSwitcher />
 
           {/* CTA Button */}
           <a
@@ -160,19 +164,22 @@ export function Navbar() {
               </a>
             )
           ))}
-          <a
-            href="#contacto"
-            onClick={(e) => handleLinkClick(e, "#contacto")}
-            className="
-              block text-center
-              rounded-full px-5 py-2.5
-              text-sm font-medium
-              bg-[#2c2c2c] text-white
-              dark:bg-[#E5E7EB] dark:text-[#0F141A]
-            "
-          >
-            Solicitar propuesta
-          </a>
+          <div className="flex items-center justify-between gap-4">
+            <DesignSwitcher />
+            <a
+              href="#contacto"
+              onClick={(e) => handleLinkClick(e, "#contacto")}
+              className="
+                flex-1 text-center
+                rounded-full px-5 py-2.5
+                text-sm font-medium
+                bg-[#2c2c2c] text-white
+                dark:bg-[#E5E7EB] dark:text-[#0F141A]
+              "
+            >
+              Solicitar propuesta
+            </a>
+          </div>
         </div>
       </div>
     </nav>

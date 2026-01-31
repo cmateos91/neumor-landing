@@ -1,0 +1,538 @@
+/* ============================================
+   DESIGN THEMES - Estilos visuales distintos
+   ============================================ */
+
+/* -------------------- NEUMORPHIC -------------------- */
+body[data-design="neumorphic"] {
+  --bg-primary: #e6e6e6;
+  --bg-secondary: #f0f0f0;
+  --text-primary: #2c2c2c;
+  --text-secondary: #666666;
+  --accent: #3b82f6;
+  --accent-secondary: #10b981;
+  --card-bg: #e6e6e6;
+  --shadow-light: #ffffff;
+  --shadow-dark: #d1d1d1;
+}
+
+body[data-design="neumorphic"].dark,
+.dark body[data-design="neumorphic"] {
+  --bg-primary: #0F141A;
+  --bg-secondary: #1a1f26;
+  --text-primary: #E5E7EB;
+  --text-secondary: #9CA3AF;
+  --card-bg: #0F141A;
+  --shadow-light: #1a2028;
+  --shadow-dark: #080a0d;
+}
+
+body[data-design="neumorphic"] {
+  background: var(--bg-primary);
+}
+
+body[data-design="neumorphic"] .hero-section {
+  background: var(--bg-primary);
+}
+
+body[data-design="neumorphic"] .design-card {
+  background: var(--card-bg);
+  border-radius: 24px;
+  box-shadow: 
+    8px 8px 16px var(--shadow-dark),
+    -8px -8px 16px var(--shadow-light);
+}
+
+body[data-design="neumorphic"] .design-badge {
+  background: var(--card-bg);
+  box-shadow: 
+    inset 2px 2px 5px var(--shadow-dark),
+    inset -2px -2px 5px var(--shadow-light);
+  border-radius: 50px;
+}
+
+body[data-design="neumorphic"] .design-btn-primary {
+  background: linear-gradient(145deg, #3b82f6, #2563eb);
+  color: white;
+  border-radius: 50px;
+  box-shadow: 
+    4px 4px 8px var(--shadow-dark),
+    -2px -2px 6px var(--shadow-light);
+}
+
+body[data-design="neumorphic"] .design-btn-secondary {
+  background: var(--card-bg);
+  border-radius: 50px;
+  box-shadow: 
+    4px 4px 8px var(--shadow-dark),
+    -4px -4px 8px var(--shadow-light);
+}
+
+/* -------------------- GLASSMORPHISM -------------------- */
+body[data-design="glassmorphism"] {
+  --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255,255,255,0.8);
+  --accent: #ffffff;
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.3);
+}
+
+.dark body[data-design="glassmorphism"],
+body[data-design="glassmorphism"].dark {
+  --bg-primary: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.15);
+}
+
+body[data-design="glassmorphism"] {
+  background: var(--bg-primary);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+body[data-design="glassmorphism"]::before {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255,255,255,0.1) 0%, transparent 30%);
+  animation: aurora-move 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+body[data-design="glassmorphism"] .hero-section {
+  background: transparent;
+}
+
+body[data-design="glassmorphism"] .design-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+body[data-design="glassmorphism"] .design-badge {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+}
+
+body[data-design="glassmorphism"] .design-btn-primary {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  border-radius: 50px;
+}
+
+body[data-design="glassmorphism"] .design-btn-primary:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+body[data-design="glassmorphism"] .design-btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  border-radius: 50px;
+}
+
+body[data-design="glassmorphism"] h1,
+body[data-design="glassmorphism"] h2,
+body[data-design="glassmorphism"] h3 {
+  color: white;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+body[data-design="glassmorphism"] p,
+body[data-design="glassmorphism"] span {
+  color: rgba(255,255,255,0.9);
+}
+
+/* -------------------- BRUTALIST -------------------- */
+body[data-design="brutalist"] {
+  --bg-primary: #ffffff;
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --accent: #ff0000;
+  --accent-secondary: #0000ff;
+  --border-width: 3px;
+}
+
+.dark body[data-design="brutalist"],
+body[data-design="brutalist"].dark {
+  --bg-primary: #000000;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --accent: #00ff00;
+  --accent-secondary: #ff00ff;
+}
+
+body[data-design="brutalist"] {
+  background: var(--bg-primary);
+  font-family: "Courier New", monospace !important;
+}
+
+body[data-design="brutalist"] * {
+  font-family: inherit;
+}
+
+body[data-design="brutalist"]::before {
+  display: none;
+}
+
+body[data-design="brutalist"] .hero-section {
+  background: var(--bg-primary);
+}
+
+body[data-design="brutalist"] .design-card {
+  background: var(--bg-primary);
+  border: var(--border-width) solid var(--text-primary);
+  border-radius: 0;
+  box-shadow: 8px 8px 0 var(--text-primary);
+}
+
+body[data-design="brutalist"] .design-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 10px 10px 0 var(--text-primary);
+}
+
+body[data-design="brutalist"] .design-badge {
+  background: var(--accent);
+  color: var(--bg-primary);
+  border: 2px solid var(--text-primary);
+  border-radius: 0;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+body[data-design="brutalist"] .design-btn-primary {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border: var(--border-width) solid var(--text-primary);
+  border-radius: 0;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+body[data-design="brutalist"] .design-btn-primary:hover {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+body[data-design="brutalist"] .design-btn-secondary {
+  background: transparent;
+  border: var(--border-width) solid var(--text-primary);
+  border-radius: 0;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+body[data-design="brutalist"] h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+  line-height: 0.9;
+}
+
+body[data-design="brutalist"] h2 {
+  font-weight: 900;
+  text-transform: uppercase;
+  border-bottom: var(--border-width) solid var(--text-primary);
+  display: inline-block;
+}
+
+/* -------------------- AURORA (Gradient/Neon) -------------------- */
+body[data-design="aurora"] {
+  --bg-primary: #0a0a0a;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --accent: #00f5d4;
+  --accent-secondary: #f15bb5;
+  --accent-tertiary: #fee440;
+  --glow-primary: rgba(0, 245, 212, 0.5);
+  --glow-secondary: rgba(241, 91, 181, 0.5);
+}
+
+.dark body[data-design="aurora"],
+body[data-design="aurora"].dark {
+  --bg-primary: #000000;
+}
+
+body[data-design="aurora"] {
+  background: var(--bg-primary);
+}
+
+body[data-design="aurora"]::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(ellipse at 0% 0%, rgba(0, 245, 212, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 0%, rgba(241, 91, 181, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(254, 228, 64, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  animation: aurora-pulse 8s ease-in-out infinite;
+}
+
+@keyframes aurora-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes aurora-move {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-5%, -5%) rotate(5deg); }
+}
+
+body[data-design="aurora"] .hero-section {
+  background: transparent;
+}
+
+body[data-design="aurora"] .design-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+body[data-design="aurora"] .design-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-secondary), transparent);
+}
+
+body[data-design="aurora"] .design-card:hover {
+  border-color: var(--accent);
+  box-shadow: 
+    0 0 30px var(--glow-primary),
+    inset 0 0 30px rgba(0, 245, 212, 0.03);
+}
+
+body[data-design="aurora"] .design-badge {
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  color: #000;
+  border-radius: 50px;
+  font-weight: 600;
+  box-shadow: 0 0 20px var(--glow-primary);
+}
+
+body[data-design="aurora"] .design-btn-primary {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+  color: #000;
+  border-radius: 50px;
+  font-weight: 600;
+  box-shadow: 0 0 30px var(--glow-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+body[data-design="aurora"] .design-btn-primary::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+  transform: rotate(45deg);
+  animation: btn-shine 3s infinite;
+}
+
+@keyframes btn-shine {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) rotate(45deg); }
+}
+
+body[data-design="aurora"] .design-btn-secondary {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 50px;
+}
+
+body[data-design="aurora"] .design-btn-secondary:hover {
+  background: rgba(0, 245, 212, 0.1);
+  box-shadow: 0 0 20px var(--glow-primary);
+}
+
+body[data-design="aurora"] h1,
+body[data-design="aurora"] h2,
+body[data-design="aurora"] h3 {
+  color: white;
+}
+
+body[data-design="aurora"] h1 span,
+body[data-design="aurora"] .text-gradient {
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary), var(--accent-tertiary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+body[data-design="aurora"] p {
+  color: var(--text-secondary);
+}
+
+/* -------------------- MINIMAL -------------------- */
+body[data-design="minimal"] {
+  --bg-primary: #fafafa;
+  --text-primary: #171717;
+  --text-secondary: #737373;
+  --accent: #171717;
+  --border-color: #e5e5e5;
+}
+
+.dark body[data-design="minimal"],
+body[data-design="minimal"].dark {
+  --bg-primary: #0a0a0a;
+  --text-primary: #fafafa;
+  --text-secondary: #a3a3a3;
+  --accent: #fafafa;
+  --border-color: #262626;
+}
+
+body[data-design="minimal"] {
+  background: var(--bg-primary);
+}
+
+body[data-design="minimal"]::before {
+  display: none;
+}
+
+body[data-design="minimal"] .hero-section {
+  background: var(--bg-primary);
+}
+
+body[data-design="minimal"] .design-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+body[data-design="minimal"] .design-card:hover {
+  border-color: var(--text-primary);
+}
+
+body[data-design="minimal"] .design-badge {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+body[data-design="minimal"] .design-btn-primary {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+body[data-design="minimal"] .design-btn-primary:hover {
+  opacity: 0.9;
+}
+
+body[data-design="minimal"] .design-btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: 6px;
+}
+
+body[data-design="minimal"] .design-btn-secondary:hover {
+  border-color: var(--text-primary);
+}
+
+body[data-design="minimal"] h1 {
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+body[data-design="minimal"] h2 {
+  font-weight: 500;
+}
+
+body[data-design="minimal"] h1 span {
+  color: var(--text-secondary);
+}
+
+/* -------------------- DESIGN SWITCHER STYLES -------------------- */
+.design-switcher-btn {
+  background: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.6);
+  color: var(--text-primary, #2c2c2c);
+}
+
+.dark .design-switcher-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #E5E7EB;
+}
+
+body[data-design="glassmorphism"] .design-switcher-btn,
+body[data-design="aurora"] .design-switcher-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: white;
+}
+
+.design-switcher-panel {
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0,0,0,0.1);
+  color: #171717;
+}
+
+.dark .design-switcher-panel {
+  background: rgba(20,20,20,0.95);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fafafa;
+}
+
+.design-switcher-option {
+  color: inherit;
+}
+
+.design-switcher-option:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+.dark .design-switcher-option:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.design-switcher-option-active {
+  background: rgba(0,0,0,0.08);
+}
+
+.dark .design-switcher-option-active {
+  background: rgba(255,255,255,0.08);
+}
+
+/* -------------------- COMMON TRANSITIONS -------------------- */
+body,
+body::before,
+.design-card,
+.design-badge,
+.design-btn-primary,
+.design-btn-secondary {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}

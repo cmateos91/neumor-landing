@@ -9,9 +9,8 @@ export function NeumorfCard({ children, className = "" }: NeumorfCardProps) {
   return (
     <div
       className={`
-        neumor-pill
+        design-card
         p-6 md:p-8
-        text-[#1A1A1A] dark:text-[#E5E7EB]
         ${className}
       `}
     >

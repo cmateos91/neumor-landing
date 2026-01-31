@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/utils/SmoothScroll";
+import { ThemeProvider } from "@/components/theme/ThemeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,6 +21,10 @@ const setInitialTheme = `
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const isDark = stored === 'dark' || (!stored && prefersDark);
     document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+    
+    // Cargar diseño visual
+    const designTheme = localStorage.getItem('designTheme') || 'neumorphic';
+    document.body.setAttribute('data-design', designTheme);
   } catch (err) {
     console.warn('No se pudo leer el tema inicial', err);
   }
@@ -129,10 +134,13 @@ export default function RootLayout({
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        data-design="neumorphic"
       >
         <script dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
         <script dangerouslySetInnerHTML={{ __html: registerSW }} />
-        <SmoothScroll>{children}</SmoothScroll>
+        <ThemeProvider>
+          <SmoothScroll>{children}</SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );

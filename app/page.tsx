@@ -83,13 +83,13 @@ export default function Home() {
 
         <main className="min-h-screen pt-20">
           {/* HERO */}
-          <NeumorfSection className="py-16 md:py-24">
+          <NeumorfSection className="py-16 md:py-24 hero-section">
             <div className="text-center max-w-3xl mx-auto">
-              {/* Badge - Glass */}
-              <div className="glass-badge inline-flex items-center gap-2 px-4 py-2 rounded-full
+              {/* Badge */}
+              <div className="design-badge inline-flex items-center gap-2 px-4 py-2
                             text-emerald-600 dark:text-emerald-400 text-sm font-medium mb-6">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-                Webs listas en 5 dias
+                Webs listas en 3 dias
               </div>
 
               {/* Titulo */}
@@ -114,8 +114,8 @@ export default function Home() {
                     e.preventDefault()
                     document.querySelector('#servicios')?.scrollIntoView({ behavior: 'smooth' })
                   }}
-                  className="cta-primary inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full
-                            text-sm font-medium text-white"
+                  className="design-btn-primary inline-flex items-center justify-center gap-2 px-6 py-3
+                            text-sm font-medium"
                 >
                   Ver que incluye
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -128,8 +128,8 @@ export default function Home() {
                     e.preventDefault()
                     document.querySelector('#contacto')?.scrollIntoView({ behavior: 'smooth' })
                   }}
-                  className="glass-cta inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full
-                            text-sm font-medium text-slate-700 dark:text-slate-200"
+                  className="design-btn-secondary inline-flex items-center justify-center gap-2 px-6 py-3
+                            text-sm font-medium"
                 >
                   Solicitar propuesta
                 </a>
@@ -212,8 +212,7 @@ export default function Home() {
                 {nichos.map((nicho) => (
                   <span
                     key={nicho}
-                    className="glass-pill px-4 py-2 rounded-full text-sm
-                              text-slate-600 dark:text-slate-300 cursor-default"
+                    className="design-badge px-4 py-2 text-sm cursor-default"
                   >
                     {nicho}
                   </span>
@@ -263,7 +262,7 @@ export default function Home() {
                   href="https://www.instagram.com/neumorstudio/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="glass-pill w-10 h-10 !p-0 rounded-xl flex items-center justify-center"
+                  className="design-card w-10 h-10 !p-0 flex items-center justify-center"
                   aria-label="Instagram"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -275,7 +274,7 @@ export default function Home() {
                   href="https://www.tiktok.com/@neumorstudio"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="glass-pill w-10 h-10 !p-0 rounded-xl flex items-center justify-center"
+                  className="design-card w-10 h-10 !p-0 flex items-center justify-center"
                   aria-label="TikTok"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -287,7 +286,7 @@ export default function Home() {
                   href="https://x.com/neumorstudio"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="glass-pill w-10 h-10 !p-0 rounded-xl flex items-center justify-center"
+                  className="design-card w-10 h-10 !p-0 flex items-center justify-center"
                   aria-label="X"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">

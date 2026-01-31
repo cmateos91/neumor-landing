@@ -6,6 +6,9 @@
 /* Importar estilos neumorfico */
 @import "./neumorph.css";
 
+/* Importar temas de diseño */
+@import "./design-themes.css";
+
 :root {
   /* Colores base */
   --background: #e6e6e6;
