@@ -38,7 +38,9 @@ export default function Home() {
       duration: 0.8,
       ease: 'power2.out',
     })
-    return () => tl.kill()
+    return () => {
+      tl.kill()
+    }
   }, [])
 
   useEffect(() => {
@@ -184,7 +186,9 @@ export default function Home() {
         },
         '+=0.2' // micro-delay narrativo entre líneas
       )
-    return () => lineTimeline.kill()
+    return () => {
+      lineTimeline.kill()
+    }
   }, [])
 
   const nichos = [
