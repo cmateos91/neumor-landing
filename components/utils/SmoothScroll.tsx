@@ -15,6 +15,11 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       touchMultiplier: 2,     // Velocidad en táctil
     })
 
+    const previousScrollRestoration = window.history.scrollRestoration
+    window.history.scrollRestoration = 'manual'
+
+    lenis.scrollTo(0, { immediate: true })
+
     // Bucle de animación para mantenerlo fluido
     function raf(time: number) {
       lenis.raf(time)
@@ -25,6 +30,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 
     return () => {
       lenis.destroy()
+      window.history.scrollRestoration = previousScrollRestoration
     }
   }, [])
 

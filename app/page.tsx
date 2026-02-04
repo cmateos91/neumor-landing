@@ -1,42 +1,190 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, type MutableRefObject } from 'react'
 import { ContactForm } from "@/components/forms/ContactForm"
 import { NeumorfSection } from "@/components/ui/NeumorfSection"
-import { NeumorfCard } from "@/components/ui/NeumorfCard"
 import { Navbar } from "@/components/ui/Navbar"
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { InteractiveLogo3D } from "@/components/ui/InteractiveLogo3D"
 
 export default function Home() {
-  const [showContent, setShowContent] = useState(false)
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const videoContainerRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
+  const contactRef = useRef<HTMLDivElement>(null)
+  const heroLine1Ref = useRef<HTMLSpanElement>(null)
+  const heroLine2Ref = useRef<HTMLSpanElement>(null)
+  const service1Ref = useRef<HTMLDivElement>(null)
+  const service2Ref = useRef<HTMLDivElement>(null)
+  const service3Ref = useRef<HTMLDivElement>(null)
+  const service4Ref = useRef<HTMLDivElement>(null)
+  const service5Ref = useRef<HTMLDivElement>(null)
+  const serviceRefsArray = [
+    service1Ref,
+    service2Ref,
+    service3Ref,
+    service4Ref,
+    service5Ref,
+  ]
 
-  // Manejar fin del video intro
-  const handleVideoEnd = () => {
-    const tl = gsap.timeline({
-      onComplete: () => setShowContent(true)
-    })
-
-    tl.to(videoContainerRef.current, {
-      autoAlpha: 0,
-      scale: 1.02,
-      duration: 1.2,
-      ease: 'power3.out'
-    })
-    .fromTo(contentRef.current,
-      { autoAlpha: 0, y: 20 },
-      { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power2.out' },
-      '-=0.6'
-    )
-  }
-
-  // Preparar estados iniciales
+  // Animación inicial del contenido
+  // Control de reproducción con IntersectionObserver para que cada video actúe solo cuando está visible.
   useEffect(() => {
-    if (contentRef.current) {
-      gsap.set(contentRef.current, { autoAlpha: 0 })
+    if (!contentRef.current) return
+    const tl = gsap.timeline()
+    gsap.set(contentRef.current, { autoAlpha: 0, y: 20 })
+    tl.to(contentRef.current, {
+      autoAlpha: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power2.out',
+    })
+    return () => tl.kill()
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.IntersectionObserver) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target as HTMLVideoElement
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+            video.play().catch(() => {})
+          } else {
+            video.pause()
+          }
+        })
+      },
+      { threshold: 0.5 }
+    )
+    videoRefs.current.forEach((video) => {
+      if (video) {
+        video.pause()
+        observer.observe(video)
+      }
+    })
+    return () => {
+      observer.disconnect()
     }
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [])
+
+  useEffect(() => {
+    const serviceRefs = serviceRefsArray
+    if (serviceRefs.some((ref) => !ref.current) || !contactRef.current) {
+      return
+    }
+
+    gsap.registerPlugin(ScrollTrigger)
+    const scroller = document.documentElement
+
+    // Sincronizamos ScrollTrigger con Lenis vía scrollerProxy para que cada capítulo responda al scroll virtual.
+    ScrollTrigger.scrollerProxy(scroller, {
+      scrollTop(value) {
+        if (arguments.length) {
+          window.scrollTo({ top: value, behavior: 'auto' })
+          return value
+        }
+        return scroller.scrollTop
+      },
+      getBoundingClientRect() {
+        return {
+          top: 0,
+          left: 0,
+          width: window.innerWidth,
+          height: window.innerHeight,
+        }
+      },
+      pinType: scroller.style.transform ? 'transform' : 'fixed',
+    })
+
+    const serviceTimelines = serviceRefs.map((serviceRef) => {
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: serviceRef.current,
+          scroller,
+          start: 'top 75%',
+          end: 'bottom 25%',
+          toggleActions: 'play none none none',
+          invalidateOnRefresh: true,
+          once: true,
+        },
+      })
+      timeline.fromTo(
+        serviceRef.current,
+        { autoAlpha: 0, y: 40 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power4.out',
+        }
+      )
+      return timeline
+    })
+
+    const contactTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: contactRef.current,
+        scroller,
+        start: 'top 80%',
+        end: 'bottom 20%',
+        toggleActions: 'play none none reverse',
+        invalidateOnRefresh: true,
+      },
+    })
+    contactTimeline.fromTo(
+      contactRef.current,
+      { autoAlpha: 0, y: 40 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power4.out',
+      }
+    )
+
+    // No usamos pin en esta fase para mantener el layout estable; la narrativa viene por visibilidad.
+    ScrollTrigger.refresh()
+
+    return () => {
+      serviceTimelines.forEach((tl) => {
+        tl.scrollTrigger?.kill()
+        tl.kill()
+      })
+      contactTimeline.scrollTrigger?.kill()
+      contactTimeline.kill()
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!heroLine1Ref.current || !heroLine2Ref.current) return
+
+    // Animación editorial desacoplada de contentRef para que cada línea cuente independientemente.
+    const lineTimeline = gsap.timeline()
+    gsap.set([heroLine1Ref.current, heroLine2Ref.current], { autoAlpha: 0, y: 30 })
+    lineTimeline
+      .to(heroLine1Ref.current, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.7,
+        ease: 'power4.out',
+      })
+      .to(
+        heroLine2Ref.current,
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power4.out',
+        },
+        '+=0.2' // micro-delay narrativo entre líneas
+      )
+    return () => lineTimeline.kill()
   }, [])
 
   const nichos = [
@@ -44,39 +192,83 @@ export default function Home() {
     'Gimnasios', 'Tiendas', 'Reformas'
   ]
 
+  type Chapter = {
+    id: string
+    headline: string
+    copy: string
+    video: string
+  }
+
+  const chapters: Chapter[] = [
+    {
+      id: 'web-que-atrae',
+      headline: 'Tu marca, elevada',
+      copy: 'Landing pages neumórficas, copy claro y CTA estratégico para convertir visitas en deseo.',
+      video: '/videos/webqueatraevideo.mp4',
+    },
+    {
+      id: 'panel-admin',
+      headline: 'El control total, simplificado',
+      copy: 'Un dashboard interno donde gestionas precios, horarios y métricas con total claridad.',
+      video: '/videos/paneladminquecontrolavideo.mp4',
+    },
+    {
+      id: 'panel-usuario',
+      headline: 'Fidelizar sin esfuerzo',
+      copy: 'Un espacio privado que se siente como un club exclusivo y hace que el cliente vuelva.',
+      video: '/videos/panelusuarioquefidelizavideo.mp4',
+    },
+    {
+      id: 'newsletter',
+      headline: 'Nunca dejes de estar presente',
+      copy: 'Comunicación inteligente que impacta en el momento justo y reactiva clientes dormidos.',
+      video: '/videos/newsletterquecomunicavideo.mp4',
+    },
+    {
+      id: 'automatizacion',
+      headline: 'Tu negocio funciona mientras duermes',
+      copy: 'Procesos automáticos que escalan sin errores y devuelven tiempo al dueño del negocio.',
+      video: '/videos/automatizacionqueescalavideo.mp4',
+    },
+  ]
+
+  const videoRefs = useRef<HTMLVideoElement[]>([])
+
+  const VideoCard = ({
+    chapter,
+    index,
+    videoRefs,
+  }: {
+    chapter: Chapter
+    index: number
+    videoRefs: MutableRefObject<HTMLVideoElement[]>
+  }) => (
+    <div className="w-full">
+      <div className="design-card shadow-[0_25px_45px_rgba(15,23,42,0.25)] rounded-3xl bg-white/60 dark:bg-slate-900/70 backdrop-blur-xl border border-white/40 dark:border-white/5">
+        <div
+          className="aspect-video w-full overflow-hidden rounded-2xl"
+          style={{ minHeight: 0 }}
+        >
+          <video
+            ref={(el) => {
+              if (!el) return
+              videoRefs.current[index] = el
+            }}
+            src={chapter.video}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+            preload="metadata"
+          />
+        </div>
+      </div>
+    </div>
+  )
+
   return (
     <div className="relative min-h-screen">
-      {/* Video Intro */}
-      <div
-        ref={videoContainerRef}
-        className="fixed inset-0 z-50 overflow-hidden"
-        style={{
-          willChange: 'opacity, visibility, transform',
-          backgroundColor: '#000'
-        }}
-      >
-        <img
-          src="/images/video-poster.jpg"
-          alt=""
-          aria-hidden="true"
-          className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover"
-          style={{ zIndex: 1 }}
-          fetchPriority="high"
-        />
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          playsInline
-          preload="auto"
-          onEnded={handleVideoEnd}
-          className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover"
-          style={{ zIndex: 2 }}
-        >
-          <source src="/videos/VideoIntroducción.mp4" type="video/mp4" />
-        </video>
-      </div>
-
       {/* Contenido principal */}
       <div ref={contentRef} style={{ willChange: 'opacity, transform' }}>
         <Navbar />
@@ -94,8 +286,18 @@ export default function Home() {
 
               {/* Titulo */}
               <h1 className="text-3xl md:text-5xl font-semibold tracking-tight mb-4 text-slate-800 dark:text-slate-100">
-                Tu web profesional.
-                <span className="block text-blue-500">
+                <span
+                  ref={heroLine1Ref}
+                  className="block"
+                  style={{ willChange: 'opacity, transform' }}
+                >
+                  Tu web profesional.
+                </span>
+                <span
+                  ref={heroLine2Ref}
+                  className="block text-blue-500"
+                  style={{ willChange: 'opacity, transform' }}
+                >
                   Con panel y automatizaciones.
                 </span>
               </h1>
@@ -137,71 +339,51 @@ export default function Home() {
             </div>
           </NeumorfSection>
 
-          {/* SERVICIOS */}
-          <NeumorfSection id="servicios" className="space-y-12">
+          {/* SERVICIOS - max-w-7xl para dar mas ancho al bloque de capítulos, mantiene la narrativa potente */}
+          <NeumorfSection id="servicios" className="space-y-20 max-w-7xl mx-auto">
             <div className="text-center">
               <h2 className="text-2xl md:text-3xl font-semibold mb-3 text-slate-800 dark:text-slate-100">
-                Todo incluido
+                Servicios diseñados para crecer
               </h2>
-              <p className="text-slate-600 dark:text-slate-400">
-                Sin sorpresas. Un precio, todo lo que necesitas.
-              </p>
+              <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                Soluciones digitales que combinan diseño, control y automatización para impulsar tu negocio con claridad y coherencia.              </p>
             </div>
 
-            {/* 3 Cards principales */}
-            <div className="grid gap-6 md:grid-cols-3">
-              {/* Web moderna */}
-              <NeumorfCard className="text-center p-6">
-                <div className="w-14 h-14 mx-auto mb-4 rounded-2xl
-                              bg-blue-500/10 dark:bg-blue-500/20
-                              backdrop-blur-sm border border-blue-500/20 dark:border-blue-500/10
-                              flex items-center justify-center
-                              shadow-[0_4px_12px_rgba(59,130,246,0.15)]">
-                  <svg className="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <h3 className="font-semibold mb-2 text-slate-800 dark:text-slate-100">Web moderna</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Diseno neumorfico, responsive y optimizada para movil.
-                </p>
-              </NeumorfCard>
+            {/* Zig-zag: el grid cambia entre 35/65 y 65/35 para mantener el vídeo en la columna ancha sin depender de order */}
+            {chapters.map((chapter, index) => {
+              const isEvenChapter = index % 2 === 1
+              const gridCols = isEvenChapter ? "md:grid-cols-[65%_35%]" : "md:grid-cols-[35%_65%]"
+              return (
+                <section
+                  key={chapter.id}
+                  className="min-h-[80vh] w-full"
+                >
+                  <div className={`grid items-start gap-10 ${gridCols}`}>
+                    {/* En capítulos pares renderizamos primero el vídeo para que ocupe la columna ancha */}
+                    {isEvenChapter && (
+                      <VideoCard chapter={chapter} index={index} videoRefs={videoRefs} />
+                    )}
 
-              {/* Panel propio */}
-              <NeumorfCard className="text-center p-6">
-                <div className="w-14 h-14 mx-auto mb-4 rounded-2xl
-                              bg-emerald-500/10 dark:bg-emerald-500/20
-                              backdrop-blur-sm border border-emerald-500/20 dark:border-emerald-500/10
-                              flex items-center justify-center
-                              shadow-[0_4px_12px_rgba(16,185,129,0.15)]">
-                  <svg className="w-7 h-7 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <h3 className="font-semibold mb-2 text-slate-800 dark:text-slate-100">Panel propio</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Cambia textos, fotos y precios sin tocar codigo.
-                </p>
-              </NeumorfCard>
+                    <div className="space-y-4 md:max-w-[520px]">
+                      <p className="text-xs tracking-[0.4em] uppercase text-slate-500 dark:text-slate-400">
+                        Servicio {index + 1}
+                      </p>
+                      <h3 className="text-3xl font-semibold text-slate-800 dark:text-slate-100">
+                        {chapter.headline}
+                      </h3>
+                      <p className="text-base text-slate-600 dark:text-slate-400 max-w-xl">
+                        {chapter.copy}
+                      </p>
+                    </div>
 
-              {/* Automatizaciones */}
-              <NeumorfCard className="text-center p-6">
-                <div className="w-14 h-14 mx-auto mb-4 rounded-2xl
-                              bg-purple-500/10 dark:bg-purple-500/20
-                              backdrop-blur-sm border border-purple-500/20 dark:border-purple-500/10
-                              flex items-center justify-center
-                              shadow-[0_4px_12px_rgba(168,85,247,0.15)]">
-                  <svg className="w-7 h-7 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h3 className="font-semibold mb-2 text-slate-800 dark:text-slate-100">Automatizaciones</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Confirmaciones, recordatorios y respuestas automaticas.
-                </p>
-              </NeumorfCard>
-            </div>
+                    {/* Si es capítulo impar el vídeo va después del texto */}
+                    {!isEvenChapter && (
+                      <VideoCard chapter={chapter} index={index} videoRefs={videoRefs} />
+                    )}
+                  </div>
+                </section>
+              )
+            })}
 
             {/* Nichos - Glass pills */}
             <div className="text-center pt-8">
@@ -222,7 +404,8 @@ export default function Home() {
           </NeumorfSection>
 
           {/* CONTACTO */}
-          <NeumorfSection id="contacto" className="pb-16">
+          <div ref={contactRef}>
+            <NeumorfSection id="contacto" className="pb-16">
             <div className="grid gap-8 md:grid-cols-2 items-start">
               <div>
                 <h2 className="text-2xl font-semibold mb-3 text-slate-800 dark:text-slate-100">
@@ -233,24 +416,28 @@ export default function Home() {
                   que incluiria tu web, que automatizaciones necesitas
                   y por donde empezariamos.
                 </p>
-                <ul className="text-sm text-slate-600 dark:text-slate-400 space-y-2">
-                  <li className="flex items-center gap-2">
-                    <svg className="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    Respuesta en menos de 24h
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <svg className="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    Propuesta personalizada sin compromiso
-                  </li>
-                </ul>
-              </div>
-              <ContactForm />
+              <ul className="text-sm text-slate-600 dark:text-slate-400 space-y-2">
+                <li className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Respuesta en menos de 24h
+                </li>
+                <li className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  Propuesta personalizada sin compromiso
+                </li>
+              </ul>
+
+              {/* Logo 3D interactivo premium justo antes del formulario */}
+              <InteractiveLogo3D />
             </div>
-          </NeumorfSection>
+            <ContactForm />
+            </div>
+            </NeumorfSection>
+          </div>
 
           {/* FOOTER */}
           <footer className="border-t border-white/40 dark:border-white/5 bg-white/30 dark:bg-black/10 backdrop-blur-sm">
