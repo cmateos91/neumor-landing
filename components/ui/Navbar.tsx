@@ -20,15 +20,12 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
+  const scrollToSection = (href: string) => {
     const target = document.querySelector(href);
     if (target) {
       target.scrollIntoView({ behavior: "smooth" });
@@ -37,97 +34,54 @@ export function Navbar() {
   };
 
   return (
-    <nav
-      className={`
-        fixed top-0 left-0 right-0 z-50
-        transition-all duration-300
-        ${isScrolled
-          ? "py-3 bg-white/70 dark:bg-[#0F141A]/75 backdrop-blur-xl border-b border-white/50 dark:border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.06),inset_0_-1px_0_rgba(255,255,255,0.5)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.25),inset_0_-1px_0_rgba(255,255,255,0.03)]"
-          : "py-5 bg-transparent"
-        }
-      `}
-    >
-      <div className="max-w-5xl mx-auto px-4 md:px-6 flex items-center justify-between">
+    <nav className={`ng-navbar ${isScrolled ? "scrolled" : ""}`}>
+      <div className="max-w-6xl mx-auto px-4 md:px-6 flex items-center justify-between">
         {/* Logo */}
         <Link
           href="/"
-          className="text-lg md:text-xl font-semibold text-[#2c2c2c] dark:text-[#E5E7EB] hover:opacity-80 transition-opacity"
+          className="text-lg md:text-xl font-semibold text-[#2c2c2c] dark:text-[#E5E7EB] 
+                     hover:opacity-80 transition-opacity relative z-10"
         >
           NeumorStudio
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
-            link.isPage ? (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm text-slate-600 dark:text-slate-300 hover:text-[#2c2c2c] dark:hover:text-white transition-colors"
-              >
-                {link.label}
-              </Link>
-            ) : (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
-                className="text-sm text-slate-600 dark:text-slate-300 hover:text-[#2c2c2c] dark:hover:text-white transition-colors"
-              >
-                {link.label}
-              </a>
-            )
+            <button
+              key={link.href}
+              onClick={() => scrollToSection(link.href)}
+              className="text-sm text-slate-600 dark:text-slate-300 
+                         hover:text-[#2c2c2c] dark:hover:text-white 
+                         transition-colors relative z-10 px-3 py-2 rounded-lg
+                         hover:bg-white/10 dark:hover:bg-white/5"
+            >
+              {link.label}
+            </button>
           ))}
 
-          {/* Design Switcher */}
           <DesignSwitcher />
-
-          {/* CTA Button */}
-          <a
-            href="#contacto"
-            onClick={(e) => handleLinkClick(e, "#contacto")}
-            className="
-              inline-flex items-center justify-center
-              rounded-full px-5 py-2
-              text-sm font-medium
-              bg-[#2c2c2c] text-white
-              dark:bg-[#E5E7EB] dark:text-[#0F141A]
-              hover:opacity-90
-              transition-all duration-150
-              shadow-[4px_4px_12px_rgba(0,0,0,0.15)]
-              dark:shadow-[4px_4px_12px_rgba(0,0,0,0.3)]
-            "
+          
+          <button
+            onClick={() => scrollToSection("#contacto")}
+            className="ng-btn-primary text-sm"
           >
             Solicitar propuesta
-          </a>
+          </button>
         </div>
 
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2 text-slate-600 dark:text-slate-300"
+          className="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300
+                     hover:bg-white/10 dark:hover:bg-white/5 transition-colors relative z-10"
           aria-label="Toggle menu"
         >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {isMobileMenuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             )}
           </svg>
         </button>
@@ -136,49 +90,29 @@ export function Navbar() {
       {/* Mobile Menu */}
       <div
         className={`
-          md:hidden
-          overflow-hidden
-          transition-all duration-300 ease-in-out
-          ${isMobileMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"}
+          md:hidden overflow-hidden transition-all duration-300 ease-out
+          ${isMobileMenuOpen ? "max-h-64 opacity-100 mt-2" : "max-h-0 opacity-0"}
         `}
       >
-        <div className="px-4 py-4 space-y-4 bg-white/80 dark:bg-[#0F141A]/85 backdrop-blur-xl border-b border-white/40 dark:border-white/5">
+        <div className="mx-4 p-4 ng-card space-y-2">
           {navLinks.map((link) => (
-            link.isPage ? (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block text-sm text-slate-600 dark:text-slate-300 hover:text-[#2c2c2c] dark:hover:text-white transition-colors"
-              >
-                {link.label}
-              </Link>
-            ) : (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
-                className="block text-sm text-slate-600 dark:text-slate-300 hover:text-[#2c2c2c] dark:hover:text-white transition-colors"
-              >
-                {link.label}
-              </a>
-            )
+            <button
+              key={link.href}
+              onClick={() => scrollToSection(link.href)}
+              className="block w-full text-left px-4 py-2 text-sm text-slate-600 dark:text-slate-300
+                         hover:bg-white/10 dark:hover:bg-white/5 rounded-lg transition-colors"
+            >
+              {link.label}
+            </button>
           ))}
-          <div className="flex items-center justify-between gap-4">
+          <div className="pt-2 flex items-center justify-between gap-4 px-2">
             <DesignSwitcher />
-            <a
-              href="#contacto"
-              onClick={(e) => handleLinkClick(e, "#contacto")}
-              className="
-                flex-1 text-center
-                rounded-full px-5 py-2.5
-                text-sm font-medium
-                bg-[#2c2c2c] text-white
-                dark:bg-[#E5E7EB] dark:text-[#0F141A]
-              "
+            <button
+              onClick={() => scrollToSection("#contacto")}
+              className="ng-btn-primary text-sm flex-1 justify-center"
             >
               Solicitar propuesta
-            </a>
+            </button>
           </div>
         </div>
       </div>

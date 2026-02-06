@@ -675,3 +675,273 @@
     0 2px 8px rgba(59, 130, 246, 0.3),
     inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
+
+/* ==========================================
+   NEOGLASS - Glassmorphism + Neumorfismo
+   Profundidad real, capas, blur coherente
+   ========================================== */
+
+/* ---------- CAPA 1: Surface Card ---------- */
+.ng-card {
+  position: relative;
+  border-radius: 24px;
+  background: var(--ng-glass-surface);
+  backdrop-filter: var(--ng-blur-md);
+  -webkit-backdrop-filter: var(--ng-blur-md);
+  border: 1px solid var(--ng-glass-border);
+  box-shadow: var(--ng-elevation-2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+/* Highlight superior (luz ambiental) */
+.ng-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.9) 0%,
+    rgba(255,255,255,0.3) 50%,
+    transparent 100%
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Capa interna de profundidad */
+.ng-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    145deg,
+    rgba(255,255,255,0.1) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.ng-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--ng-elevation-3);
+}
+
+.dark .ng-card::before {
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.15) 0%,
+    rgba(255,255,255,0.05) 50%,
+    transparent 100%
+  );
+}
+
+/* ---------- CAPA 2: Raised Elements ---------- */
+.ng-raised {
+  background: var(--ng-glass-deep);
+  backdrop-filter: var(--ng-blur-sm);
+  border: 1px solid var(--ng-glass-border-subtle);
+  box-shadow: 
+    var(--ng-elevation-1),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+  border-radius: 16px;
+}
+
+.dark .ng-raised {
+  box-shadow: 
+    var(--ng-elevation-1),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+/* ---------- CAPA 3: Floating Badge ---------- */
+.ng-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: var(--ng-blur-sm);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  box-shadow: 
+    0 2px 12px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,1);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+  transition: all 0.3s ease;
+}
+
+.ng-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 16px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,1);
+}
+
+.dark .ng-badge {
+  background: rgba(30, 40, 55, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #E5E7EB;
+}
+
+/* ---------- NeoGlass Input ---------- */
+.ng-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: var(--ng-glass-deep);
+  backdrop-filter: var(--ng-blur-sm);
+  border: 1px solid var(--ng-glass-border-subtle);
+  border-radius: 14px;
+  font-size: 0.9375rem;
+  color: var(--foreground);
+  transition: all 0.25s ease;
+  outline: none;
+}
+
+.ng-input:focus {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 
+    0 0 0 3px rgba(59, 130, 246, 0.1),
+    0 4px 12px rgba(59, 130, 246, 0.08);
+}
+
+.ng-input::placeholder {
+  color: rgba(100, 100, 100, 0.5);
+}
+
+.dark .ng-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ---------- NeoGlass Button Primary ---------- */
+.ng-btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border: none;
+  border-radius: 14px;
+  color: white;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 14px rgba(59, 130, 246, 0.35),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ng-btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.2) 0%,
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ng-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 20px rgba(59, 130, 246, 0.45),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+}
+
+.ng-btn-primary:hover::before {
+  opacity: 1;
+}
+
+/* ---------- NeoGlass Navbar ---------- */
+.ng-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  padding: 1rem 0;
+  background: transparent;
+  transition: all 0.4s ease;
+}
+
+.ng-navbar.scrolled {
+  padding: 0.75rem 0;
+  background: var(--ng-glass-surface);
+  backdrop-filter: var(--ng-blur-lg);
+  -webkit-backdrop-filter: var(--ng-blur-lg);
+  border-bottom: 1px solid var(--ng-glass-border);
+  box-shadow: var(--ng-elevation-2);
+}
+
+.ng-navbar.scrolled::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-bottom: 1px solid transparent;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box;
+  mask: linear-gradient(#fff 0 0) content-box;
+  pointer-events: none;
+}
+
+.dark .ng-navbar.scrolled::before {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+
+/* ---------- NeoGlass Video Card ---------- */
+.ng-video-card {
+  position: relative;
+  border-radius: 28px;
+  padding: 12px;
+  background: var(--ng-glass-deep);
+  backdrop-filter: var(--ng-blur-sm);
+  border: 1px solid var(--ng-glass-border);
+  box-shadow: var(--ng-elevation-2);
+}
+
+.ng-video-card video {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.ng-video-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  padding: 1px;
+  background: linear-gradient(
+    145deg,
+    rgba(255,255,255,0.8) 0%,
+    transparent 50%
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}

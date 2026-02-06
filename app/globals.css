@@ -118,3 +118,50 @@ body::before {
     animation: float 4s ease-in-out infinite;
   }
 }
+
+/* ========== NEOGLASS DESIGN SYSTEM ========== */
+:root {
+  /* Capas de profundidad */
+  --ng-elevation-1: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+  --ng-elevation-2: 
+    0 4px 20px rgba(0,0,0,0.06),
+    0 2px 8px rgba(0,0,0,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+  --ng-elevation-3: 
+    0 8px 32px rgba(0,0,0,0.08),
+    0 4px 16px rgba(0,0,0,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+
+  /* Glass layers */
+  --ng-glass-surface: rgba(255, 255, 255, 0.72);
+  --ng-glass-deep: rgba(255, 255, 255, 0.45);
+  --ng-glass-border: rgba(255, 255, 255, 0.85);
+  --ng-glass-border-subtle: rgba(255, 255, 255, 0.5);
+  
+  /* Blur scale */
+  --ng-blur-sm: blur(8px);
+  --ng-blur-md: blur(16px);
+  --ng-blur-lg: blur(24px);
+  
+  /* Glow sutil */
+  --ng-glow-light: 0 0 20px rgba(255,255,255,0.3);
+  --ng-glow-accent: 0 0 30px rgba(59, 130, 246, 0.15);
+}
+
+.dark {
+  --ng-glass-surface: rgba(20, 25, 35, 0.65);
+  --ng-glass-deep: rgba(15, 20, 26, 0.85);
+  --ng-glass-border: rgba(255, 255, 255, 0.1);
+  --ng-glass-border-subtle: rgba(255, 255, 255, 0.05);
+  
+  --ng-elevation-2: 
+    0 4px 20px rgba(0,0,0,0.25),
+    0 2px 8px rgba(0,0,0,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  --ng-elevation-3: 
+    0 8px 32px rgba(0,0,0,0.35),
+    0 4px 16px rgba(0,0,0,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+    
+  --ng-glow-light: 0 0 20px rgba(255,255,255,0.05);
+}

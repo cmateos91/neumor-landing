@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { NeumorfButton } from '@/components/ui/NeumorfButton'
 import { crearLead } from '@/app/actions/leads'
 
 export function ContactForm() {
@@ -39,11 +38,10 @@ export function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="form-card p-8 text-center">
+      <div className="ng-card p-8 text-center">
         <div className="w-16 h-16 mx-auto mb-4 rounded-full
                       bg-emerald-500/10 dark:bg-emerald-500/20
-                      flex items-center justify-center
-                      shadow-[0_4px_16px_rgba(16,185,129,0.2)]">
+                      flex items-center justify-center">
           <svg className="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
@@ -54,7 +52,7 @@ export function ContactForm() {
         </p>
         <button
           onClick={() => setStatus('idle')}
-          className="glass-pill mt-4 px-4 py-2 text-sm text-slate-600 dark:text-slate-300"
+          className="ng-raised mt-6 px-4 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/10 transition-colors"
         >
           Enviar otro proyecto
         </button>
@@ -63,10 +61,10 @@ export function ContactForm() {
   }
 
   return (
-    <div className="form-card p-8">
-      <form onSubmit={handleSubmit} className="space-y-3">
+    <div className="ng-card p-8">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5">
+          <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-2 ml-1">
             Nombre
           </label>
           <input
@@ -75,13 +73,13 @@ export function ContactForm() {
             value={formData.nombre}
             onChange={handleChange}
             required
-            className="neumor-input w-full px-4 py-3 text-sm text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500"
-            placeholder="Cómo te llamas"
+            className="ng-input"
+            placeholder="¿Cómo te llamas?"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5">
+          <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-2 ml-1">
             Email
           </label>
           <input
@@ -90,13 +88,13 @@ export function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="neumor-input w-full px-4 py-3 text-sm text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500"
+            className="ng-input"
             placeholder="donde podamos escribirte"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5">
+          <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-2 ml-1">
             Tipo de negocio
           </label>
           <input
@@ -105,36 +103,36 @@ export function ContactForm() {
             value={formData.tipo_negocio}
             onChange={handleChange}
             required
-            className="neumor-input w-full px-4 py-3 text-sm text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500"
-            placeholder="restaurante, marca personal, estudio, etc."
+            className="ng-input"
+            placeholder="restaurante, marca personal, estudio..."
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5">
-            ¿Qué te gustaría conseguir con la web?
+          <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-2 ml-1">
+            ¿Qué te gustaría conseguir?
           </label>
           <textarea
             name="mensaje"
             value={formData.mensaje}
             onChange={handleChange}
             rows={3}
-            className="neumor-input w-full px-4 py-3 text-sm text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-none"
-            placeholder="Cuéntame en pocas frases qué buscas."
+            className="ng-input resize-none"
+            placeholder="Cuéntame en pocas frases qué buscas..."
           />
         </div>
 
         {status === 'error' && (
-          <p className="text-red-500 text-sm">{errorMsg}</p>
+          <p className="text-red-500 text-sm px-1">{errorMsg}</p>
         )}
 
-        <NeumorfButton
+        <button
           type="submit"
-          className="w-full justify-center"
           disabled={status === 'loading'}
+          className="ng-btn-primary w-full mt-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
         >
           {status === 'loading' ? 'Enviando...' : 'Enviar proyecto a revisión'}
-        </NeumorfButton>
+        </button>
       </form>
     </div>
   )

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/utils/SmoothScroll";
 import { ThemeProvider } from "@/components/theme/ThemeContext";
+import { NeoGlassCursor } from "@/components/ui/NeoGlassCursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -139,7 +140,10 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
         <script dangerouslySetInnerHTML={{ __html: registerSW }} />
         <ThemeProvider>
-          <SmoothScroll>{children}</SmoothScroll>
+          <SmoothScroll>
+            {children}
+            <NeoGlassCursor />
+          </SmoothScroll>
         </ThemeProvider>
       </body>
     </html>
