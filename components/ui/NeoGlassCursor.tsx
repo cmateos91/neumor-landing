@@ -10,42 +10,51 @@ interface CursorState {
 }
 
 export function NeoGlassCursor() {
-  // Solo renderizar en cliente
   const [isClient, setIsClient] = useState(false)
+  const [isTouchDevice, setIsTouchDevice] = useState(true) // Default true para SSR safety
   
-  // Posición objetivo (mouse real)
   const targetRef = useRef({ x: 0, y: 0 })
-  
-  // Posición actual (con inercia)
   const currentRef = useRef({ x: 0, y: 0 })
-  
-  // Estado visual
   const [state, setState] = useState<CursorState>({
     x: 0,
     y: 0,
     isHovering: false,
     isClicking: false,
   })
-
-  // RAF ref
   const rafRef = useRef<number | undefined>(undefined)
 
   useEffect(() => {
     setIsClient(true)
 
-    // Detectar dispositivos touch (no mostrar cursor personalizado)
-    const isTouch = window.matchMedia('(pointer: coarse)').matches
-    if (isTouch) return
+    // Detección robusta de dispositivos táctiles
+    const checkTouch = () => {
+      const hasTouch = 
+        'ontouchstart' in window || 
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia('(pointer: coarse)').matches
+      
+      setIsTouchDevice(hasTouch)
+      return hasTouch
+    }
 
-    // Lerp factor (0.1 = lento/pesado, 0.3 = rápido/liviano)
+    const isTouch = checkTouch()
+    
+    // Re-verificar en resize (por si cambia orientación o conectan mouse)
+    const handleResize = () => checkTouch()
+    window.addEventListener('resize', handleResize, { passive: true })
+
+    if (isTouch) {
+      // En móvil: no inicializar cursor, solo cleanup
+      return () => window.removeEventListener('resize', handleResize)
+    }
+
+    // Lerp factor
     const LERP = 0.15
 
-    // Animation loop
     const animate = () => {
       const target = targetRef.current
       const current = currentRef.current
 
-      // Interpolación lineal suave
       current.x += (target.x - current.x) * LERP
       current.y += (target.y - current.y) * LERP
 
@@ -58,19 +67,16 @@ export function NeoGlassCursor() {
       rafRef.current = requestAnimationFrame(animate)
     }
 
-    // Mouse move handler
     const handleMouseMove = (e: MouseEvent) => {
       targetRef.current = { x: e.clientX, y: e.clientY }
     }
 
-    // Hover detection
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement
       const isHoverable = target.closest('a, button, [role="button"], input, textarea, .cursor-hover')
       setState(prev => ({ ...prev, isHovering: !!isHoverable }))
     }
 
-    // Click states
     const handleMouseDown = () => {
       setState(prev => ({ ...prev, isClicking: true }))
     }
@@ -79,10 +85,8 @@ export function NeoGlassCursor() {
       setState(prev => ({ ...prev, isClicking: false }))
     }
 
-    // Iniciar loop
     rafRef.current = requestAnimationFrame(animate)
 
-    // Event listeners
     document.addEventListener('mousemove', handleMouseMove, { passive: true })
     document.addEventListener('mouseover', handleMouseOver, { passive: true })
     document.addEventListener('mousedown', handleMouseDown)
@@ -94,13 +98,13 @@ export function NeoGlassCursor() {
       document.removeEventListener('mouseover', handleMouseOver)
       document.removeEventListener('mousedown', handleMouseDown)
       document.removeEventListener('mouseup', handleMouseUp)
+      window.removeEventListener('resize', handleResize)
     }
   }, [])
 
-  // No renderizar en SSR o dispositivos touch
-  if (!isClient) return null
+  // No renderizar: SSR, touch devices, o no client
+  if (!isClient || isTouchDevice) return null
 
-  // Calcular escala basada en estado
   const getScale = () => {
     if (state.isClicking) return 0.9
     if (state.isHovering) return 1.6
@@ -111,9 +115,8 @@ export function NeoGlassCursor() {
 
   return (
     <>
-      {/* Cursor principal - Orbe NeoGlass */}
       <div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference hidden md:block"
         style={{
           transform: `translate3d(${state.x}px, ${state.y}px, 0) translate(-50%, -50%)`,
           willChange: 'transform',
@@ -121,11 +124,8 @@ export function NeoGlassCursor() {
       >
         <div
           className="relative transition-transform duration-150 ease-out"
-          style={{
-            transform: `scale(${scale})`,
-          }}
+          style={{ transform: `scale(${scale})` }}
         >
-          {/* Orbe principal */}
           <div
             className="w-8 h-8 rounded-full"
             style={{
@@ -140,8 +140,6 @@ export function NeoGlassCursor() {
               `,
             }}
           />
-          
-          {/* Anillo exterior (solo en hover) */}
           {state.isHovering && (
             <div
               className="absolute inset-0 rounded-full -m-2 animate-pulse"
@@ -154,9 +152,8 @@ export function NeoGlassCursor() {
         </div>
       </div>
 
-      {/* Cursor secundario - Dot central (más rápido) */}
       <div
-        className="fixed top-0 left-0 pointer-events-none z-[9999]"
+        className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block"
         style={{
           transform: `translate3d(${targetRef.current.x}px, ${targetRef.current.y}px, 0) translate(-50%, -50%)`,
         }}
@@ -170,9 +167,8 @@ export function NeoGlassCursor() {
         />
       </div>
 
-      {/* Global styles para ocultar cursor nativo */}
       <style jsx global>{`
-        @media (pointer: fine) {
+        @media (pointer: fine) and (min-width: 768px) {
           * {
             cursor: none !important;
           }
