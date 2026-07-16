@@ -236,9 +236,6 @@ export default function Home() {
                 </span>
               ))}
             </div>
-            <p className="font-mono text-[0.7rem] text-[var(--ink-soft)] opacity-60 mt-3">
-              Las piezas se pueden arrastrar.
-            </p>
           </div>
         </NeumorfSection>
 
