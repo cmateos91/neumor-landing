@@ -48,7 +48,7 @@ const labItems = [
   {
     status: 'en validación',
     title: 'Componentes de interfaz',
-    copy: 'Interacciones avanzadas, como la demostración de física de la portada, que incorporamos a los proyectos de cliente.',
+    copy: 'Elementos de interfaz propios que diseñamos, probamos y reutilizamos en los proyectos de cliente.',
   },
   {
     status: 'en producción',
@@ -237,7 +237,7 @@ export default function Home() {
               ))}
             </div>
             <p className="font-mono text-[0.7rem] text-[var(--ink-soft)] opacity-60 mt-3">
-              Demostración interactiva: arrastra las piezas.
+              Las piezas se pueden arrastrar.
             </p>
           </div>
         </NeumorfSection>
