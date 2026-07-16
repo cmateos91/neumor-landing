@@ -46,15 +46,15 @@ export function ContactForm() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-lg font-semibold mb-2 text-slate-800 dark:text-slate-100">Proyecto recibido</h3>
+        <h3 className="text-lg font-semibold mb-2 text-slate-800 dark:text-slate-100">Consulta recibida</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400">
-          Te responderemos pronto con una propuesta personalizada.
+          Te responderemos en menos de 24 horas con una propuesta detallada.
         </p>
         <button
           onClick={() => setStatus('idle')}
           className="ng-raised mt-6 px-4 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/10 transition-colors"
         >
-          Enviar otro proyecto
+          Enviar otra consulta
         </button>
       </div>
     )
@@ -74,7 +74,7 @@ export function ContactForm() {
             onChange={handleChange}
             required
             className="ng-input"
-            placeholder="¿Cómo te llamas?"
+            placeholder="Nombre y apellidos"
           />
         </div>
 
@@ -89,7 +89,7 @@ export function ContactForm() {
             onChange={handleChange}
             required
             className="ng-input"
-            placeholder="donde podamos escribirte"
+            placeholder="nombre@empresa.com"
           />
         </div>
 
@@ -104,13 +104,13 @@ export function ContactForm() {
             onChange={handleChange}
             required
             className="ng-input"
-            placeholder="restaurante, marca personal, estudio..."
+            placeholder="Restaurante, clínica, comercio..."
           />
         </div>
 
         <div>
           <label className="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-2 ml-1">
-            ¿Qué te gustaría conseguir?
+            Descripción del proyecto
           </label>
           <textarea
             name="mensaje"
@@ -118,7 +118,7 @@ export function ContactForm() {
             onChange={handleChange}
             rows={3}
             className="ng-input resize-none"
-            placeholder="Cuéntame en pocas frases qué buscas..."
+            placeholder="Describe brevemente qué necesitas y tus objetivos"
           />
         </div>
 
@@ -131,7 +131,7 @@ export function ContactForm() {
           disabled={status === 'loading'}
           className="ng-btn-primary w-full mt-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
         >
-          {status === 'loading' ? 'Enviando...' : 'Enviar proyecto a revisión'}
+          {status === 'loading' ? 'Enviando...' : 'Enviar consulta'}
         </button>
       </form>
     </div>

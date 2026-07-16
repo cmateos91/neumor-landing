@@ -6,44 +6,32 @@ import { NeumorfSection } from "@/components/ui/NeumorfSection"
 import { Navbar } from "@/components/ui/Navbar"
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { InteractiveLogo3D } from "@/components/ui/InteractiveLogo3D"
-import { AntiGravityTextImmediate } from "@/components/ui/AntiGravityText"
+import { Draggable } from 'gsap/Draggable'
+import { InertiaPlugin } from 'gsap/InertiaPlugin'
 
-// Registrar plugins una sola vez
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin)
 
-// Datos de capítulos
-const chapters = [
-  {
-    id: 'web-que-atrae',
-    headline: 'Tu marca, elevada',
-    copy: 'Landing pages neumórficas, copy claro y CTA estratégico para convertir visitas en deseo.',
-    video: '/videos/webqueatraevideo.mp4',
-  },
-  {
-    id: 'panel-admin',
-    headline: 'El control total, simplificado',
-    copy: 'Un dashboard interno donde gestionas precios, horarios y métricas con total claridad.',
-    video: '/videos/paneladminquecontrolavideo.mp4',
-  },
-  {
-    id: 'panel-usuario',
-    headline: 'Fidelizar sin esfuerzo',
-    copy: 'Un espacio privado que se siente como un club exclusivo y hace que el cliente vuelva.',
-    video: '/videos/panelusuarioquefidelizavideo.mp4',
-  },
-  {
-    id: 'newsletter',
-    headline: 'Nunca dejes de estar presente',
-    copy: 'Comunicación inteligente que impacta en el momento justo y reactiva clientes dormidos.',
-    video: '/videos/newsletterquecomunicavideo.mp4',
-  },
-  {
-    id: 'automatizacion',
-    headline: 'Tu negocio funciona mientras duermes',
-    copy: 'Procesos automáticos que escalan sin errores y devuelven tiempo al dueño del negocio.',
-    video: '/videos/automatizacionqueescalavideo.mp4',
-  },
+// Piezas de la mesa de taller del hero
+const toyPieces = [
+  { label: 'web', lab: false },
+  { label: 'panel', lab: false },
+  { label: 'bot', lab: false },
+  { label: 'api', lab: false },
+  { label: 'juego', lab: true },
+]
+
+// Lo que incluye el producto webs+panel
+const productFeatures = [
+  { title: 'Web orientada a conversión', copy: 'Diseño y contenidos estructurados para que la visita se convierta en cliente.' },
+  { title: 'Panel de gestión', copy: 'Administra precios, horarios y contenidos con autonomía total, sin depender de terceros.' },
+  { title: 'Área de clientes', copy: 'Un espacio privado que fideliza y genera valor recurrente.' },
+  { title: 'Comunicación y campañas', copy: 'Newsletter y mensajes segmentados, enviados en el momento oportuno.' },
+  { title: 'Automatización de procesos', copy: 'Respuestas, recordatorios y seguimiento que funcionan sin intervención manual.' },
+]
+
+const productVideos = [
+  { id: 'web-que-atrae', video: '/videos/webqueatraevideo.mp4', caption: 'La web pública' },
+  { id: 'panel-admin', video: '/videos/paneladminquecontrolavideo.mp4', caption: 'El panel de gestión' },
 ]
 
 const nichos = [
@@ -51,24 +39,55 @@ const nichos = [
   'Gimnasios', 'Tiendas', 'Reformas'
 ]
 
-export default function Home() {
-  // Refs organizados
-  const containerRef = useRef<HTMLDivElement>(null)
-  const heroRef = useRef<HTMLDivElement>(null)
-  const contactRef = useRef<HTMLDivElement>(null)
-  const videoRefs = useRef<HTMLVideoElement[]>([])
-  const chapterTriggersRef = useRef<ScrollTrigger[]>([])
+const labItems = [
+  {
+    status: 'en desarrollo',
+    title: 'Prototipos interactivos',
+    copy: 'Mecánicas y experiencias interactivas que evaluamos internamente antes de convertirlas en producto.',
+  },
+  {
+    status: 'en validación',
+    title: 'Componentes de interfaz',
+    copy: 'Interacciones avanzadas, como la demostración de física de la portada, que incorporamos a los proyectos de cliente.',
+  },
+  {
+    status: 'en producción',
+    title: 'Herramientas internas',
+    copy: 'Software que automatiza parte de nuestro propio flujo de trabajo y madura hasta convertirse en producto.',
+  },
+]
 
-  // ========== VIDEO INTERSECTION OBSERVER ==========
+const processSteps = [
+  {
+    day: '1',
+    title: 'Análisis',
+    copy: 'Estudiamos tu negocio y definimos el alcance: funcionalidades, plazos y presupuesto cerrado.',
+  },
+  {
+    day: '2',
+    title: 'Desarrollo',
+    copy: 'Construimos la solución con entregas parciales, para que el avance sea visible y verificable.',
+  },
+  {
+    day: '3',
+    title: 'Entrega y soporte',
+    copy: 'Publicación, formación de tu equipo y soporte continuado tras la puesta en marcha.',
+  },
+]
+
+export default function Home() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const contactRef = useRef<HTMLDivElement>(null)
+  const trayRef = useRef<HTMLDivElement>(null)
+  const videoRefs = useRef<HTMLVideoElement[]>([])
+
+  // ========== VIDEO AUTOPLAY EN DESKTOP ==========
   useEffect(() => {
-    // Detectar si es móvil/táctil
-    const isTouchDevice = 
-      'ontouchstart' in window || 
+    const isTouchDevice =
+      'ontouchstart' in window ||
       navigator.maxTouchPoints > 0 ||
       window.matchMedia('(pointer: coarse)').matches
-    
-    // En móvil, no usar IntersectionObserver para autoplay
-    // Los videos se controlan manualmente con el botón de play
+
     if (isTouchDevice) return
 
     const videos = videoRefs.current.filter(Boolean)
@@ -78,7 +97,6 @@ export default function Home() {
       (entries) => {
         entries.forEach((entry) => {
           const video = entry.target as HTMLVideoElement
-          // Solo reproducir si el video no tiene controles activos
           if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
             video.play().catch(() => {})
           } else {
@@ -90,131 +108,79 @@ export default function Home() {
     )
 
     videos.forEach((video) => observer.observe(video))
-
-    return () => {
-      videos.forEach((video) => observer.unobserve(video))
-      observer.disconnect()
-    }
+    return () => observer.disconnect()
   }, [])
 
-  // ========== GSAP ANIMATIONS CON CONTEXT ==========
+  // ========== MESA DE TALLER: piezas arrastrables ==========
   useEffect(() => {
-    // Check for reduced motion preference
+    if (!trayRef.current) return
+
+    const draggables = Draggable.create('.toy-piece', {
+      type: 'x,y',
+      bounds: trayRef.current,
+      inertia: true,
+      edgeResistance: 0.7,
+      onPress() { this.target.classList.add('dragging') },
+      onRelease() { this.target.classList.remove('dragging') },
+    })
+
+    return () => draggables.forEach((d) => d.kill())
+  }, [])
+
+  // ========== ENTRADAS Y REVEALS ==========
+  useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion) return
 
     const ctx = gsap.context(() => {
-      // ----- Hero Animation (sin el título, manejado por AntiGravityText) -----
-      const heroTl = gsap.timeline({ 
-        defaults: { ease: 'power3.out' },
-        delay: 0.8 // Delay aumentado para dejar que AntiGravityText inicie primero
+      // Hero: una sola entrada orquestada
+      gsap.timeline({ defaults: { ease: 'power3.out' } })
+        .fromTo('.hero-eyebrow', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 })
+        .fromTo('.hero-line', { opacity: 0, y: 30 }, { opacity: 1, y: 0, stagger: 0.12, duration: 0.7 }, '-=0.2')
+        .fromTo('.hero-desc', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.4')
+        .fromTo('.hero-cta', { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.08, duration: 0.5 }, '-=0.35')
+        .fromTo('.toy-tray', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.3')
+        .fromTo('.toy-piece', { opacity: 0, scale: 0.6, y: -40 }, { opacity: 1, scale: 1, y: 0, stagger: 0.07, duration: 0.6, ease: 'back.out(2)' }, '-=0.4')
+
+      // Reveal genérico por sección
+      gsap.utils.toArray<HTMLElement>('.reveal').forEach((el) => {
+        gsap.fromTo(
+          el.children,
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1,
+            y: 0,
+            stagger: 0.08,
+            duration: 0.7,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 80%',
+              toggleActions: 'play none none none',
+            },
+          }
+        )
       })
 
-      heroTl
-        .fromTo(
-          '.hero-badge',
-          { opacity: 0, y: 20, scale: 0.95 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.6 }
-        )
-        .fromTo(
-          '.hero-desc',
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.6 },
-          '-=0.3'
-        )
-        .fromTo(
-          '.hero-cta',
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, stagger: 0.1, duration: 0.5 },
-          '-=0.3'
-        )
-
-      // ----- Chapters Scroll Animation -----
-      const chapterSections = gsap.utils.toArray<HTMLElement>('.chapter-section')
-
-      chapterSections.forEach((chapter, index) => {
-        const isEven = index % 2 === 1
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: chapter,
-            start: 'top 80%',
-            end: 'top 30%',
-            toggleActions: 'play none none reverse',
-          },
-        })
-
-        const textEl = chapter.querySelector('.chapter-text')
-        const videoEl = chapter.querySelector('.chapter-video')
-
-        // Texto entra desde el lado correspondiente
-        tl.fromTo(
-          textEl,
-          { opacity: 0, x: isEven ? 40 : -40 },
-          { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out' }
-        ).fromTo(
-          videoEl,
-          { opacity: 0, scale: 0.95, y: 30 },
-          { opacity: 1, scale: 1, y: 0, duration: 1, ease: 'power2.out' },
-          '-=0.6'
-        )
-
-        if (tl.scrollTrigger) {
-          chapterTriggersRef.current.push(tl.scrollTrigger)
-        }
-      })
-
-      // ----- Nichos Animation -----
+      // Pills de nichos
       gsap.fromTo(
         '.nicho-pill',
         { opacity: 0, y: 20, scale: 0.9 },
         {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          stagger: 0.05,
-          duration: 0.5,
-          ease: 'back.out(1.7)',
+          opacity: 1, y: 0, scale: 1,
+          stagger: 0.05, duration: 0.5, ease: 'back.out(1.7)',
           scrollTrigger: {
             trigger: '.nichos-section',
             start: 'top 85%',
-            toggleActions: 'play none none reverse',
+            toggleActions: 'play none none none',
           },
         }
       )
-
-      // ----- Contact Section -----
-      const contactTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: contactRef.current,
-          start: 'top 75%',
-          toggleActions: 'play none none reverse',
-        },
-      })
-
-      contactTl
-        .fromTo(
-          '.contact-content > *',
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, stagger: 0.1, duration: 0.7, ease: 'power2.out' }
-        )
-        .fromTo(
-          '.contact-form',
-          { opacity: 0, x: 30 },
-          { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out' },
-          '-=0.4'
-        )
-
     }, containerRef)
 
-    return () => {
-      ctx.revert()
-      chapterTriggersRef.current.forEach((st) => st.kill())
-      chapterTriggersRef.current = []
-    }
+    return () => ctx.revert()
   }, [])
 
-  // ========== SMOOTH SCROLL TO TOP ==========
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }, [])
@@ -224,115 +190,112 @@ export default function Home() {
       <Navbar />
 
       <main className="min-h-screen pt-20">
-        {/* HERO */}
-        <NeumorfSection ref={heroRef} className="py-16 md:py-24">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="hero-badge ng-badge text-emerald-600 dark:text-emerald-400 mb-6">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-              Webs listas en 3 días
-            </div>
-
-            <div className="mb-4">
-              <AntiGravityTextImmediate
-                as="h1"
-                className="text-3xl md:text-5xl font-semibold tracking-tight text-slate-800 dark:text-slate-100"
-                delay={0.3}
-                stagger={0.025}
-                duration={1.4}
-              >
-                Tu web profesional.
-              </AntiGravityTextImmediate>
-              <AntiGravityTextImmediate
-                as="h1"
-                className="text-3xl md:text-5xl font-semibold tracking-tight text-blue-500"
-                delay={0.8}
-                stagger={0.03}
-                duration={1.2}
-              >
-                Con panel y automatizaciones.
-              </AntiGravityTextImmediate>
-            </div>
-
-            <p className="hero-desc text-base md:text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-xl mx-auto">
-              Sitios web para negocios locales con panel de administración
-              y respuestas automáticas. Todo gestionado desde un solo lugar.
+        {/* ========== HERO: MANIFIESTO + MESA DE TALLER ========== */}
+        <NeumorfSection className="py-14 md:py-20">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="hero-eyebrow font-mono text-xs tracking-[0.25em] uppercase text-[var(--ink-soft)] mb-6">
+              NeumorStudio — desarrollo de software
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <h1 className="font-display text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-6">
+              <span className="hero-line block">Desarrollamos software</span>
+              <span className="hero-line block text-[var(--accent)]">que se siente bien usar.</span>
+            </h1>
+
+            <p className="hero-desc text-base md:text-lg text-[var(--ink-soft)] mb-8 max-w-xl mx-auto">
+              Aplicaciones web con panel de gestión, automatización de procesos
+              e integraciones a medida. Aplicamos IA en nuestro flujo de trabajo
+              para acelerar y optimizar cada desarrollo, con supervisión
+              de ingeniería en cada entrega.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
               <button
-                onClick={() => document.querySelector('#servicios')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => document.querySelector('#construimos')?.scrollIntoView({ behavior: 'smooth' })}
                 className="hero-cta ng-btn-primary"
               >
-                Ver qué incluye
+                Ver qué construimos
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
               <button
                 onClick={() => document.querySelector('#contacto')?.scrollIntoView({ behavior: 'smooth' })}
-                className="hero-cta ng-raised px-6 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-white/50 dark:hover:bg-white/10 transition-colors"
+                className="hero-cta ng-raised px-6 py-3 text-sm font-medium"
               >
                 Solicitar propuesta
               </button>
             </div>
+
+            {/* Mesa de taller: las piezas se arrastran de verdad */}
+            <div ref={trayRef} className="toy-tray h-36 md:h-40 flex flex-wrap items-center justify-center gap-3 px-6">
+              {toyPieces.map((piece) => (
+                <span key={piece.label} className="toy-piece" data-lab={piece.lab || undefined}>
+                  <span className="toy-dot" />
+                  {piece.label}
+                </span>
+              ))}
+            </div>
+            <p className="font-mono text-[0.7rem] text-[var(--ink-soft)] opacity-60 mt-3">
+              Demostración interactiva: arrastra las piezas.
+            </p>
           </div>
         </NeumorfSection>
 
-        {/* SERVICIOS */}
-        <NeumorfSection id="servicios" className="space-y-32 max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl font-semibold mb-3 text-slate-800 dark:text-slate-100">
-              Servicios diseñados para crecer
+        {/* ========== LO QUE CONSTRUIMOS ========== */}
+        <NeumorfSection id="construimos" className="max-w-6xl">
+          <div className="reveal text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-bold tracking-tight mb-3">
+              Lo que construimos
             </h2>
-            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-              Soluciones digitales que combinan diseño, control y automatización para impulsar tu negocio.
+            <p className="text-[var(--ink-soft)] max-w-2xl mx-auto">
+              Producto propio y desarrollo a medida. Lo que madura en nuestra
+              línea de I+D se incorpora a este catálogo.
             </p>
           </div>
 
-          {chapters.map((chapter, index) => (
-            <section
-              key={chapter.id}
-              className={`chapter-section min-h-[60vh] w-full grid items-center gap-10 md:gap-12 ${
-                index % 2 === 1 ? 'md:grid-cols-[55%_45%]' : 'md:grid-cols-[45%_55%]'
-              }`}
-            >
-              {index % 2 === 1 && (
-                <div className="chapter-video order-1 md:order-1">
-                  <VideoCard chapter={chapter} index={index} videoRefs={videoRefs} />
-                </div>
-              )}
+          <div className="reveal ng-card p-6 md:p-10">
+            <div className="flex flex-wrap items-center gap-3 mb-6">
+              <span className="ng-badge text-emerald-600 dark:text-emerald-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                Disponible
+              </span>
+              <span className="ng-badge text-[var(--ink-soft)]">Panel de gestión</span>
+              <span className="ng-badge text-[var(--ink-soft)]">Automatización incluida</span>
+            </div>
 
-              <div className={`chapter-text space-y-4 ${index % 2 === 1 ? 'order-2 md:order-2' : ''}`}>
-                <p className="text-xs tracking-[0.3em] uppercase text-slate-400 dark:text-slate-500 font-medium">
-                  Servicio {String(index + 1).padStart(2, '0')}
-                </p>
-                <h3 className="text-2xl md:text-4xl font-semibold text-slate-800 dark:text-slate-100 leading-tight">
-                  {chapter.headline}
-                </h3>
-                <p className="text-base text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed">
-                  {chapter.copy}
-                </p>
-              </div>
-
-              {index % 2 === 0 && (
-                <div className="chapter-video">
-                  <VideoCard chapter={chapter} index={index} videoRefs={videoRefs} />
-                </div>
-              )}
-            </section>
-          ))}
-
-          {/* Nichos - Glass pills */}
-          <div className="nichos-section text-center pt-8">
-            <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-              Plantillas especializadas para
+            <h3 className="font-display text-2xl md:text-3xl font-bold tracking-tight mb-3">
+              Aplicaciones web con panel de gestión
+            </h3>
+            <p className="text-[var(--ink-soft)] max-w-2xl mb-10">
+              Para empresas y negocios locales que necesitan una presencia digital
+              profesional y autonomía completa en la gestión diaria.
             </p>
-            <div className="flex flex-wrap justify-center gap-3">
+
+            <div className="grid gap-6 md:grid-cols-2 mb-10">
+              {productVideos.map((item, index) => (
+                <figure key={item.id}>
+                  <VideoCard video={item.video} poster={`/images/${item.id}-poster.jpg`} onVideoRef={(el) => { videoRefs.current[index] = el }} />
+                  <figcaption className="font-mono text-xs text-[var(--ink-soft)] mt-3 text-center">
+                    {item.caption}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+
+            <div className="grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-3 mb-10">
+              {productFeatures.map((feature) => (
+                <div key={feature.title}>
+                  <h4 className="font-semibold text-sm mb-1">{feature.title}</h4>
+                  <p className="text-sm text-[var(--ink-soft)]">{feature.copy}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="nichos-section flex flex-wrap items-center gap-3">
+              <span className="text-sm text-[var(--ink-soft)] mr-1">Soluciones especializadas por sector:</span>
               {nichos.map((nicho) => (
-                <span
-                  key={nicho}
-                  className="nicho-pill ng-raised px-4 py-2 text-sm text-slate-600 dark:text-slate-300 cursor-default hover:bg-white/40 dark:hover:bg-white/5 transition-colors"
-                >
+                <span key={nicho} className="nicho-pill ng-raised px-4 py-2 text-sm cursor-default">
                   {nicho}
                 </span>
               ))}
@@ -340,25 +303,100 @@ export default function Home() {
           </div>
         </NeumorfSection>
 
-        {/* CONTACTO */}
+        {/* ========== EL LABORATORIO ========== */}
+        <NeumorfSection id="laboratorio" className="max-w-6xl">
+          <div className="reveal text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-bold tracking-tight mb-3">
+              El laboratorio
+            </h2>
+            <p className="text-[var(--ink-soft)] max-w-2xl mx-auto">
+              Nuestra línea de I+D. Exploramos tecnologías y prototipos
+              que, una vez validados, se incorporan a productos y proyectos de cliente.
+            </p>
+          </div>
+
+          <div className="reveal grid gap-6 md:grid-cols-3">
+            {labItems.map((item) => (
+              <article key={item.title} className="ng-card p-6">
+                <span className="lab-status mb-4">{item.status}</span>
+                <h3 className="font-display text-lg font-bold mt-4 mb-2">{item.title}</h3>
+                <p className="text-sm text-[var(--ink-soft)]">{item.copy}</p>
+              </article>
+            ))}
+          </div>
+        </NeumorfSection>
+
+        {/* ========== CÓMO TRABAJAMOS ========== */}
+        <NeumorfSection id="proceso" className="max-w-6xl">
+          <div className="reveal text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-bold tracking-tight mb-3">
+              Cómo trabajamos
+            </h2>
+            <p className="text-[var(--ink-soft)] max-w-2xl mx-auto">
+              Método claro, plazos cerrados y comunicación directa
+              durante todo el proyecto.
+            </p>
+          </div>
+
+          <div className="reveal grid gap-6 md:grid-cols-3">
+            {processSteps.map((step) => (
+              <div key={step.day} className="ng-card p-6">
+                <span className="step-key mb-4">{step.day}</span>
+                <h3 className="font-display text-lg font-bold mt-4 mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-sm text-[var(--ink-soft)]">{step.copy}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="reveal ng-card p-6 md:p-8 mt-6">
+            <div className="flex flex-wrap items-center gap-3 mb-4">
+              <h3 className="font-display text-lg md:text-xl font-bold">
+                Desarrollo asistido por IA
+              </h3>
+              <span className="ng-badge text-[var(--ink-soft)] text-xs">metodología</span>
+            </div>
+            <p className="text-sm md:text-base text-[var(--ink-soft)] max-w-3xl mb-6">
+              Integramos inteligencia artificial en nuestro flujo de trabajo con un
+              principio claro: automatiza lo repetitivo, no sustituye el criterio.
+              Cada entrega pasa revisión de ingeniería antes de llegar a producción.
+            </p>
+            <div className="grid gap-x-8 gap-y-4 sm:grid-cols-3">
+              <div>
+                <h4 className="font-semibold text-sm mb-1">Automatizar</h4>
+                <p className="text-sm text-[var(--ink-soft)]">Tareas repetitivas, pruebas y despliegues, para dedicar el tiempo a lo que aporta valor.</p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-sm mb-1">Optimizar</h4>
+                <p className="text-sm text-[var(--ink-soft)]">Rendimiento, calidad de código y detección temprana de errores en cada iteración.</p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-sm mb-1">Supervisar</h4>
+                <p className="text-sm text-[var(--ink-soft)]">Revisión humana de cada resultado: la responsabilidad técnica nunca se delega.</p>
+              </div>
+            </div>
+          </div>
+        </NeumorfSection>
+
+        {/* ========== CONTACTO ========== */}
         <div ref={contactRef} id="contacto">
           <NeumorfSection className="pb-24">
-            <div className="contact-content grid gap-12 md:grid-cols-2 items-start">
+            <div className="reveal grid gap-12 md:grid-cols-2 items-start">
               <div className="space-y-6">
                 <div>
-                  <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-slate-800 dark:text-slate-100">
-                    ¿Tienes un negocio local?
+                  <h2 className="font-display text-3xl md:text-4xl font-bold tracking-tight mb-4">
+                    Hablemos de tu proyecto
                   </h2>
-                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                    Cuéntame qué haces y te propongo una solución concreta:
-                    qué incluiría tu web, qué automatizaciones necesitas
-                    y por dónde empezaríamos.
+                  <p className="text-[var(--ink-soft)] leading-relaxed">
+                    Cuéntanos qué necesitas y te enviaremos una propuesta
+                    detallada: alcance, funcionalidades, plazos y presupuesto.
                   </p>
                 </div>
 
                 <ul className="space-y-3">
-                  {['Respuesta en menos de 24h', 'Propuesta personalizada sin compromiso'].map((item) => (
-                    <li key={item} className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+                  {['Respuesta en menos de 24 horas', 'Propuesta detallada sin compromiso'].map((item) => (
+                    <li key={item} className="flex items-center gap-3 text-sm text-[var(--ink-soft)]">
                       <span className="w-5 h-5 rounded-full bg-emerald-500/10 dark:bg-emerald-500/20 flex items-center justify-center">
                         <svg className="w-3 h-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
@@ -368,8 +406,6 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-
-                <InteractiveLogo3D />
               </div>
 
               <div className="contact-form">
@@ -379,16 +415,16 @@ export default function Home() {
           </NeumorfSection>
         </div>
 
-        {/* FOOTER */}
-        <footer className="border-t border-white/40 dark:border-white/5 bg-white/30 dark:bg-black/10 backdrop-blur-sm">
-          <NeumorfSection className="py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
-            <span>&copy; {new Date().getFullYear()} NeumorStudio</span>
+        {/* ========== FOOTER ========== */}
+        <footer className="border-t border-[var(--edge-border)]">
+          <NeumorfSection className="py-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-[var(--ink-soft)]">
+            <span>&copy; {new Date().getFullYear()} NeumorStudio — Desarrollo de software</span>
             <div className="flex gap-3">
               <a
                 href="https://www.instagram.com/neumorstudio/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="ng-raised w-10 h-10 !p-0 flex items-center justify-center hover:bg-white/50 dark:hover:bg-white/5 transition-colors"
+                className="ng-raised w-10 h-10 !p-0 flex items-center justify-center"
                 aria-label="Instagram"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -399,7 +435,7 @@ export default function Home() {
                 href="https://www.tiktok.com/@neumorstudio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="ng-raised w-10 h-10 !p-0 flex items-center justify-center hover:bg-white/50 dark:hover:bg-white/5 transition-colors"
+                className="ng-raised w-10 h-10 !p-0 flex items-center justify-center"
                 aria-label="TikTok"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -410,7 +446,7 @@ export default function Home() {
                 href="https://x.com/neumorstudio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="ng-raised w-10 h-10 !p-0 flex items-center justify-center hover:bg-white/50 dark:hover:bg-white/5 transition-colors"
+                className="ng-raised w-10 h-10 !p-0 flex items-center justify-center"
                 aria-label="X"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -425,71 +461,60 @@ export default function Home() {
   )
 }
 
-// ========== VIDEO CARD COMPONENT ==========
+// ========== VIDEO CARD ==========
 interface VideoCardProps {
-  chapter: {
-    id: string
-    headline: string
-    copy: string
-    video: string
-  }
-  index: number
-  videoRefs: React.MutableRefObject<HTMLVideoElement[]>
+  video: string
+  poster: string
+  onVideoRef: (el: HTMLVideoElement) => void
 }
 
-function VideoCard({ chapter, index, videoRefs }: VideoCardProps) {
+function VideoCard({ video, poster, onVideoRef }: VideoCardProps) {
   const [isMobile, setIsMobile] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
-    // Detectar si es móvil
-    const checkMobile = () => {
-      const isTouchDevice = 
-        'ontouchstart' in window || 
-        navigator.maxTouchPoints > 0 ||
-        window.matchMedia('(pointer: coarse)').matches
-      setIsMobile(isTouchDevice)
-    }
-    checkMobile()
+    const isTouchDevice =
+      'ontouchstart' in window ||
+      navigator.maxTouchPoints > 0 ||
+      window.matchMedia('(pointer: coarse)').matches
+    // La detección táctil solo existe en cliente; un render extra al montar es inevitable
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMobile(isTouchDevice)
   }, [])
 
   const handlePlayClick = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause()
-        setIsPlaying(false)
-      } else {
-        videoRef.current.play().catch(() => {})
-        setIsPlaying(true)
-      }
+    const el = videoRef.current
+    if (!el) return
+    if (isPlaying) {
+      el.pause()
+    } else {
+      el.play().catch(() => {})
     }
+  }
+
+  const setRefs = (el: HTMLVideoElement | null) => {
+    videoRef.current = el
+    if (el) onVideoRef(el)
   }
 
   return (
     <div className="ng-video-card group relative">
-      <div className="aspect-video w-full overflow-hidden rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 relative">
-        {/* Video Element */}
+      <div className="aspect-video w-full overflow-hidden relative">
         <video
-          ref={(el) => {
-            videoRef.current = el
-            if (el) videoRefs.current[index] = el
-          }}
-          src={chapter.video}
-          muted={!isMobile} // En móvil, no forzar muted para permitir interacción
+          ref={setRefs}
+          src={video}
+          muted={!isMobile}
           loop
           playsInline
-          controls={isMobile} // Mostrar controles nativos en móvil
-          webkit-playsinline="true"
-          x5-playsinline="true"
+          controls={isMobile}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
           preload="metadata"
-          poster={`/images/${chapter.id}-poster.jpg`}
+          poster={poster}
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
         />
-        
-        {/* Overlay con botón de play para móvil (cuando no está reproduciendo) */}
+
         {isMobile && !isPlaying && (
           <button
             onClick={handlePlayClick}
@@ -497,11 +522,7 @@ function VideoCard({ chapter, index, videoRefs }: VideoCardProps) {
             aria-label="Reproducir video"
           >
             <div className="w-16 h-16 rounded-full bg-white/90 dark:bg-white/20 backdrop-blur-md flex items-center justify-center shadow-lg border border-white/50">
-              <svg 
-                className="w-6 h-6 text-slate-800 dark:text-white ml-1" 
-                fill="currentColor" 
-                viewBox="0 0 24 24"
-              >
+              <svg className="w-6 h-6 text-slate-800 dark:text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z"/>
               </svg>
             </div>

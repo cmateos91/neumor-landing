@@ -9,7 +9,7 @@ export function NeumorfCard({ children, className = "" }: NeumorfCardProps) {
   return (
     <div
       className={`
-        design-card
+        ng-card
         p-6 md:p-8
         ${className}
       `}

@@ -1,7 +1,7 @@
 // NeumorStudio Service Worker
 // Versión: 1.0.0
 
-const CACHE_NAME = 'neumorstudio-v1'
+const CACHE_NAME = 'neumorstudio-v2'
 const OFFLINE_URL = '/'
 
 // Assets a pre-cachear

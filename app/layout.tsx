@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SmoothScroll } from "@/components/utils/SmoothScroll";
 import { ThemeProvider } from "@/components/theme/ThemeContext";
-import { NeoGlassCursor } from "@/components/ui/NeoGlassCursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,6 +13,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin"],
+});
+
 const setInitialTheme = `
 (() => {
   try {
@@ -22,10 +25,6 @@ const setInitialTheme = `
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const isDark = stored === 'dark' || (!stored && prefersDark);
     document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
-    
-    // Cargar diseño visual
-    const designTheme = localStorage.getItem('designTheme') || 'neumorphic';
-    document.body.setAttribute('data-design', designTheme);
   } catch (err) {
     console.warn('No se pudo leer el tema inicial', err);
   }
@@ -48,16 +47,16 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#fbbf24' },
-    { media: '(prefers-color-scheme: dark)', color: '#0F141A' },
+    { media: '(prefers-color-scheme: light)', color: '#e9edf4' },
+    { media: '(prefers-color-scheme: dark)', color: '#12151c' },
   ],
 };
 
 export const metadata: Metadata = {
-  title: "NeumorStudio | Interfaces neumorficas + automatizacion",
+  title: "NeumorStudio | Desarrollo de software y automatización",
   description:
-    "Estudio que disena webs neumorficas, capta leads y automatiza respuestas para que tu negocio no pierda oportunidades.",
-  keywords: ['diseno web', 'neumorfismo', 'leads', 'automatizacion', 'n8n', 'landing page'],
+    "Estudio de desarrollo de software: aplicaciones web con panel de gestión, automatización de procesos e integraciones a medida. Desarrollo asistido por IA con supervisión de ingeniería.",
+  keywords: ['desarrollo de software', 'aplicaciones web', 'panel de gestion', 'automatizacion', 'inteligencia artificial', 'desarrollo a medida'],
   authors: [{ name: 'NeumorStudio' }],
   creator: 'NeumorStudio',
   publisher: 'NeumorStudio',
@@ -76,8 +75,8 @@ export const metadata: Metadata = {
     locale: 'es_ES',
     url: 'https://neumorstudio.com',
     siteName: 'NeumorStudio',
-    title: 'NeumorStudio | Diseno que conecta',
-    description: 'Webs con panel propio, leads centralizados y automatizaciones.',
+    title: 'NeumorStudio | Desarrollo de software y automatización',
+    description: 'Aplicaciones web con panel de gestión, automatización de procesos e integraciones a medida.',
     images: [
       {
         url: '/images/og-image.png',
@@ -89,8 +88,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'NeumorStudio | Diseno que conecta',
-    description: 'Webs con panel propio, leads centralizados y automatizaciones.',
+    title: 'NeumorStudio | Desarrollo de software y automatización',
+    description: 'Aplicaciones web con panel de gestión, automatización de procesos e integraciones a medida.',
     images: ['/images/og-image.png'],
     creator: '@neumorstudio',
   },
@@ -110,40 +109,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const isComingSoon = process.env.NEXT_PUBLIC_COMING_SOON === 'true'
-
   return (
     <html lang="es" suppressHydrationWarning>
-      <head>
-        {/* Preload crítico para LCP */}
-        {isComingSoon && (
-          <>
-            <link
-              rel="preload"
-              href="/images/video-poster.jpg"
-              as="image"
-              fetchPriority="high"
-            />
-            <link
-              rel="preload"
-              href="/videos/VideoIntroducción.mp4"
-              as="video"
-              type="video/mp4"
-            />
-          </>
-        )}
-      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        data-design="neumorphic"
+        className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} antialiased`}
       >
         <script dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
         <script dangerouslySetInnerHTML={{ __html: registerSW }} />
         <ThemeProvider>
-          <SmoothScroll>
-            {children}
-            <NeoGlassCursor />
-          </SmoothScroll>
+          {children}
         </ThemeProvider>
       </body>
     </html>
